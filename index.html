@@ -399,7 +399,7 @@ section {
 
 @media (max-width: 480px) {
   .home-section {
-    padding: 40px 15px;
+    padding: 100px 15px;
   }
 
   .home-section h1 {
@@ -920,6 +920,133 @@ section {
     font-size: 0.9rem;
   }
 }
+
+
+.project-card {
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: white;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card-image {
+  height: 180px;
+  object-fit: contain;
+}
+
+.hover-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30, 30, 30, 0.6);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.project-card:hover .hover-overlay {
+  opacity: 1;
+}
+
+.hover-overlay a {
+  font-size: 2rem;
+  color: white;
+  text-decoration: none;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1a1a1a;
+  text-transform: uppercase;
+}
+
+
+/*about us */
+.about-section {
+  padding: 60px 0;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1a1a1a;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(to right, #007bff, #00d1ff);
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+.icon-box {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+}
+
+.icon-box:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.icon-box i {
+  font-size: 2.5rem;
+}
+
+.icon-box h6 {
+  font-size: 1.1rem;
+  margin: 10px 0 5px;
+  color: #343a40;
+}
+
+.icon-box p {
+  font-size: 0.95rem;
+}
+
+@media (max-width: 767px) {
+  .icon-box {
+    padding: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .section-title::after {
+    width: 60px;
+  }
+
+  .icon-box i {
+    font-size: 2rem;
+  }
+
+  .icon-box h6 {
+    font-size: 1rem;
+  }
+
+  .icon-box p {
+    font-size: 0.9rem;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -972,215 +1099,142 @@ section {
   </div>
 </section>
 
-
 <!-- About -->
-<section id="about" class="bg-white">
+<section id="about" class="about-section bg-white py-5">
   <div class="container">
-    <h2 class="section-title">About Me</h2>
+    <h2 class="section-title text-center mb-4">About Me</h2>
     <p class="text-center mb-5 text-muted">I build modern, responsive websites with a focus on user experience.</p>
 
-    <div class="row text-center g-4 mb-5 justify-content-center orbit-container" style="flex-wrap: nowrap;">
-      <div class="col-12 col-sm-6 col-md-3 orbit-item" data-aos="zoom-in">
-        <div class="p-3 shadow-sm rounded bg-light icon-box">
-          <i class="fas fa-briefcase fa-2x text-info mb-2"></i>
+    <div class="row justify-content-center g-4">
+      <div class="col-12 col-sm-6 col-md-3" data-aos="zoom-in">
+        <div class="icon-box text-center p-4 shadow-sm rounded bg-light h-100">
+          <i class="fas fa-briefcase fa-2x text-info mb-3"></i>
           <h6 class="fw-bold">Experience</h6>
-          <p class="fst-italic text-muted">Fresher</p>
+          <p class="fst-italic text-muted mb-0">Fresher</p>
         </div>
       </div>
 
-      <div class="col-12 col-sm-6 col-md-3 orbit-item" data-aos="zoom-in" data-aos-delay="100">
-        <div class="p-3 shadow-sm rounded bg-light icon-box">
-          <i class="fas fa-graduation-cap fa-2x text-success mb-2"></i>
+      <div class="col-12 col-sm-6 col-md-3" data-aos="zoom-in" data-aos-delay="100">
+        <div class="icon-box text-center p-4 shadow-sm rounded bg-light h-100">
+          <i class="fas fa-graduation-cap fa-2x text-success mb-3"></i>
           <h6 class="fw-bold">Education</h6>
-          <p class="fst-italic text-muted">BCA in Computer Science</p>
+          <p class="fst-italic text-muted mb-0">BCA in Computer Science</p>
         </div>
       </div>
 
-      <div class="col-12 col-sm-6 col-md-3 orbit-item" data-aos="zoom-in" data-aos-delay="200">
-        <div class="p-3 shadow-sm rounded bg-light icon-box">
-          <i class="fas fa-map-marker-alt fa-2x text-danger mb-2"></i>
+      <div class="col-12 col-sm-6 col-md-3" data-aos="zoom-in" data-aos-delay="200">
+        <div class="icon-box text-center p-4 shadow-sm rounded bg-light h-100">
+          <i class="fas fa-map-marker-alt fa-2x text-danger mb-3"></i>
           <h6 class="fw-bold">Location</h6>
-          <p class="fst-italic text-muted">India</p>
+          <p class="fst-italic text-muted mb-0">India</p>
         </div>
       </div>
 
-      <div class="col-12 col-sm-6 col-md-3 orbit-item" data-aos="zoom-in" data-aos-delay="300">
-        <div class="p-3 shadow-sm rounded bg-light icon-box">
-          <i class="fas fa-code fa-2x text-warning mb-2"></i>
+      <div class="col-12 col-sm-6 col-md-3" data-aos="zoom-in" data-aos-delay="300">
+        <div class="icon-box text-center p-4 shadow-sm rounded bg-light h-100">
+          <i class="fas fa-code fa-2x text-warning mb-3"></i>
           <h6 class="fw-bold">Speciality</h6>
-          <p class="fst-italic text-muted">Front-end Web Development</p>
+          <p class="fst-italic text-muted mb-0">Front-end Web Development</p>
         </div>
       </div>
     </div>
-
   </div>
 </section>
 
 
-<!-- Projects -->
-<section id="projects" class="bg-light">
+
+<!-- Projects Section -->
+<section id="projects" class="bg-light py-5">
   <div class="container">
-    <h2 class="section-title">Projects</h2>
-    <div class="row justify-content-center g-4">
-      
-      <!-- Project Card 1 -->
-  <!--    <div class="col-12 col-md-4">
-        <div class="card-flip">
-          <div class="card-flip-inner">
-            <div class="card-front">
-              <img src="footwear.png" alt="Project Image">
-              <h5>FOOTWEAR</h5>
-            </div>
-            <div class="card-back">
-              <p>A modern responsive website built using HTML, CSS, and JavaScript.Mobile-friendly and performance-optimized.</p>
-              <a href="footwear/login.html" target="_blank">Live Demo</a>
-            </div>
+    <h2 class="section-title text-center mb-5">Projects</h2>
+    <div class="row g-4">
+      <!-- Project Card Template -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card project-card h-100 position-relative overflow-hidden">
+          <div class="card-body text-center">
+            <img src="ims.png" alt="Internship Management System" class="card-image mb-3 img-fluid">
+            <h3 class="card-title">INTERNSHIP MANAGEMENT SYSTEM</h3>
+            <p class="card-text">A system to manage student internships with secure login.</p>
+          </div>
+          <div class="hover-overlay">
+            <a href="ims/login.html" target="_blank"><i class='bx bx-link'></i></a>
           </div>
         </div>
       </div>
 
-     
-
-     
-      <div class="col-12 col-md-4">
-        <div class="card-flip">
-          <div class="card-flip-inner">
-            <div class="card-front">
-              <img src="farmer.png" alt="Project Image">
-              <h5>GreenHarvest
-              </h5>
-            </div>
-            <div class="card-back">
-              <p>A platform that connects customers with farmers for direct farm visits, showcasing crops and enabling farm engagement. Request visits to explore fresh produce and interact with local farmers.</p>
-              <a href="farmer/login.html" target="_blank">Live Demo</a>
-            </div>
+      <!-- Card 2 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card project-card h-100 position-relative overflow-hidden">
+          <div class="card-body text-center">
+            <img src="farmer.png" alt="GreenHarvest" class="card-image mb-3 img-fluid">
+            <h3 class="card-title">GREENHARVEST</h3>
+            <p class="card-text">A digital platform connecting farmers with buyers.</p>
+          </div>
+          <div class="hover-overlay">
+            <a href="farmer/login.html" target="_blank"><i class='bx bx-link'></i></a>
           </div>
         </div>
       </div>
 
-
-
-<div class="col-12 col-md-4">
-  <div class="card-flip">
-    <div class="card-flip-inner">
-      <div class="card-front">
-        <img src="ims.png" alt="Project Image">
-        <h5>Internship Management System</h5>
+      <!-- Card 3 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card project-card h-100 position-relative overflow-hidden">
+          <div class="card-body text-center">
+            <img src="footwear.png" alt="Footwear" class="card-image mb-3 img-fluid">
+            <h3 class="card-title">FOOTWEAR</h3>
+            <p class="card-text">E-commerce website for trending footwear collections.</p>
+          </div>
+          <div class="hover-overlay">
+            <a href="footwear/login.html" target="_blank"><i class='bx bx-link'></i></a>
+          </div>
+        </div>
       </div>
-      <div class="card-back">
-        <p>The Internship Management System (IMS) streamlines the process of managing internship opportunities, applications, and student records. </p>
-        <a href="ims/login.html" target="_blank">Live Demo</a>
+
+      <!-- Card 4 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card project-card h-100 position-relative overflow-hidden">
+          <div class="card-body text-center">
+            <img src="excle.png" alt="Excel Dashboard" class="card-image mb-3 img-fluid">
+            <h3 class="card-title">EXCEL DASHBOARD</h3>
+            <p class="card-text">Data visualization using advanced Excel dashboards.</p>
+          </div>
+          <div class="hover-overlay">
+            <a href="dashboard.xlsx" target="_blank"><i class='bx bx-download'></i></a>
+          </div>
+        </div>
       </div>
+
+      <!-- Card 5 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card project-card h-100 position-relative overflow-hidden">
+          <div class="card-body text-center">
+            <img src="wather.png" alt="Weather Forecast" class="card-image mb-3 img-fluid">
+            <h3 class="card-title">WEATHER FORECAST</h3>
+            <p class="card-text">Live weather forecast using OpenWeatherMap API.</p>
+          </div>
+          <div class="hover-overlay">
+            <a href="wather.html" target="_blank"><i class='bx bx-link'></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card project-card h-100 position-relative overflow-hidden">
+          <div class="card-body text-center">
+            <img src="game.png" alt="Game" class="card-image mb-3 img-fluid">
+            <h3 class="card-title">GAME</h3>
+            <p class="card-text">Fun browser game built using HTML, CSS, and JS.</p>
+          </div>
+          <div class="hover-overlay">
+            <a href="game.html" target="_blank"><i class='bx bx-link'></i></a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
-</div>
-
-
--->
-
-
- <!-- Project Card 2 -->
-  
- <div class="card-container">
-  <!-- Card 1 -->
-  <div class="card-container">
-    <!-- Card 1 -->
-    <div class="card project-card">
-      <div class="card-body">
-        <img src="ims.png" alt="Project Image" class="card-image">
-        <h3 class="card-title">INTERNSHIP MANAGEMENT SYSTEM</h3>
-        <p class="card-text">Project Description Goes Here.</p>
-      </div>
-      <div class="hover-overlay">
-        <span class="hover-link-icon">
-          <a href="ims/login.html" target="_blank"><i class='bx bx-link'></i></a>
-        </span>
-        <div class="corner-triangle top-left"></div>
-        <div class="corner-triangle bottom-right"></div>
-      </div>
-    </div>
-  
-    <!-- Card 2 -->
-    <div class="card project-card">
-      <div class="card-body">
-        <img src="farmer.png" alt="Project Image" class="card-image">
-        <h3 class="card-title">GREENHARVEST</h3>
-        <p class="card-text">Project Description Goes Here.</p>
-      </div>
-      <div class="hover-overlay">
-        <span class="hover-link-icon">
-          <a href="farmer/login.html" target="_blank"><i class='bx bx-link'></i></a>
-        </span>
-        <div class="corner-triangle top-left"></div>
-        <div class="corner-triangle bottom-right"></div>
-      </div>
-    </div>
-  
-    <!-- Card 3 -->
-    <div class="card project-card">
-      <div class="card-body">
-        <img src="footwear.png" alt="Project Image" class="card-image">
-        <h3 class="card-title">FOOTWEAR</h3>
-        <p class="card-text">Project Description Goes Here.</p>
-      </div>
-      <div class="hover-overlay">
-        <span class="hover-link-icon">
-          <a href="footwear/login.html" target="_blank"><i class='bx bx-link'></i></a>
-        </span>
-        <div class="corner-triangle top-left"></div>
-        <div class="corner-triangle bottom-right"></div>
-      </div>
-    </div>
-  
-    <!-- Card 4 -->
-    <div class="card project-card">
-      <div class="card-body">
-        <img src="excle.png" alt="Project Image" class="card-image">
-        <h3 class="card-title">EXCEL DASHBOARD</h3>
-        <p class="card-text">Project Description Goes Here.</p>
-      </div>
-      <div class="hover-overlay">
-        <span class="hover-link-icon">
-          <a href="dashboard.xlsx" target="_blank"><i class='bx bx-download'></i></a>
-        </span>
-        <div class="corner-triangle top-left"></div>
-        <div class="corner-triangle bottom-right"></div>
-      </div>
-    </div>
-  
-    <!-- Card 5 -->
-    <div class="card project-card">
-      <div class="card-body">
-        <img src="wather.png" alt="Project Image" class="card-image">
-        <h3 class="card-title">WATHER FORCAST</h3>
-        <p class="card-text">Project Description Goes Here.</p>
-      </div>
-      <div class="hover-overlay">
-        <span class="hover-link-icon">
-          <a href="wather.html" target="_blank"><i class='bx bx-link'></i></a>
-        </span>
-        <div class="corner-triangle top-left"></div>
-        <div class="corner-triangle bottom-right"></div>
-      </div>
-    </div>
-  
-    <!-- Card 6 -->
-    <div class="card project-card">
-      <div class="card-body">
-        <img src="game.png" alt="Project Image" class="card-image">
-        <h3 class="card-title">GAME</h3>
-        <p class="card-text">Project Description Goes Here.</p>
-      </div>
-      <div class="hover-overlay">
-        <span class="hover-link-icon">
-          <a href="game.html" target="_blank"><i class='bx bx-link'></i></a>
-        </span>
-        <div class="corner-triangle top-left"></div>
-        <div class="corner-triangle bottom-right"></div>
-      </div>
-    </div>
-  </div>
-  
+</section>
 
 
 
