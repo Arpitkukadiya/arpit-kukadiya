@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            overflow: hidden;
+            transition: background-color 1s ease;
+        }
+
+        .game-container {
+            text-align: center;
+            background-color: #fff;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            transition: transform 0.3s ease;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .score {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Animations */
+        @keyframes fireworks {
+            0% { transform: scale(0); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.8; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        .fireworks {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+            color: #ffcc00;
+            animation: fireworks 1s ease-out infinite;
+        }
+
+        /* Change background color as attempts decrease */
+        .attempts-10 { background-color: #cce5ff; }
+        .attempts-9 { background-color: #b3d7ff; }
+        .attempts-8 { background-color: #99ccff; }
+        .attempts-7 { background-color: #80c2ff; }
+        .attempts-6 { background-color: #66b8ff; }
+        .attempts-5 { background-color: #4daeff; }
+        .attempts-4 { background-color: #33a4ff; }
+        .attempts-3 { background-color: #1a99ff; }
+        .attempts-2 { background-color: #008eff; }
+        .attempts-1 { background-color: #0072e5; }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>Guess the Number</h1>
+        <p class="message" id="message">Guess a number between 1 and 100</p>
+        <div class="input-container">
+            <input type="number" id="guessInput" min="1" max="100">
+        </div>
+        <button id="guessButton">Guess</button>
+        <p class="score" id="score">Attempts left: <span id="attempts">10</span></p>
+        <p class="message" id="resultMessage"></p>
+    </div>
+
+    <script>
+        const guessButton = document.getElementById('guessButton');
+        const guessInput = document.getElementById('guessInput');
+        const message = document.getElementById('message');
+        const score = document.getElementById('score');
+        const attemptsLeft = document.getElementById('attempts');
+        const resultMessage = document.getElementById('resultMessage');
+        const body = document.body;
+        
+        const targetNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 10;
+
+        guessButton.addEventListener('click', () => {
+            const guess = parseInt(guessInput.value);
+
+            if (isNaN(guess) || guess < 1 || guess > 100) {
+                message.textContent = 'Please enter a valid number between 1 and 100.';
+                return;
+            }
+
+            attempts--;
+            attemptsLeft.textContent = attempts;
+
+            // Update background and animation based on attempts
+            body.className = `attempts-${attempts}`;
+
+            if (guess === targetNumber) {
+                resultMessage.textContent = `Congratulations! You guessed the number ${targetNumber} correctly!`;
+                message.textContent = "";
+                body.style.backgroundColor = "#28a745"; // Green background for correct guess
+                body.style.transition = "background-color 1s ease";
+                showFireworks();
+                guessButton.disabled = true;
+            } else if (attempts === 0) {
+                resultMessage.textContent = `Game Over! The correct number was ${targetNumber}.`;
+                message.textContent = "";
+                body.style.backgroundColor = "#dc3545"; // Red background for game over
+                body.style.transition = "background-color 1s ease";
+                guessButton.disabled = true;
+            } else {
+                message.textContent = guess < targetNumber ? 'Too low! Try again.' : 'Too high! Try again.';
+            }
+
+            if (attempts === 0 || guess === targetNumber) {
+                guessInput.disabled = true;
+                guessButton.disabled = true;
+            }
+        });
+
+        // Function to show fireworks
+        function showFireworks() {
+            const fireworks = document.createElement('div');
+            fireworks.classList.add('fireworks');
+            fireworks.textContent = '🎆🎇';
+            document.body.appendChild(fireworks);
+
+            setTimeout(() => {
+                fireworks.remove();
+            }, 3000);
+        }
+    </script>
+
+</body>
+</html>

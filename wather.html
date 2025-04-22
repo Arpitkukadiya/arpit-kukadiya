@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Advanced Weather App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to top right, #1e3c72, #2a5298);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      text-align: center;
+      width: 90%;
+      max-width: 500px;
+      animation: fadeIn 1s ease;
+    }
+    input[type="text"] {
+      padding: 12px;
+      width: 80%;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #00c6ff;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background-color: #0072ff;
+    }
+    .weather-info {
+      margin-top: 25px;
+      animation: fadeInUp 0.8s ease;
+    }
+    .weather-card {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      margin-top: 20px;
+    }
+    .weather-icon {
+      font-size: 64px;
+      margin-bottom: 10px;
+      animation: rotate 20s linear infinite;
+    }
+    .stat {
+      margin: 10px 0;
+      font-size: 18px;
+    }
+    .feedback {
+      font-size: 24px;
+      margin-top: 15px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(1.1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🌤️ Weather Forecast</h1>
+    <input type="text" id="cityInput" placeholder="Enter city name">
+    <button onclick="getWeather()">Check Weather</button>
+    <div class="weather-info" id="weatherInfo"></div>
+
+    
+  </div>
+
+  <script>
+    function getWeatherIcon(condition) {
+      condition = condition.toLowerCase();
+      if (condition.includes('cloud')) return '<i class="fas fa-cloud"></i>';
+      if (condition.includes('rain')) return '<i class="fas fa-cloud-showers-heavy"></i>';
+      if (condition.includes('clear')) return '<i class="fas fa-sun"></i>';
+      if (condition.includes('snow')) return '<i class="fas fa-snowflake"></i>';
+      if (condition.includes('storm')) return '<i class="fas fa-bolt"></i>';
+      return '<i class="fas fa-smog"></i>';
+    }
+
+    function getWeatherFeedback(condition) {
+      condition = condition.toLowerCase();
+      if (condition.includes('clear')) return "🌞 Good Weather!";
+      if (condition.includes('cloud') || condition.includes('mist')) return "😐 Moderate Weather";
+      if (condition.includes('rain') || condition.includes('storm') || condition.includes('snow')) return "🌧️ Bad Weather!";
+      return "🔎 Weather Unknown";
+    }
+
+    async function getWeather() {
+      const city = document.getElementById('cityInput').value.trim();
+      const apiKey = '396aa79430391c5a544edb385d813ba2';
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},IN&appid=${apiKey}&units=metric`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.cod === 200) {
+          const icon = getWeatherIcon(data.weather[0].main);
+          const feedback = getWeatherFeedback(data.weather[0].main);
+          const html = `
+            <div class="weather-card">
+              <div class="weather-icon">${icon}</div>
+              <h2>${data.name}, ${data.sys.country}</h2>
+              <div class="stat"><strong>🌡️ Temperature:</strong> ${data.main.temp} °C</div>
+              <div class="stat"><strong>🌥️ Condition:</strong> ${data.weather[0].description}</div>
+              <div class="stat"><strong>💧 Humidity:</strong> ${data.main.humidity}%</div>
+              <div class="stat"><strong>🌬️ Wind Speed:</strong> ${data.wind.speed} m/s</div>
+              <div class="feedback">${feedback}</div>
+            </div>
+          `;
+          document.getElementById('weatherInfo').innerHTML = html;
+        } else {
+          document.getElementById('weatherInfo').innerHTML = `<p>${data.message}</p>`;
+        }
+      } catch (error) {
+        document.getElementById('weatherInfo').innerHTML = '<p>Error fetching weather data.</p>';
+      }
+    }
+  </script>
+</body>
+</html>
