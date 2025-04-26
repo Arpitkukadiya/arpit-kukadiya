@@ -18,6 +18,7 @@
   <!-- AOS (Animate on Scroll) -->
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
 
   <style>
 
@@ -166,11 +167,12 @@
 
 /* Navbar for mobile */
 .navbar-toggler {
-  border-color: #fff;
+  border-color: #2b2b9f;
 }
 
-.navbar-toggler-icon {
-  background-color: #fff;
+.navbar-toggler-icon {   
+  
+  background-color: #2b2b9f;
 }
 
 /* Scrolled Navbar */
@@ -1134,6 +1136,13 @@ section {
   }
 }
 
+/*togal button (icnon)*/
+.custom-toggler:hover {
+  transform: scale(1.1);
+  transition: 0.3s ease;
+}
+
+
   </style>
 </head>
 <body>
@@ -1142,9 +1151,10 @@ section {
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
   <div class="container">
     <a class="navbar-brand" href="#">Portfolio.</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
+    <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <i class="fas fa-bars"></i>
     </button>
+    
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
