@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🚀 Docker Dashboard - Arpit Kukadiya</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #e3f2fd, #ffffff);
+      font-family: 'Segoe UI', sans-serif;
+      padding: 30px;
+      min-height: 100vh;
+    }
+    h1, h5 {
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+    .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: none;
+      border-radius: 1rem;
+      background: linear-gradient(to bottom right, #ffffff, #f1faff);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    }
+    .card-body h5 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #0a4275;
+    }
+    .card-body i {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      color: #007bff;
+    }
+    .btn {
+      margin-top: 10px;
+      border-radius: 30px;
+      padding: 8px 18px;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="text-center text-primary">💻 DevOps & Docker Dashboard</h1>
+  <h5 class="text-center">Curated by Arpit Kukadiya 🚀</h5>
+
+  <div class="dashboard">
+    <div class="card">
+      <div class="card-body text-center">
+        <i class="bi bi-journal-code"></i>
+        <h5>📘 Docker Cheat Sheet</h5>
+        <p>Essential Docker & Swarm commands with explanations.</p>
+        <a href="docker_cheatsheet.html" class="btn btn-primary">Open Sheet</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body text-center">
+        <i class="bi bi-youtube"></i>
+        <h5>📺 DevOps Tutorials</h5>
+        <p>Watch videos on Docker, CI/CD, Jenkins, GitHub Actions.</p>
+        <a href="https://www.youtube.com/watch?v=tgmM3_2dZwg&t=21815s" class="btn btn-danger" target="_blank">Watch Now</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body text-center">
+        <i class="bi bi-question-circle"></i>
+        <h5>🧠 Interview Questions</h5>
+        <p>Top Docker and DevOps interview Q&A for students.</p>
+        <a href="interview_questions.html" class="btn btn-success">View Questions</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body text-center">
+        <i class="bi bi-collection"></i>
+        <h5>📂 Topics by Section</h5>
+        <p>Navigate to specific topics like volumes, services, stacks.</p>
+        <a href="topics.html" class="btn btn-info">Explore</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body text-center">
+        <i class="bi bi-chat-dots"></i>
+        <h5>💬 Docker Chit Chat</h5>
+        <p>Mini-guides, Q&A and Docker chit-chat tips by Arpit.</p>
+        <a href="chit.html" class="btn btn-warning">Let's Talk</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
