@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>3D Circular Carousel - Simple Rotation</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f0f4f8;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .carousel-container {
+      width: 320px; height: 420px;
+      perspective: 1200px;
+    }
+    .carousel {
+      width: 100%; height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 1s ease;
+    }
+    .card {
+      position: absolute;
+      width: 280px; height: 380px;
+      background: linear-gradient(135deg, #ffffff, #eaf3fa);
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      padding: 1rem; text-align: center;
+      transform-origin: center center;
+      transition: transform 1s ease, scale 0.3s;
+    }
+    .card img {
+      width: 100%; height: 160px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+    .card h3 {
+      font-size: 1.25rem;
+      color: #254e90;
+      margin-bottom: 0.5rem;
+    }
+    .card p {
+      font-size: 1rem;
+      color: #546e7a;
+      margin-bottom: 1rem;
+    }
+    .card a {
+      display: inline-block;
+      font-size: 1.3rem;
+      color: #0072ff;
+      background: #e0f2ff;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .card a:hover {
+      background: #0072ff;
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    .card.active {
+      transform: scale(1.07) translateZ(520px) !important;
+      z-index: 2;
+    }
+
+    @media(max-width: 500px) {
+      .carousel-container { width: 90vw; height: 380px; }
+      .card { width: 240px; height: 330px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="carousel-container">
+  <div class="carousel" id="carousel">
+    <div class="card">
+      <img src="ims.png" alt="Internship">
+      <h3>INTERNSHIP</h3>
+      <p>Manage student internships.</p>
+      <a href="#">🔗</a>
+    </div>
+    <div class="card">
+      <img src="farmer.png" alt="GreenHarvest">
+      <h3>GREENHARVEST</h3>
+      <p>Farmer to buyer system.</p>
+      <a href="#">🔗</a>
+    </div>
+    <div class="card">
+      <img src="footwear.png" alt="Footwear">
+      <h3>FOOTWEAR</h3>
+      <p>Shoe e-commerce site.</p>
+      <a href="#">🔗</a>
+    </div>
+    <div class="card">
+      <img src="docker/docker.png" alt="Docker">
+      <h3>DOCKER SHEET</h3>
+      <p>DevOps notes & dashboard.</p>
+      <a href="#">🔗</a>
+    </div>
+    <div class="card">
+      <img src="wather.png" alt="Weather">
+      <h3>WEATHER</h3>
+      <p>Live weather info.</p>
+      <a href="#">🔗</a>
+    </div>
+    <div class="card">
+      <img src="game.png" alt="Game">
+      <h3>GAME</h3>
+      <p>JS-based browser game.</p>
+      <a href="#">🔗</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const carousel = document.getElementById("carousel");
+  const cards = document.querySelectorAll(".card");
+  const cardCount = cards.length;
+  const rotateY = 360 / cardCount;
+  let currentAngle = 0;
+
+  function updateCarousel() {
+    cards.forEach((card, i) => {
+      const angle = i * rotateY + currentAngle;
+      card.style.transform = `rotateY(${angle}deg) translateZ(500px)`;
+      
+      // Set active class based on angle
+      const normalized = ((angle % 360) + 360) % 360;
+      card.classList.toggle("active", normalized === 0);
+    });
+
+    carousel.style.transform = `rotateY(${currentAngle}deg)`;
+  }
+
+  updateCarousel();
+
+  let autoRotate = setInterval(() => {
+    currentAngle -= rotateY;
+    updateCarousel();
+  }, 5000);
+
+  let isDragging = false;
+  let startX = 0;
+
+  const startDrag = (x) => {
+    clearInterval(autoRotate);
+    isDragging = true;
+    startX = x;
+  };
+
+  const drag = (x) => {
+    if (!isDragging) return;
+    const delta = x - startX;
+    currentAngle += delta * 0.3;
+    updateCarousel();
+    startX = x;
+  };
+
+  const stopDrag = () => {
+    if (!isDragging) return;
+    isDragging = false;
+    currentAngle = Math.round(currentAngle / rotateY) * rotateY;
+    updateCarousel();
+    autoRotate = setInterval(() => {
+      currentAngle -= rotateY;
+      updateCarousel();
+    }, 5000);
+  };
+
+  carousel.addEventListener("mousedown", e => startDrag(e.clientX));
+  window.addEventListener("mousemove", e => drag(e.clientX));
+  window.addEventListener("mouseup", stopDrag);
+
+  carousel.addEventListener("touchstart", e => startDrag(e.touches[0].clientX));
+  window.addEventListener("touchmove", e => drag(e.touches[0].clientX));
+  window.addEventListener("touchend", stopDrag);
+</script>
+
+</body>
+</html>
