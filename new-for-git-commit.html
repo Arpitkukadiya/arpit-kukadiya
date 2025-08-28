@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Arpit Kukadiya | Portfolio</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- AOS (Animate on Scroll) -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top left, #eaf3fa, #f0f4f8);
+      backdrop-filter: blur(10px);
+      scroll-behavior: smooth;
+    }
+
+    nav {
+      background-color: rgba(38, 79, 175, 0.85);
+    }
+
+    nav a {
+      color: #fff !important;
+    }
+
+    nav a:hover, .nav-link.active {
+      color: #00bcd4 !important;
+    }
+
+    .home-section {
+      min-height: 100vh;
+      padding: 120px 0 60px;
+      display: flex;
+      align-items: center;
+      background: url('https://www.transparenttextures.com/patterns/clean-gray-paper.png');
+    }
+
+    .home-text h1 {
+      font-size: 36px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    .home-text h5 {
+      font-weight: 500;
+      color: #666;
+    }
+
+    .home-image img {
+      max-width: 400px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .progress {
+      height: 10px;
+      border-radius: 20px;
+      background-color: #e0e0e0;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      border-radius: 20px;
+      width: 0;
+    }
+
+    .animate-bar {
+      animation: fill 2s forwards;
+    }
+
+    @keyframes fill {
+      to {
+        width: var(--target-width);
+      }
+    }
+
+    .orbit-container {
+      position: relative;
+    }
+
+    .orbit-item {
+      animation: orbit 2.5s ease-in-out infinite alternate;
+      display: inline-block;
+    }
+
+    .orbit-top-left { animation-delay: 0s; }
+    .orbit-top-right { animation-delay: 0.2s; }
+    .orbit-bottom-left { animation-delay: 0.4s; }
+    .orbit-bottom-right { animation-delay: 0.6s; }
+
+    @keyframes orbit {
+      0%   { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
+    }
+
+    .bg-purple { background-color: #6f42c1 !important; }
+
+    section {
+      padding: 80px 0;
+    }
+
+    /* Footer */
+    footer {
+      background: #0a0a0a;
+      color: #ccc;
+      padding: 50px 0 20px;
+    }
+
+    footer .footer-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    footer a {
+      color: #ccc;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: #00bcd4;
+    }
+
+    footer .social-icons i {
+      font-size: 18px;
+      margin-right: 15px;
+      color: #00bcd4;
+    }
+
+    .form-control, .form-control:focus {
+      background-color: rgba(255, 255, 255, 0.85);
+      border: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    /* Skill Bar Color Customization */
+    .progress-bar.bg-html { background-color: #f44336; }
+    .progress-bar.bg-css { background-color: #2196F3; }
+    .progress-bar.bg-bootstrap { background-color: #FF9800; }
+    .progress-bar.bg-javascript { background-color: #2da050; }
+    .progress-bar.bg-powerbi { background-color: #9C27B0; }
+    .progress-bar.bg-dba { background-color: #00BCD4; }
+
+    /* Card Flip Styles */
+    .card-flip {
+        perspective: 1000px;
+        margin-bottom: 30px;
+      }
+      
+      .card-flip-inner {
+        position: relative;
+        width: 100%;
+        height: 350px;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+      }
+      
+      .card-flip:hover .card-flip-inner {
+        transform: rotateY(180deg);
+      }
+      
+      .card-front, .card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      }
+      
+      .card-front {
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      
+      .card-front img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-bottom: 1px solid #eee;
+      }
+      
+      .card-front h5 {
+        margin-top: 15px;
+        font-weight: bold;
+        color: #333;
+      }
+      
+      .card-back {
+        background-color: #00bcd4;
+        color: white;
+        transform: rotateY(180deg);
+        padding: 30px 20px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      
+      .card-back p {
+        font-size: 16px;
+        margin-bottom: 20px;
+      }
+      
+      .card-back a {
+        color: #fff;
+        border: 2px solid #fff;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background 0.3s;
+      }
+      
+      .card-back a:hover {
+        background: #fff;
+        color: #00bcd4;
+      }
+      
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">Arpit</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Home -->
+<section id="home" class="home-section">
+  <div class="container d-flex align-items-center justify-content-between flex-column flex-md-row">
+    <div class="home-text mb-4 mb-md-0" data-aos="fade-right">
+      <h1>Hey, I'm <span class="text-primary fw-bold">Arpit Kukadiya</span></h1>
+      <h5 class="text-secondary mb-3" id="dynamicText"></h5>
+      <p>I build clean, creative, and responsive websites for the modern web.</p>
+      <a href="#projects" class="btn btn-primary mt-3">Explore Projects</a>
+    </div>
+    <div class="home-image" data-aos="fade-left">
+      <img src="arpit.jpeg" alt="Profile" class="img-fluid rounded shadow-lg">
+    </div>
+  </div>
+</section>
+
+
+<!-- About -->
+<section id="about" class="bg-white">
+  <div class="container">
+    <h2 class="section-title">About Me</h2>
+    <p class="text-center mb-5 text-muted">I build modern, responsive websites with a focus on user experience.</p>
+
+    <div class="row text-center g-4 mb-5 justify-content-center orbit-container">
+      <div class="col-6 col-md-3 orbit-item orbit-top-left" data-aos="zoom-in">
+        <div class="p-3 shadow-sm rounded bg-light icon-box">
+          <i class="fas fa-briefcase fa-2x text-info mb-2"></i>
+          <h6 class="fw-bold">Experience</h6>
+          <p class="fst-italic text-muted">Fresher</p>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 orbit-item orbit-top-right" data-aos="zoom-in" data-aos-delay="100">
+        <div class="p-3 shadow-sm rounded bg-light icon-box">
+          <i class="fas fa-graduation-cap fa-2x text-success mb-2"></i>
+          <h6 class="fw-bold">Education</h6>
+          <p class="fst-italic text-muted">BCA in Computer Science</p>
+       
+        </div>
+      </div>
+      <div class="col-6 col-md-3 orbit-item orbit-bottom-left" data-aos="zoom-in" data-aos-delay="200">
+        <div class="p-3 shadow-sm rounded bg-light icon-box">
+          <i class="fas fa-map-marker-alt fa-2x text-danger mb-2"></i>
+          <h6 class="fw-bold">Location</h6>
+          <p class="fst-italic text-muted">India</p>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 orbit-item orbit-bottom-right" data-aos="zoom-in" data-aos-delay="300">
+        <div class="p-3 shadow-sm rounded bg-light icon-box">
+          <i class="fas fa-code fa-2x text-warning mb-2"></i>
+          <h6 class="fw-bold">Speciality</h6>
+          <p class="fst-italic text-muted">Front-end Web Development</p>
+        </div>
+      </div>
+    </div>
+
+    <h4 class="text-center mb-4">Technical Skills</h4>
+    <div class="skills-section mx-auto" style="max-width: 700px;">
+      <div class="row g-4">
+        <div class="col-sm-6" data-aos="fade-up">
+          <h6>HTML <span class="float-end">90%</span></h6>
+          <div class="progress"><div class="progress-bar bg-html animate-bar" style="--target-width: 90%;"></div></div>
+        </div>
+        <div class="col-sm-6" data-aos="fade-up" data-aos-delay="100">
+          <h6>CSS <span class="float-end">75%</span></h6>
+          <div class="progress"><div class="progress-bar bg-css animate-bar" style="--target-width: 75%;"></div></div>
+        </div>
+        <div class="col-sm-6" data-aos="fade-up" data-aos-delay="200">
+          <h6>Bootstrap <span class="float-end">70%</span></h6>
+          <div class="progress"><div class="progress-bar bg-bootstrap animate-bar" style="--target-width: 70%;"></div></div>
+        </div>
+        <div class="col-sm-6" data-aos="fade-up" data-aos-delay="300">
+          <h6>JavaScript <span class="float-end">10%</span></h6>
+          <div class="progress"><div class="progress-bar bg-javascript animate-bar" style="--target-width: 10%;"></div></div>
+        </div>
+        <div class="col-sm-6" data-aos="fade-up">
+            <h6>POWER BI <span class="float-end">90%</span></h6>
+            <div class="progress"><div class="progress-bar bg-powerbi animate-bar" style="--target-width: 90%;"></div></div>
+        </div>
+        <div class="col-sm-6" data-aos="fade-up">
+            <h6>DBA <span class="float-end">85%</span></h6>
+            <div class="progress"><div class="progress-bar bg-dba animate-bar" style="--target-width: 85%;"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section id="projects" class="bg-light">
+  <div class="container">
+    <h2 class="section-title">Projects</h2>
+    <div class="row justify-content-center g-4">
+      
+      <!-- Project Card 1 -->
+      <div class="col-12 col-md-4">
+        <div class="card-flip">
+          <div class="card-flip-inner">
+            <div class="card-front">
+              <img src="footwear.png" alt="Project Image">
+              <h5>FOOTWEAR</h5>
+            </div>
+            <div class="card-back">
+              <p>A modern responsive website built using HTML, CSS, and JavaScript.Mobile-friendly and performance-optimized.</p>
+              <a href="footwear/login.html" target="_blank">Live Demo</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+     
+
+      <!-- Project Card 3 -->
+      <div class="col-12 col-md-4">
+        <div class="card-flip">
+          <div class="card-flip-inner">
+            <div class="card-front">
+              <img src="farmer.png" alt="Project Image">
+              <h5>GreenHarvest
+              </h5>
+            </div>
+            <div class="card-back">
+              <p>A platform that connects customers with farmers for direct farm visits, showcasing crops and enabling farm engagement. Request visits to explore fresh produce and interact with local farmers.</p>
+              <a href="farmer/login.html" target="_blank">Live Demo</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+<div class="col-12 col-md-4">
+  <div class="card-flip">
+    <div class="card-flip-inner">
+      <div class="card-front">
+        <img src="ims.png" alt="Project Image">
+        <h5>Internship Management System</h5>
+      </div>
+      <div class="card-back">
+        <p>The Internship Management System (IMS) streamlines the process of managing internship opportunities, applications, and student records. </p>
+        <a href="ims/login.html" target="_blank">Live Demo</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="col-12 col-md-4">
+  <div class="card-flip">
+    <div class="card-flip-inner">
+      <div class="card-front">
+        <img src="bus.png" alt="Project Image">
+        <h5>BUS BOOKING</h5>
+      </div>
+      <div class="card-back">
+        <p>Discover the fastest and most convenient way to book your bus tickets online.
+          Secure your seat anytime, anywhere — safe, affordable, and hassle-free travel awaits!.</p>
+        <a href="bus/login.html" target="_blank">Live Demo</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <!-- Project Card 2 -->
+ <div class="col-12 col-md-4">
+  <div class="card-flip">
+    <div class="card-flip-inner">
+      <div class="card-front">
+        <img src="dashboard.png" alt="Project Image">
+        <h5>Excel Dashboard</h5>
+      </div>
+      <div class="card-back">
+        <p>An Excel Dashboard is a visual interface that displays key metrics and data insights using charts, tables.It helps in quick decision-making by summarizing complex data into an easy-to-read format.</p>
+        <a href="ims/login.html" target="_blank">Download And Explore</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="col-12 col-md-4">
+  <div class="card-flip">
+    <div class="card-flip-inner">
+      <div class="card-front">
+        <img src="dashboard.png" alt="Project Image">
+        <h5>Excel Dashboard</h5>
+      </div>
+      <div class="card-back">
+        <p>An Excel Dashboard is a visual interface that displays key metrics and data insights using charts, tables.It helps in quick decision-making by summarizing complex data into an easy-to-read format.</p>
+        <a href="dashboard.xlsx" target="_blank">Download And Explore</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+    </div>
+  </div>
+</section>
+
+
+<!-- Contact --><section id="contact" class="contact">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Contact</h2>
+        </div>
+
+        <div class="row mt-1">
+
+          <div class="col-lg-4">
+            <div class="info">
+              <div class="address">
+                <i class="bi bi-geo-alt"></i>
+                <h4>Location:</h4>
+                <p>Gandhinagar</p>
+              </div>
+
+              <div class="email">
+                <i class="bi bi-envelope"></i>
+                <h4>Email:</h4>
+                <p>arpitkukadiya10@gmail.com</p>
+              </div>
+
+              <div class="phone">
+                <i class="bi bi-phone"></i>
+                <h4>Call:</h4>
+                <p>+91 7862899655</p>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="col-lg-8 mt-5 mt-lg-0">
+
+            <form action="https://api.web3forms.com/submit" method="POST" >
+              <input type="hidden" name="access_key" value="b1311ffb-e2b9-4870-973f-c052bc44ba6b">
+
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  
+                    
+      
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Your name" required>
+                </div>
+                <div class="col-md-6 form-group mt-3 mt-md-0">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email Address" required>
+                </div>
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Type your subject line" required>
+              </div>
+              <div class="form-group mt-3">
+                <textarea class="form-control" name="message" rows="5" placeholder="message" required></textarea>
+              </div>
+              <div class="text-center"><button type="submit" name="send" id="contact-submit">Send Message</button></div>
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+
+        
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+
+<!-- Footer -->
+<footer id="contact">
+  <div class="container text-center">
+    <div class="footer-title">Get in Touch</div>
+    <div class="social-icons mb-4">
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-linkedin"></i></a>
+      <a href="#"><i class="fab fa-github"></i></a>
+    </div>
+    <div>&copy; 2025 Arpit Kukadiya. All rights reserved.</div>
+  </div>
+</footer>
+
+
+<!-- End Footer --><!-- End Footer --><!-- End Footer --><!-- End Footer --><!-- End Footer -->
+
+<footer id="footer">
+  <div class="container">
+    
+    <div class="social-links">
+      <a href="https://github.com/Arpitkukadiya" class="twitter"><i class="bx bxl-github"></i></a>
+      <a href="https://www.facebook.com/profile.php?id=100069346480417&mibextid=eHce3h" class="facebook"><i class="bx bxl-facebook"></i></a>
+      <a href="https://www.instagram.com/arpit_patel_111_?igsh=bHhpZGl2bzU5enUz/" class="instagram"><i class="bx bxl-instagram"></i></a>
+      <a href="https://www.linkedin.com/in/arpit-kukadiya-943b64266?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app/" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+   
+    </div>
+   
+    <div class="credits">
+      </div>
+  </div>
+</footer><!-- End Footer -->
+
+<!-- Bootstrap JS & AOS JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+
+  const dynamicText = document.getElementById('dynamicText');
+  const textArray = ["Web Developer", "UI/UX Designer", "Tech Enthusiast", "Creative Thinker"];
+  let i = 0; // index of text
+  let j = 0; // index of character
+  let isDeleting = false;
+
+  function typeWriter() {
+    let currentText = textArray[i];
+    if (isDeleting) {
+      dynamicText.innerText = currentText.substring(0, j--);
+    } else {
+      dynamicText.innerText = currentText.substring(0, j++);
+    }
+
+    if (!isDeleting && j === currentText.length) {
+      isDeleting = true;
+      setTimeout(typeWriter, 1500); // pause before deleting
+    } else if (isDeleting && j === 0) {
+      isDeleting = false;
+      i = (i + 1) % textArray.length;
+      setTimeout(typeWriter, 500); // pause before typing next
+    } else {
+      setTimeout(typeWriter, isDeleting ? 50 : 100); // typing speed
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", typeWriter);
+</script>
+
+
+</body>
+</html> 
