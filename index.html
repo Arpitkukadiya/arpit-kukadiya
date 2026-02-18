@@ -1,434 +1,583 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Arpit Kukadiya | Elite Portfolio</title>
-  
-  <!-- Fonts & Icons (Consolidated) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-  <!-- AOS -->
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
-
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #f4f7fc;
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-      color: #1e2b3a;
-    }
-
-    /* ===== CUSTOM GLASSMORPHISM + NEON ACCENTS ===== */
-    .glass-card, .navbar, .project-card, .icon-box, .info, form {
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.3);
-      box-shadow: 0 15px 35px rgba(0,30,60,0.15);
-    }
-
-    /* ===== STICKY NAVBAR (ULTRA MODERN) ===== */
-    .navbar {
-      background: rgba(10, 30, 50, 0.75) !important;
-      backdrop-filter: blur(16px);
-      padding: 16px 30px;
-      box-shadow: 0 10px 30px -10px rgba(2, 40, 80, 0.5);
-      border-bottom: 1px solid rgba(0, 191, 255, 0.3);
-      transition: all 0.4s ease;
-    }
-    .navbar.scrolled {
-      background: rgba(4, 20, 40, 0.9) !important;
-      padding: 12px 30px;
-      border-bottom: 1px solid #00d4ff;
-    }
-    .navbar-brand {
-      font-size: 2rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #fff, #a0e9ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: 1px;
-    }
-    .navbar-nav .nav-link {
-      color: #f0f9ff;
-      font-weight: 500;
-      margin: 0 16px;
-      position: relative;
-      padding: 6px 0;
-      transition: 0.3s;
-    }
-    .navbar-nav .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0%;
-      height: 3px;
-      background: linear-gradient(90deg, #00c6ff, #0072ff);
-      transition: 0.4s;
-      border-radius: 10px;
-    }
-    .navbar-nav .nav-link:hover::after,
-    .navbar-nav .nav-link.active::after {
-      width: 100%;
-    }
-    .navbar-nav .nav-link:hover { color: #a0e9ff; transform: translateY(-2px); }
-    .custom-toggler { border: none; font-size: 1.8rem; color: white; }
-
-    /* ===== HOME SECTION FUTURISTIC ===== */
-    .home-section {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      background: radial-gradient(circle at 10% 30%, #021f3a, #0a2a44, #01101f);
-      color: white;
-      position: relative;
-      overflow: hidden;
-    }
-    .home-section::before {
-      content: '';
-      position: absolute;
-      width: 150%;
-      height: 150%;
-      background: repeating-linear-gradient(45deg, rgba(0,191,255,0.02) 0px, rgba(0,191,255,0.02) 20px, transparent 20px, transparent 40px);
-      animation: moveGrid 30s linear infinite;
-    }
-    @keyframes moveGrid { 0% { transform: translateX(-20%) translateY(-10%); } 100% { transform: translateX(20%) translateY(10%); } }
-    .home-text h1 { font-size: 4rem; font-weight: 800; line-height: 1.2; }
-    .home-text h1 span { background: linear-gradient(145deg, #00d2ff, #3a7bd5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; animation: glowPulse 3s infinite; }
-    @keyframes glowPulse { 0% { text-shadow: 0 0 10px #00a6ff; } 50% { text-shadow: 0 0 30px #0077ff, 0 0 60px #0099ff; } 100% { text-shadow: 0 0 10px #00a6ff; } }
-    #dynamicText { font-size: 1.8rem; font-weight: 300; border-right: 3px solid #00c3ff; padding-right: 10px; display: inline-block; }
-    .home-image img { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; animation: float 8s ease-in-out infinite; border: 4px solid rgba(0,200,255,0.5); box-shadow: 0 30px 40px -20px rgba(0,200,255,0.6); width: 100%; max-width: 400px; }
-    @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-20px); } 100% { transform: translateY(0px); } }
-    .social-icons .icon-link {
-      display: inline-flex; width: 55px; height: 55px; border-radius: 50%; align-items: center; justify-content: center;
-      font-size: 26px; color: white; margin-right: 15px; transition: 0.4s; background: rgba(255,255,255,0.1); backdrop-filter: blur(6px);
-      border: 1px solid rgba(255,255,255,0.3);
-    }
-    .social-icons .icon-link:hover { transform: scale(1.2) rotate(8deg); background: #0077ff; box-shadow: 0 5px 25px #0077ff; }
-
-    /* ===== SECTION TITLES ===== */
-    .section-title {
-      font-size: 3rem;
-      font-weight: 700;
-      background: linear-gradient(145deg, #1e3c72, #2a5298);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      position: relative;
-      margin-bottom: 3rem;
-    }
-    .section-title::after {
-      content: '';
-      display: block;
-      width: 100px;
-      height: 6px;
-      background: linear-gradient(90deg, #0072ff, #00c6ff);
-      margin: 10px auto 0;
-      border-radius: 6px;
-    }
-
-    /* ===== ABOUT CARDS ICON BOX ===== */
-    .icon-box {
-      background: rgba(255,255,255,0.7);
-      backdrop-filter: blur(12px);
-      border-radius: 30px;
-      padding: 2rem 1rem;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      border: 1px solid rgba(255,255,255,0.6);
-    }
-    .icon-box:hover { transform: translateY(-15px) scale(1.02); box-shadow: 0 30px 40px -10px rgba(0,120,255,0.5); }
-    .icon-box i { font-size: 3rem; background: linear-gradient(145deg, #0077be, #00a6c0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-    /* SKILL BARS 3D + ANIMATION */
-    .skills-section .progress {
-      height: 16px;
-      border-radius: 30px;
-      background: rgba(0,0,0,0.1);
-      backdrop-filter: blur(4px);
-      overflow: hidden;
-      box-shadow: inset 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .progress-bar {
-      background-size: 200% 200%;
-      border-radius: 30px;
-      position: relative;
-      animation: shimmer 3s infinite linear;
-    }
-    @keyframes shimmer { 0% { background-position: 0% 0; } 100% { background-position: 200% 0; } }
-    .bg-html { background: linear-gradient(90deg, #f06529, #f28b62, #f06529); }
-    .bg-css { background: linear-gradient(90deg, #2965f1, #5a8ef7, #2965f1); }
-    .bg-bootstrap { background: linear-gradient(90deg, #563d7c, #886ab5, #563d7c); }
-    .bg-javascript { background: linear-gradient(90deg, #f7df1e, #f5e774, #f7df1e); }
-    .bg-powerbi { background: linear-gradient(90deg, #f2c811, #fedb5e, #f2c811); }
-    .bg-dba { background: linear-gradient(90deg, #20c997, #63e7b5, #20c997); }
-
-    /* ===== PROJECT CARDS - ULTRA PREMIUM ===== */
-    .project-card {
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(16px);
-      border-radius: 40px 40px 30px 30px;
-      border: 1px solid rgba(255,255,255,0.7);
-      transition: 0.5s ease;
-      overflow: hidden;
-      transform-style: preserve-3d;
-      perspective: 1000px;
-    }
-    .project-card:hover {
-      transform: translateY(-20px) rotateX(2deg) scale(1.02);
-      box-shadow: 0 50px 60px -20px rgba(0, 119, 255, 0.6);
-      border-color: #00a6ff;
-    }
-    .card-image {
-      height: 220px;
-      object-fit: cover;
-      border-radius: 30px 30px 20px 20px;
-      transition: 0.8s;
-    }
-    .project-card:hover .card-image { transform: scale(1.05); }
-    .hover-overlay {
-      position: absolute; inset: 0;
-      background: radial-gradient(circle, rgba(0,180,255,0.2), rgba(0,60,120,0.8));
-      backdrop-filter: blur(5px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: 0.5s;
-    }
-    .project-card:hover .hover-overlay { opacity: 1; }
-    .hover-overlay a i { font-size: 4rem; color: white; background: #0072ff; padding: 20px; border-radius: 50%; box-shadow: 0 10px 30px #00b7ff; transition: 0.3s; }
-    .hover-overlay a:hover i { transform: scale(1.2) rotate(360deg); background: #00c3ff; }
-
-    /* ===== CONTACT SECTION GLASS + FLOATING ===== */
-    .contact {
-      background: linear-gradient(145deg, #d9e9ff, #f0f5ff);
-    }
-    .info, form {
-      background: rgba(255,255,255,0.5);
-      backdrop-filter: blur(14px);
-      border-radius: 50px;
-      padding: 2rem;
-      border: 1px solid white;
-    }
-    .info i { font-size: 2.2rem; color: #0072ff; filter: drop-shadow(0 5px 10px #0072ff); }
-    .form-control {
-      background: rgba(255,255,255,0.7);
-      border: 2px solid transparent;
-      border-radius: 40px;
-      padding: 14px 20px;
-      font-size: 1.1rem;
-      transition: 0.3s;
-    }
-    .form-control:focus { border-color: #0072ff; box-shadow: 0 0 0 5px rgba(0,114,255,0.3); background: white; }
-    button[type="submit"] {
-      background: linear-gradient(135deg, #0072ff, #00c6ff);
-      border: none;
-      padding: 14px 40px;
-      border-radius: 60px;
-      font-weight: 700;
-      color: white;
-      letter-spacing: 1px;
-      transition: 0.4s;
-      box-shadow: 0 10px 25px #0072ff;
-    }
-    button[type="submit"]:hover { transform: scale(1.05); background: linear-gradient(135deg, #005be5, #0072ff); box-shadow: 0 20px 35px #0051b3; }
-
-    /* ===== FOOTER DARK GLASS ===== */
-    #footer {
-      background: rgba(10, 25, 40, 0.95);
-      backdrop-filter: blur(10px);
-      border-top: 2px solid #0077ff;
-      color: white;
-      padding: 50px 0 20px;
-    }
-    .footer-content h3 { color: #80d4ff; font-weight: 600; }
-    .footer-social .social-icons a {
-      font-size: 28px; color: white; margin: 0 15px 0 0;
-      transition: 0.3s; display: inline-block;
-    }
-    .footer-social .social-icons a:hover { color: #00c6ff; transform: translateY(-8px) scale(1.2); }
-
-    /* ===== RESPONSIVE TWEAKS ===== */
-    @media (max-width: 992px) {
-      .home-text h1 { font-size: 2.8rem; }
-      #dynamicText { font-size: 1.4rem; }
-    }
-    @media (max-width: 768px) {
-      .section-title { font-size: 2.5rem; }
-      .home-section { text-align: center; }
-      .home-image { margin-top: 30px; }
-    }
-    @media (max-width: 480px) {
-      .navbar-brand { font-size: 1.5rem; }
-      .home-text h1 { font-size: 2.2rem; }
-    }
-
-    /* Animated background shapes (extra flair) */
-    .shape {
-      position: absolute; width: 250px; height: 250px; background: rgba(0,150,255,0.1);
-      border-radius: 50%; filter: blur(60px); z-index: 0; animation: breathe 10s infinite alternate;
-    }
-    .shape-1 { top: 10%; left: 5%; background: #4d9fff; }
-    .shape-2 { bottom: 5%; right: 10%; background: #3a7bd5; width: 350px; height: 350px; }
-    @keyframes breathe { 0% { opacity: 0.3; transform: scale(1); } 100% { opacity: 0.7; transform: scale(1.2); } }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Arpit Kukadiya · Cinematic 3D Portfolio</title>
+    <!-- Google Font for clean typography (overlay) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            color: white;
+        }
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+        }
+        /* UI Overlays – glassmorphism panels, hidden by default, triggered by GSAP */
+        .ui-overlay {
+            position: absolute;
+            z-index: 10;
+            pointer-events: none;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: 0;
+            left: 0;
+        }
+        .glass-panel {
+            background: rgba(20, 30, 45, 0.3);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 48px;
+            padding: 32px 48px;
+            box-shadow: 0 30px 50px -20px rgba(0, 180, 255, 0.5), 0 0 0 1px rgba(255,255,255,0.2) inset;
+            color: white;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1), transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+            border: 1px solid rgba(255,255,255,0.4);
+            background: rgba(15, 25, 40, 0.5);
+            max-width: 80vw;
+        }
+        .glass-panel.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .stats-grid {
+            display: flex;
+            gap: 48px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #aaccff, #80f0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+            filter: drop-shadow(0 0 20px #00a6ff);
+        }
+        .stat-label {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.8);
+        }
+        .final-text {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.3;
+            text-align: center;
+            background: linear-gradient(145deg, #ffffff, #b5f0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 40px #0077ff);
+        }
+        .final-instagram {
+            font-size: 2rem;
+            margin-top: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.9);
+            text-shadow: 0 0 30px cyan;
+        }
+        #stats-panel .glass-panel {
+            background: rgba(10, 20, 35, 0.6);
+            border: 1px solid rgba(0, 200, 255, 0.4);
+        }
+        /* small screen adjustments */
+        @media (max-aspect-ratio: 9/16) {
+            .stat-number { font-size: 3rem; }
+            .final-text { font-size: 2.5rem; }
+        }
+        /* loading / disclaimer (optional) */
+        .info {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: rgba(255,255,255,0.3);
+            font-size: 12px;
+            z-index: 20;
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
-  <!-- Animated background shapes -->
-  <div class="shape shape-1"></div><div class="shape shape-2"></div>
+    <div id="canvas-container"></div>
 
-  <!-- Navbar (sticky) -->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="#">✧ Arpit.</a>
-      <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <i class="fas fa-bars"></i>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Home Section -->
-  <section id="home" class="home-section">
-    <div class="container d-flex align-items-center justify-content-between flex-column flex-md-row position-relative" style="z-index: 5;">
-      <div class="home-text mb-5 mb-md-0" data-aos="fade-right" data-aos-duration="1200">
-        <h1>Hey, I'm <span>Arpit Kukadiya</span></h1>
-        <h5 class="mb-4" style="color: #bbd9ff;"><span id="dynamicText"></span></h5>
-        <p class="lead" style="color: #e0f0ff;">I build clean, creative, and responsive websites with futuristic flair.</p>
-        <a href="#projects" class="btn btn-primary btn-lg mt-3" style="border-radius: 60px; padding: 14px 40px; background: linear-gradient(145deg,#0072ff,#00c6ff); border: none;">Explore Projects</a>
-        <div class="social-icons mt-5">
-          <a href="https://www.linkedin.com/in/arpit-kukadiya-943b64266/" target="_blank" class="icon-link"><i class="bi bi-linkedin"></i></a>
-          <a href="https://github.com/Arpitkukadiya" target="_blank" class="icon-link"><i class="bi bi-github"></i></a>
-          <a href="https://www.instagram.com/patidar_111_/" target="_blank" class="icon-link"><i class="bi bi-instagram"></i></a>
+    <!-- UI Overlays: Stats & Final -->
+    <div id="stats-panel" class="ui-overlay" style="align-items: center;">
+        <div class="glass-panel" id="statsGlass">
+            <div class="stats-grid">
+                <div class="stat-item"><span class="stat-number" id="stat-projects">0</span><span class="stat-label">Projects+</span></div>
+                <div class="stat-item"><span class="stat-number" id="stat-role">0</span><span class="stat-label">Full Stack</span></div>
+                <div class="stat-item"><span class="stat-number" id="stat-ui">0</span><span class="stat-label">UI/UX Focus</span></div>
+                <div class="stat-item"><span class="stat-number" id="stat-hack">0</span><span class="stat-label">HackReady</span></div>
+            </div>
         </div>
-      </div>
-      <div class="home-image" data-aos="fade-left" data-aos-duration="1200">
-        <img src="arpit.jpeg" alt="Profile" class="img-fluid" onerror="this.src='https://via.placeholder.com/400x400?text=Arpit'">
-      </div>
     </div>
-  </section>
 
-  <!-- About -->
-  <section id="about" class="about-section py-5">
-    <div class="container">
-      <h2 class="section-title text-center" data-aos="zoom-in">About Me</h2>
-      <p class="text-center mb-5 fs-5">I build modern, responsive websites with a focus on user experience & motion.</p>
-      <div class="row g-4">
-        <div class="col-6 col-md-3" data-aos="flip-left"><div class="icon-box text-center"><i class="fas fa-briefcase"></i><h6 class="fw-bold mt-3">Experience</h6><p class="text-muted">Fresher</p></div></div>
-        <div class="col-6 col-md-3" data-aos="flip-left" data-aos-delay="100"><div class="icon-box text-center"><i class="fas fa-graduation-cap"></i><h6 class="fw-bold mt-3">Education</h6><p class="text-muted">BCA Computer Science</p></div></div>
-        <div class="col-6 col-md-3" data-aos="flip-left" data-aos-delay="200"><div class="icon-box text-center"><i class="fas fa-map-marker-alt"></i><h6 class="fw-bold mt-3">Location</h6><p class="text-muted">India</p></div></div>
-        <div class="col-6 col-md-3" data-aos="flip-left" data-aos-delay="300"><div class="icon-box text-center"><i class="fas fa-code"></i><h6 class="fw-bold mt-3">Speciality</h6><p class="text-muted">Front-end</p></div></div>
-      </div>
-
-      <div class="skills-section mt-5">
-        <h4 class="text-center fw-bolder mb-4">Technical Proficiency</h4>
-        <div class="row g-4">
-          <div class="col-md-6"><h6>HTML <span class="float-end">90%</span></h6><div class="progress"><div class="progress-bar bg-html" style="width:90%;"></div></div></div>
-          <div class="col-md-6"><h6>CSS <span class="float-end">75%</span></h6><div class="progress"><div class="progress-bar bg-css" style="width:75%;"></div></div></div>
-          <div class="col-md-6"><h6>Bootstrap <span class="float-end">70%</span></h6><div class="progress"><div class="progress-bar bg-bootstrap" style="width:70%;"></div></div></div>
-          <div class="col-md-6"><h6>JavaScript <span class="float-end">10%</span></h6><div class="progress"><div class="progress-bar bg-javascript" style="width:10%;"></div></div></div>
-          <div class="col-md-6"><h6>POWER BI <span class="float-end">90%</span></h6><div class="progress"><div class="progress-bar bg-powerbi" style="width:90%;"></div></div></div>
-          <div class="col-md-6"><h6>DBA <span class="float-end">85%</span></h6><div class="progress"><div class="progress-bar bg-dba" style="width:85%;"></div></div></div>
+    <div id="final-panel" class="ui-overlay" style="align-items: center;">
+        <div class="glass-panel" id="finalGlass" style="background: rgba(5, 15, 30, 0.7); text-align: center;">
+            <div class="final-text">Let’s Build<br>Something Extraordinary</div>
+            <div class="final-instagram">@patidar_111_</div>
         </div>
-      </div>
     </div>
-  </section>
 
-  <!-- Projects Section -->
-  <section id="projects" class="py-5 bg-light">
-    <div class="container">
-      <h2 class="section-title text-center" data-aos="fade-up">Projects</h2>
-      <div class="row g-4">
-        <!-- Project cards (kept your links & images) -->
-        <div class="col-md-6 col-lg-4"><div class="project-card h-100 position-relative overflow-hidden"><div class="card-body text-center"><img src="ims.png" alt="IMS" class="card-image img-fluid" onerror="this.src='https://via.placeholder.com/400x200?text=IMS'"><h3 class="card-title mt-3">Internship Management</h3><p class="card-text">Manage student internships with secure login.</p></div><div class="hover-overlay"><a href="ims/login.html" target="_blank"><i class='bx bx-link'></i></a></div></div></div>
-        <div class="col-md-6 col-lg-4"><div class="project-card h-100 position-relative overflow-hidden"><div class="card-body text-center"><img src="farmer.png" alt="GreenHarvest" class="card-image img-fluid" onerror="this.src='https://via.placeholder.com/400x200?text=GreenHarvest'"><h3 class="card-title mt-3">GreenHarvest</h3><p class="card-text">Platform connecting farmers & buyers.</p></div><div class="hover-overlay"><a href="farmer/login.html" target="_blank"><i class='bx bx-link'></i></a></div></div></div>
-        <div class="col-md-6 col-lg-4"><div class="project-card h-100 position-relative overflow-hidden"><div class="card-body text-center"><img src="footwear.png" alt="Footwear" class="card-image img-fluid" onerror="this.src='https://via.placeholder.com/400x200?text=Footwear'"><h3 class="card-title mt-3">Footwear</h3><p class="card-text">E‑commerce for trendy footwear.</p></div><div class="hover-overlay"><a href="footwear/login.html" target="_blank"><i class='bx bx-link'></i></a></div></div></div>
-        <div class="col-md-6 col-lg-4"><div class="project-card h-100 position-relative overflow-hidden"><div class="card-body text-center"><img src="docker/docker.png" alt="Docker" class="card-image img-fluid" onerror="this.src='https://via.placeholder.com/400x200?text=Docker'"><h3 class="card-title mt-3">Docker Cheat Sheet</h3><p class="card-text">DevOps & Docker Dashboard</p></div><div class="hover-overlay"><a href="docker/index.html" target="_blank"><i class='bx bx-link'></i></a></div></div></div>
-        <div class="col-md-6 col-lg-4"><div class="project-card h-100 position-relative overflow-hidden"><div class="card-body text-center"><img src="wather.png" alt="Weather" class="card-image img-fluid" onerror="this.src='https://via.placeholder.com/400x200?text=Weather'"><h3 class="card-title mt-3">Weather Forecast</h3><p class="card-text">Live weather using OpenWeatherMap</p></div><div class="hover-overlay"><a href="wather.html" target="_blank"><i class='bx bx-link'></i></a></div></div></div>
-        <div class="col-md-6 col-lg-4"><div class="project-card h-100 position-relative overflow-hidden"><div class="card-body text-center"><img src="game.png" alt="Game" class="card-image img-fluid" onerror="this.src='https://via.placeholder.com/400x200?text=Game'"><h3 class="card-title mt-3">Game</h3><p class="card-text">Fun browser game using HTML/CSS/JS.</p></div><div class="hover-overlay"><a href="game.html" target="_blank"><i class='bx bx-link'></i></a></div></div></div>
-      </div>
-    </div>
-  </section>
+    <div class="info">✨ Arpit Kukadiya · Cinematic 3D</div>
 
-  <!-- Contact Section -->
-  <section id="contact" class="contact py-5">
-    <div class="container" data-aos="fade-up">
-      <div class="section-title text-center"><h2>Contact</h2></div>
-      <div class="row mt-1">
-        <div class="col-lg-4">
-          <div class="info">
-            <div class="address mb-4"><i class="bi bi-geo-alt"></i> <h4>Location:</h4><p>Gandhinagar, India</p></div>
-            <div class="email mb-4"><i class="bi bi-envelope"></i> <h4>Email:</h4><p>arpitkukadiya10@gmail.com</p></div>
-            <div class="phone mb-4"><i class="bi bi-phone"></i> <h4>Call:</h4><p>+91 7862899655</p></div>
-          </div>
-        </div>
-        <div class="col-lg-8 mt-5 mt-lg-0">
-          <form action="https://api.web3forms.com/submit" method="POST">
-            <input type="hidden" name="access_key" value="b1311ffb-e2b9-4870-973f-c052bc44ba6b">
-            <div class="row"><div class="col-md-6"><input type="text" name="name" class="form-control" placeholder="Your name" required></div><div class="col-md-6 mt-3 mt-md-0"><input type="email" class="form-control" name="email" placeholder="Your Email Address" required></div></div>
-            <div class="mt-3"><input type="text" class="form-control" name="subject" placeholder="Subject line" required></div>
-            <div class="mt-3"><textarea class="form-control" name="message" rows="5" placeholder="Your message" required></textarea></div>
-            <div class="text-center mt-4"><button type="submit">Send Message <i class="fas fa-paper-plane ms-2"></i></button></div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
+    <!-- Scripts: Three.js core, addons, GSAP -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/",
+                "gsap": "https://unpkg.com/gsap@3.12.5/index.js"
+            }
+        }
+    </script>
 
-  <!-- Footer -->
-  <footer id="footer">
-    <div class="footer-container container">
-      <div class="footer-content row text-center text-md-start">
-        <div class="col-md-4 footer-about mb-4"><h3>About Me</h3><p>I'm Arpit Kukadiya, a passionate web developer creating modern, responsive websites and applications.</p></div>
-        <div class="col-md-2 footer-nav mb-4"><h3>Quick Links</h3><ul class="list-unstyled"><li><a href="#home" class="text-white-50 text-decoration-none">Home</a></li><li><a href="#about" class="text-white-50 text-decoration-none">About</a></li><li><a href="#projects" class="text-white-50 text-decoration-none">Projects</a></li><li><a href="#contact" class="text-white-50 text-decoration-none">Contact</a></li></ul></div>
-        <div class="col-md-3 footer-contact mb-4"><h3>Contact</h3><p><i class="fas fa-envelope me-2"></i>arpitkukadiya10@gmail.com</p><p><i class="fas fa-map-marker-alt me-2"></i>Gandhinagar, India</p></div>
-        <div class="col-md-3 footer-social mb-4"><h3>Follow Me</h3><div class="social-icons"><a href="https://github.com/Arpitkukadiya" target="_blank" class="fab fa-github me-3"></a><a href="https://www.linkedin.com/in/arpit-kukadiya-943b64266/" target="_blank" class="fab fa-linkedin me-3"></a><a href="https://www.instagram.com/patidar_111_/" target="_blank" class="fab fa-instagram me-3"></a><a href="https://www.facebook.com/arpit.kukadiya.1" target="_blank" class="fab fa-facebook"></a></div></div>
-      </div>
-      <div class="footer-bottom text-center mt-5"><p>© 2025 Arpit Kukadiya. All Rights Reserved.</p></div>
-    </div>
-  </footer>
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+        import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+        import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
+        import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+        import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+        import gsap from 'gsap';
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    AOS.init({ duration: 1000, once: true, mirror: true });
-    // Navbar background change on scroll
-    window.addEventListener('scroll', ()=> {
-      const nav = document.querySelector('.navbar');
-      if(window.scrollY > 50) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
-    });
+        // --- setup scene, camera, renderer (9:16 vertical) ---
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x050b18); // deep space
+        scene.fog = new THREE.FogExp2(0x050b18, 0.03);
 
-    // Typewriter effect (enhanced)
-    const dynamicText = document.getElementById('dynamicText');
-    const textArray = ["Web Developer", "UI/UX Designer", "Tech Enthusiast", "Creative Thinker"];
-    let i = 0, j = 0, isDeleting = false;
-    function typeWriter() {
-      let current = textArray[i];
-      if (isDeleting) { dynamicText.innerText = current.substring(0, j--); } 
-      else { dynamicText.innerText = current.substring(0, j++); }
-      if (!isDeleting && j === current.length) { isDeleting = true; setTimeout(typeWriter, 1500); } 
-      else if (isDeleting && j === 0) { isDeleting = false; i = (i + 1) % textArray.length; setTimeout(typeWriter, 500); } 
-      else { setTimeout(typeWriter, isDeleting ? 40 : 100); }
-    }
-    document.addEventListener("DOMContentLoaded", typeWriter);
-  </script>
-  <!-- make all placeholder images visible if missing -->
-  <script>
-    document.querySelectorAll('img').forEach(img => { if(!img.complete || img.naturalHeight===0) img.src = 'https://via.placeholder.com/400x300?text=Project+Image'; });
-  </script>
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 2, 12); // initial
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.toneMapping = THREE.ReinhardToneMapping;
+        renderer.toneMappingExposure = 1.2;
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+        // --- controls (disabled autoRotate, we use GSAM) but allow orbit for debug? Keep but disable interact later maybe.
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableZoom = false;
+        controls.enablePan = false;
+        controls.enableRotate = false;
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+
+        // --- post processing (bloom) ---
+        const renderScene = new RenderPass(scene, camera);
+        const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+        bloomPass.threshold = 0.1;
+        bloomPass.strength = 1.2;
+        bloomPass.radius = 0.5;
+
+        const composer = new EffectComposer(renderer);
+        composer.addPass(renderScene);
+        composer.addPass(bloomPass);
+
+        // FXAA for cleaner edges
+        const effectFXAA = new ShaderPass(FXAAShader);
+        effectFXAA.uniforms['resolution'].value.set(1 / window.innerWidth, 1 / window.innerHeight);
+        composer.addPass(effectFXAA);
+
+        // --- lighting (cinematic) ---
+        const ambient = new THREE.AmbientLight(0x404060);
+        scene.add(ambient);
+
+        const keyLight = new THREE.DirectionalLight(0xaaccff, 1.2);
+        keyLight.position.set(2, 5, 5);
+        keyLight.castShadow = false;
+        scene.add(keyLight);
+
+        const fillLight = new THREE.DirectionalLight(0x5577aa, 0.6);
+        fillLight.position.set(-3, 1, 3);
+        scene.add(fillLight);
+
+        const backLight = new THREE.PointLight(0x3366aa, 0.8);
+        backLight.position.set(0, 2, -5);
+        scene.add(backLight);
+
+        // colored point lights for glow
+        const pointLight1 = new THREE.PointLight(0x3366ff, 1, 20);
+        pointLight1.position.set(2, 1, 2);
+        scene.add(pointLight1);
+        
+        const pointLight2 = new THREE.PointLight(0xff44aa, 0.8, 20);
+        pointLight2.position.set(-2, 0.5, 3);
+        scene.add(pointLight2);
+
+        // moving light beams (we'll animate later)
+        const movingLight = new THREE.PointLight(0x00ccff, 1.5, 30);
+        movingLight.position.set(0, 3, 0);
+        scene.add(movingLight);
+
+        // --- particle background (stars) ---
+        const particleGeo = new THREE.BufferGeometry();
+        const particleCount = 2000;
+        const posArray = new Float32Array(particleCount * 3);
+        const colorArray = new Float32Array(particleCount * 3);
+        for (let i = 0; i < particleCount; i++) {
+            const r = 20 + Math.random() * 30; // spherical distribution
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos((Math.random() * 2) - 1);
+            const x = r * Math.sin(phi) * Math.cos(theta);
+            const y = r * Math.sin(phi) * Math.sin(theta);
+            const z = r * Math.cos(phi);
+            posArray[i*3] = x; posArray[i*3+1] = y; posArray[i*3+2] = z;
+            
+            const col = new THREE.Color().setHSL(0.65 + Math.random()*0.2, 0.8, 0.5 + Math.random()*0.3);
+            colorArray[i*3] = col.r; colorArray[i*3+1] = col.g; colorArray[i*3+2] = col.b;
+        }
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        particleGeo.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
+        const particleMat = new THREE.PointsMaterial({ size: 0.1, vertexColors: true, transparent: true, opacity: 0.7, blending: THREE.AdditiveBlending });
+        const particles = new THREE.Points(particleGeo, particleMat);
+        scene.add(particles);
+
+        // --- central platform (futuristic disk) ---
+        const platformGroup = new THREE.Group();
+        const diskGeo = new THREE.CylinderGeometry(2.5, 2.5, 0.2, 64);
+        const diskMat = new THREE.MeshStandardMaterial({ color: 0x1a2b4a, emissive: 0x112233, roughness: 0.2, metalness: 0.7, transparent: true, opacity: 0.9 });
+        const disk = new THREE.Mesh(diskGeo, diskMat);
+        disk.position.y = -0.1;
+        disk.receiveShadow = false;
+        platformGroup.add(disk);
+        
+        const ringGeo = new THREE.TorusGeometry(2.5, 0.05, 16, 100);
+        const ringMat = new THREE.MeshStandardMaterial({ color: 0x44aaff, emissive: 0x2266aa });
+        const ring = new THREE.Mesh(ringGeo, ringMat);
+        ring.rotation.x = Math.PI / 2;
+        ring.position.y = 0.05;
+        platformGroup.add(ring);
+        
+        const innerRing = new THREE.TorusGeometry(1.8, 0.03, 16, 100);
+        const innerRingMat = new THREE.MeshStandardMaterial({ color: 0xff88cc, emissive: 0x440022 });
+        const iRing = new THREE.Mesh(innerRing, innerRingMat);
+        iRing.rotation.x = Math.PI / 2;
+        iRing.position.y = 0.1;
+        platformGroup.add(iRing);
+        
+        scene.add(platformGroup);
+        platformGroup.position.y = -0.2;
+
+        // --- 3D Text (Intro) ---
+        const loader = new FontLoader();
+        let introTextGroup = new THREE.Group();
+        loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', (font) => {
+            const geometry1 = new TextGeometry('Arpit Kukadiya', {
+                font: font,
+                size: 0.4,
+                height: 0.1,
+                curveSegments: 5,
+                bevelEnabled: true,
+                bevelThickness: 0.02,
+                bevelSize: 0.02,
+                bevelOffset: 0,
+                bevelSegments: 3
+            });
+            const geometry2 = new TextGeometry('Full Stack Developer', {
+                font: font,
+                size: 0.25,
+                height: 0.08,
+                curveSegments: 5,
+                bevelEnabled: true,
+                bevelThickness: 0.02,
+                bevelSize: 0.01
+            });
+            
+            const material = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: new THREE.Color(0x2266ff), roughness: 0.2, metalness: 0.1 });
+            const text1 = new THREE.Mesh(geometry1, material);
+            const text2 = new THREE.Mesh(geometry2, material);
+            
+            text1.position.set(-2.0, 0.8, -1);
+            text2.position.set(-1.4, 0.3, -1);
+            
+            // center them roughly
+            text1.geometry.computeBoundingBox();
+            const box1 = text1.geometry.boundingBox;
+            if (box1) text1.position.x = - (box1.max.x - box1.min.x) / 2;
+            
+            text2.geometry.computeBoundingBox();
+            const box2 = text2.geometry.boundingBox;
+            if (box2) text2.position.x = - (box2.max.x - box2.min.x) / 2;
+            
+            introTextGroup.add(text1);
+            introTextGroup.add(text2);
+            introTextGroup.position.set(0, 1.5, 0);
+            scene.add(introTextGroup);
+            
+            // initial opacity control via material? later fade in via GSAP timeline
+            [text1, text2].forEach(t => t.material.emissiveIntensity = 0);
+        });
+
+        // --- Laptop Model (simple geometry) ---
+        const laptopGroup = new THREE.Group();
+        // base
+        const baseGeo = new THREE.BoxGeometry(2.0, 0.1, 1.5);
+        const baseMat = new THREE.MeshStandardMaterial({ color: 0x222233, emissive: 0x111122, roughness: 0.4, metalness: 0.8 });
+        const base = new THREE.Mesh(baseGeo, baseMat);
+        base.position.y = 0;
+        laptopGroup.add(base);
+        // keyboard (smaller details)
+        const keyGeo = new THREE.BoxGeometry(1.8, 0.05, 1.3);
+        const keyMat = new THREE.MeshStandardMaterial({ color: 0x334455, emissive: 0x112233 });
+        const keys = new THREE.Mesh(keyGeo, keyMat);
+        keys.position.y = 0.1;
+        laptopGroup.add(keys);
+        
+        // screen (with hinge)
+        const screenGroup = new THREE.Group();
+        const screenBaseGeo = new THREE.BoxGeometry(2.0, 0.1, 1.5);
+        const screenBaseMat = new THREE.MeshStandardMaterial({ color: 0x222233, emissive: 0x111122 });
+        const screenBase = new THREE.Mesh(screenBaseGeo, screenBaseMat);
+        screenBase.position.set(0, 1.0, -0.7); // relative to screen group
+        screenGroup.add(screenBase);
+        
+        // display panel
+        const displayGeo = new THREE.BoxGeometry(1.8, 1.1, 0.05);
+        const displayMat = new THREE.MeshStandardMaterial({ color: 0x000000, emissive: 0x113355 });
+        const display = new THREE.Mesh(displayGeo, displayMat);
+        display.position.set(0, 1.55, -0.75);
+        screenGroup.add(display);
+        
+        // animated texture for screen: create canvas and update
+        const canvas = document.createElement('canvas');
+        canvas.width = 512;
+        canvas.height = 512;
+        const ctx = canvas.getContext('2d');
+        const texture = new THREE.CanvasTexture(canvas);
+        
+        function animateScreen() {
+            ctx.fillStyle = '#0a1a2a';
+            ctx.fillRect(0,0,512,512);
+            ctx.font = 'bold 30px "Courier New"';
+            ctx.fillStyle = '#00ffff';
+            ctx.fillText('> IRIM', 50, 150);
+            ctx.fillStyle = '#88aaff';
+            ctx.font = '24px "Courier New"';
+            ctx.fillText('> Peanut Farm', 50, 250);
+            ctx.fillText('> Campus Recruit', 50, 350);
+            ctx.fillStyle = '#ffaa88';
+            ctx.fillText('> FoodZone', 50, 450);
+            // animated scan line
+            ctx.strokeStyle = '#00ffff';
+            ctx.lineWidth = 2;
+            const time = Date.now() / 200;
+            ctx.beginPath();
+            ctx.moveTo(30, 80 + Math.sin(time)*30);
+            ctx.lineTo(480, 80 + Math.cos(time)*20);
+            ctx.stroke();
+            texture.needsUpdate = true;
+        }
+        setInterval(animateScreen, 100);
+        
+        const screenMat = new THREE.MeshStandardMaterial({ map: texture, emissive: 0x224466 });
+        const screenPanel = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.9, 0.02), screenMat);
+        screenPanel.position.set(0, 1.55, -0.73);
+        screenGroup.add(screenPanel);
+        
+        screenGroup.position.set(0, 0.2, 0.3); // initial closed position (rotated later)
+        screenGroup.rotation.x = 0; // closed
+        
+        laptopGroup.add(screenGroup);
+        laptopGroup.position.set(0, 0.4, 1);
+        laptopGroup.visible = false;
+        scene.add(laptopGroup);
+
+        // --- Project Cards (Glass) ---
+        const cardGroup = new THREE.Group();
+        const projects = [
+            { name: 'IRIM', color: 0x3a6ea5 },
+            { name: 'Peanut Farming', color: 0x6a4e9a },
+            { name: 'Campus Recruitment', color: 0x2a9d8f },
+            { name: 'FoodZone', color: 0xe76f51 }
+        ];
+        const cards = [];
+        projects.forEach((proj, i) => {
+            const cardMat = new THREE.MeshStandardMaterial({
+                color: proj.color,
+                emissive: proj.color,
+                transparent: true,
+                opacity: 0.2,
+                side: THREE.DoubleSide
+            });
+            const plane = new THREE.Mesh(new THREE.PlaneGeometry(0.8, 0.5), cardMat);
+            
+            // border via edges
+            const edges = new THREE.EdgesGeometry(new THREE.PlaneGeometry(0.8, 0.5));
+            const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x88ccff, emissive: 0x2266aa }));
+            plane.add(line);
+            
+            // text on card (canvas texture)
+            const canvas2 = document.createElement('canvas');
+            canvas2.width = 256;
+            canvas2.height = 128;
+            const ctx2 = canvas2.getContext('2d');
+            ctx2.fillStyle = '#00000000';
+            ctx2.clearRect(0,0,256,128);
+            ctx2.font = 'bold 28px "Inter"';
+            ctx2.fillStyle = '#ffffff';
+            ctx2.fillText(proj.name, 20, 70);
+            const tex = new THREE.CanvasTexture(canvas2);
+            const textPlane = new THREE.Mesh(new THREE.PlaneGeometry(0.6, 0.2), new THREE.MeshStandardMaterial({ map: tex, emissive: 0x335588, transparent: true }));
+            textPlane.position.z = 0.02;
+            plane.add(textPlane);
+            
+            plane.position.set((i-1.5)*1.2, 0.8 + Math.sin(i)*0.1, 0.5);
+            cardGroup.add(plane);
+            cards.push(plane);
+        });
+        cardGroup.position.set(0, 0.8, 0.8);
+        cardGroup.visible = false;
+        scene.add(cardGroup);
+
+        // --- Skills Orbit (3D sprites) ---
+        const skillsGroup = new THREE.Group();
+        const skillNames = ['HTML', 'CSS', 'Bootstrap', 'JavaScript', 'PHP', 'MySQL'];
+        const skillSprites = [];
+        skillNames.forEach((name, i) => {
+            const canvas = document.createElement('canvas');
+            canvas.width = 128;
+            canvas.height = 128;
+            const ctx = canvas.getContext('2d');
+            ctx.shadowColor = '#00aaff';
+            ctx.shadowBlur = 20;
+            ctx.font = 'bold 36px "Inter"';
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText(name, 10, 80);
+            
+            const texture = new THREE.CanvasTexture(canvas);
+            const material = new THREE.SpriteMaterial({ map: texture, blending: THREE.AdditiveBlending, depthTest: true, depthWrite: false });
+            const sprite = new THREE.Sprite(material);
+            const angle = (i / skillNames.length) * Math.PI * 2;
+            const radius = 2.2;
+            sprite.position.set(Math.cos(angle)*radius, Math.sin(angle)*radius*0.8 + 0.5, 0);
+            sprite.scale.set(1.2, 0.6, 1);
+            skillsGroup.add(sprite);
+            skillSprites.push(sprite);
+        });
+        skillsGroup.position.set(0, 1.8, 1);
+        skillsGroup.visible = false;
+        scene.add(skillsGroup);
+
+        // --- moving light beam (a simple line) ---
+        const beamGroup = new THREE.Group();
+        const beamMat = new THREE.LineBasicMaterial({ color: 0x4488ff });
+        const points = [];
+        points.push(new THREE.Vector3(-3, 1, 2));
+        points.push(new THREE.Vector3(3, 3, -1));
+        const beamGeo = new THREE.BufferGeometry().setFromPoints(points);
+        const beamLine = new THREE.Line(beamGeo, beamMat);
+        beamGroup.add(beamLine);
+        scene.add(beamGroup);
+
+        // --- GSAP Timeline ---
+        const tl = gsap.timeline({ paused: false, repeat: 0, delay: 0.5 });
+
+        // initial setup: hide overlays, set camera far
+        camera.position.set(0, 1, 18);
+        camera.lookAt(0, 1, 0);
+        
+        // scene1 intro: camera zoom in, text glow
+        tl.to(camera.position, { duration: 4, z: 8, y: 1.2, ease: "power2.inOut" }, 0)
+          .to(camera.position, { duration: 2, x: 1, y: 1.5, z: 6, ease: "sine.inOut" }, 3)
+          .call(() => {
+              if (introTextGroup.children.length) {
+                  introTextGroup.children.forEach(c => c.material.emissiveIntensity = 0.8);
+              }
+          }, null, 1.5)
+          .to(particles.rotation, { duration: 10, y: Math.PI*2, repeat: -1, ease: "none" }, 0)
+          // scene2: laptop appears and opens
+          .set(laptopGroup, { visible: true }, 5)
+          .from(laptopGroup.position, { y: -1, duration: 2, ease: "back.out" }, 5)
+          .to(screenGroup.rotation, { duration: 1.5, x: -0.7, ease: "power2.inOut" }, 6.5)
+          // cards appear
+          .set(cardGroup, { visible: true }, 7.5)
+          .from(cardGroup.children, { opacity: 0, scale: 0.5, stagger: 0.2, duration: 1.5, ease: "back.out" }, 8)
+          // floating loop for cards
+          .to(cards.map(c => c.position), { y: "+=0.1", duration: 1.5, yoyo: true, repeat: -1, ease: "sine.inOut" }, 9)
+          // scene3: fade laptop/cards, skills orbit appear
+          .to([laptopGroup.position, cardGroup.position], { opacity: 0, duration: 1, ease: "power2.in" }, 11)
+          .set(laptopGroup, { visible: false }, 12)
+          .set(cardGroup, { visible: false }, 12)
+          .set(skillsGroup, { visible: true }, 12)
+          .from(skillsGroup.children, { scale: 0, stagger: 0.1, duration: 1.5, ease: "elastic.out" }, 12.5)
+          .to(skillsGroup.rotation, { duration: 8, y: Math.PI*2, repeat: -1, ease: "none" }, 13)
+          // scene4: stats panel (HTML) count up
+          .call(() => {
+              document.getElementById('statsGlass').classList.add('visible');
+              // GSAP counters
+              gsap.to('#stat-projects', { duration: 2, innerText: 5, snap: { innerText: 1 }, delay: 0.5 });
+              gsap.to('#stat-role', { duration: 2, innerText: 1, snap: { innerText: 1 }, delay: 0.6 });
+              gsap.to('#stat-ui', { duration: 2, innerText: 1, snap: { innerText: 1 }, delay: 0.7 });
+              gsap.to('#stat-hack', { duration: 2, innerText: 1, snap: { innerText: 1 }, delay: 0.8 });
+          }, null, 15)
+          .to(camera.position, { duration: 3, x: -1.5, y: 2.2, z: 5, ease: "sine.inOut" }, 16)
+          // scene5: final message and rotate around
+          .call(() => {
+              document.getElementById('finalGlass').classList.add('visible');
+          }, null, 19)
+          .to(camera.position, { duration: 6, x: 2, y: 2.5, z: 6, ease: "sine.inOut" }, 20)
+          .to(camera.position, { duration: 6, x: 0, y: 2, z: 7, ease: "sine.inOut" }, 26);
+
+        // animate moving light
+        gsap.to(movingLight.position, { duration: 8, x: 3, y: 2, z: 3, repeat: -1, yoyo: true, ease: "sine.inOut" });
+
+        // --- animation loop ---
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // subtle particle rotation
+            particles.rotation.y += 0.0002;
+            particles.rotation.x += 0.0001;
+
+            // update controls (if enabled)
+            controls.update();
+
+            // render via composer
+            composer.render();
+        }
+        animate();
+
+        // --- resize handler ---
+        window.addEventListener('resize', onWindowResize, false);
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            composer.setSize(window.innerWidth, window.innerHeight);
+            effectFXAA.uniforms['resolution'].value.set(1 / window.innerWidth, 1 / window.innerHeight);
+        }
+
+        // start with a small fade-in for canvas? done via GSAP.
+        console.log('Cinematic 3D portfolio ready');
+    </script>
 </body>
 </html>
