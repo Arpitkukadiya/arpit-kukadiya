@@ -1,715 +1,625 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Arpit Kukadiya · Cinematic 3D Portfolio</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            color: white;
-        }
-        #canvas-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 1;
-        }
-        /* UI Overlays */
-        .ui-overlay {
-            position: absolute;
-            z-index: 10;
-            pointer-events: none;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            top: 0;
-            left: 0;
-        }
-        .glass-panel {
-            background: rgba(20, 30, 45, 0.4);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            border-radius: 48px;
-            padding: 32px 48px;
-            box-shadow: 0 30px 50px -20px rgba(0, 180, 255, 0.5);
-            color: white;
-            text-align: center;
-            opacity: 0;
-            transform: scale(0.9);
-            transition: opacity 1.2s ease, transform 1.2s ease;
-            max-width: 80vw;
-            z-index: 20;
-        }
-        .glass-panel.visible {
-            opacity: 1;
-            transform: scale(1);
-        }
-        .stats-grid {
-            display: flex;
-            gap: 48px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .stat-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .stat-number {
-            font-size: 4rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #aaccff, #80f0ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1;
-        }
-        .stat-label {
-            font-size: 1.2rem;
-            font-weight: 300;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.8);
-        }
-        .final-text {
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.3;
-            background: linear-gradient(145deg, #ffffff, #b5f0ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .final-instagram {
-            font-size: 2rem;
-            margin-top: 20px;
-            font-weight: 300;
-            letter-spacing: 2px;
-            color: rgba(255,255,255,0.9);
-            text-shadow: 0 0 30px cyan;
-        }
-        #loading {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 20px;
-            z-index: 100;
-            background: rgba(0,0,0,0.8);
-            padding: 20px 40px;
-            border-radius: 50px;
-            border: 1px solid #00aaff;
-            box-shadow: 0 0 30px #00aaff;
-            transition: opacity 1s;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Arpit Kukadiya · cinematic portfolio</title>
+
+  <!-- Font Awesome (latest) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts: modern luxury pairing (Inter + Playfair Display) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <!-- Boxicons -->
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <!-- AOS (we keep but GSAP dominates) -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* ----- RESET & GLOBAL CINEMATIC DARK ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0f0f0f;
+      font-family: 'Inter', sans-serif;
+      color: rgba(255,255,255,0.92);
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: none; /* custom glow cursor */
+    }
+
+    /* custom cursor glow */
+    .cursor-glow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(90,150,255,0.6) 0%, rgba(150,100,255,0) 80%);
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: screen;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease;
+      filter: blur(3px);
+    }
+
+    /* soft noise overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJmIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBudW1PY3RhdmVzPSIzIiAvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNmKSIgb3BhY2l0eT0iMC4wMjUiIC8+PC9zdmc+');
+      opacity: 0.2;
+      pointer-events: none;
+      z-index: 9997;
+    }
+
+    /* animated gradient background */
+    .gradient-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 30% 40%, rgba(40,80,200,0.25) 0%, transparent 45%),
+                  radial-gradient(circle at 80% 70%, rgba(150,50,220,0.2) 0%, transparent 50%),
+                  radial-gradient(circle at 10% 80%, rgba(0,180,255,0.15) 0%, transparent 55%);
+      filter: blur(70px);
+      z-index: -2;
+      animation: slowPan 28s infinite alternate ease-in-out;
+    }
+
+    @keyframes slowPan {
+      0% { transform: scale(1) translate(0%, 0%); }
+      100% { transform: scale(1.25) translate(-2%, -4%); }
+    }
+
+    /* glassmorphism core */
+    .glass, nav, .project-card, .skill-item, .contact-form, .info, form {
+      background: rgba(20, 22, 30, 0.3) !important;
+      backdrop-filter: blur(16px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      border: 1px solid rgba(120, 160, 255, 0.2) !important;
+      border-radius: 32px !important;
+      box-shadow: 0 25px 40px -20px rgba(0,0,0,0.8), 0 0 0 1px rgba(200, 220, 255, 0.1) inset !important;
+    }
+
+    /* typography */
+    h1, h2, h3, .section-title {
+      font-family: 'Playfair Display', serif !important;
+      font-weight: 900 !important;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #fff, #b0b8ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2.section-title, .section-title h2 {
+      font-size: clamp(3rem, 8vw, 5rem);
+      margin-bottom: 2rem;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* navbar - transparent glass */
+    .navbar {
+      background: rgba(10, 10, 20, 0.3) !important;
+      backdrop-filter: blur(20px) !important;
+      border: 1px solid rgba(140, 180, 255, 0.25) !important;
+      border-radius: 60px !important;
+      width: 90%;
+      max-width: 900px;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 20px;
+      padding: 0.8rem 2rem !important;
+      box-shadow: 0 15px 35px -10px black;
+    }
+
+    .navbar-brand {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: white !important;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .navbar-nav .nav-link {
+      color: rgba(255,255,255,0.85) !important;
+      font-weight: 500;
+      margin: 0 15px;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .navbar-nav .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -5px; left: 0;
+      width: 0%; height: 2px;
+      background: linear-gradient(90deg, #3f7eff, #c97bff);
+      box-shadow: 0 0 12px #5f9eff;
+      transition: width 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+    }
+
+    .navbar-nav .nav-link:hover::after,
+    .navbar-nav .nav-link.active::after {
+      width: 100%;
+    }
+
+    /* loader cinematic */
+    .loader {
+      position: fixed;
+      top:0; left:0; width:100%; height:100%;
+      background: #0a0a0a;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      transition: opacity 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+      pointer-events: none;
+    }
+    .loader-text {
+      font-size: clamp(4rem, 15vw, 8rem);
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      color: white;
+      text-shadow: 0 0 30px #3f7eff, 0 0 90px #aa66ff;
+      letter-spacing: 8px;
+    }
+    .loader-sub {
+      color: rgba(255,255,255,0.5);
+      font-size: 1.2rem;
+      letter-spacing: 6px;
+    }
+
+    /* home section */
+    .home-section {
+      min-height: 100vh;
+      background: transparent !important;
+      display: flex;
+      align-items: center;
+      color: white;
+    }
+    .home-text h1 {
+      font-size: clamp(3.5rem, 8vw, 6rem);
+      line-height: 1.1;
+    }
+    .home-text h1 span { color: #7aa6ff; }
+    .home-text h5 { color: rgba(255,255,255,0.7) !important; font-size: 1.8rem; }
+    .home-image img { border-radius: 40px; box-shadow: 0 30px 50px -20px black, 0 0 0 1px rgba(255,255,255,0.1); }
+
+    /* social icons glass */
+    .social-icons .icon-link {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      width: 50px; height: 50px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: 0.3s;
+      margin: 0 8px;
+    }
+    .social-icons .icon-link:hover {
+      background: #3f7eff; transform: scale(1.15); box-shadow: 0 0 30px #3f7eff; border-color: transparent;
+    }
+
+    /* project cards */
+    .project-card {
+      background: rgba(25, 28, 40, 0.4) !important;
+      border-radius: 32px !important;
+      border: 1px solid rgba(130, 170, 255, 0.15) !important;
+      transition: transform 0.3s, box-shadow 0.4s;
+      transform-style: preserve-3d;
+      overflow: hidden;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: inherit;
+      padding: 2px;
+      background: linear-gradient(145deg, #5f9eff, #c97bff, #5f9eff);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.5s;
+      pointer-events: none;
+    }
+    .project-card:hover::before { opacity: 1; }
+    .project-card:hover { box-shadow: 0 0 50px rgba(100, 150, 255, 0.4); transform: translateY(-8px); }
+
+    .hover-overlay {
+      background: rgba(0, 0, 0, 0.5) !important;
+      backdrop-filter: blur(4px);
+    }
+
+    /* skills */
+    .skill-item {
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 60px !important;
+    }
+    .progress {
+      background: rgba(255,255,255,0.1) !important;
+      border-radius: 30px !important;
+      height: 12px;
+    }
+    .progress-bar {
+      background: linear-gradient(90deg, #3f7eff, #b47aff) !important;
+      border-radius: 30px;
+      box-shadow: 0 0 20px #3f7eff;
+      width: 0%;
+    }
+
+    /* contact form & info */
+    .contact .info, .contact form {
+      background: rgba(20, 22, 30, 0.4) !important;
+      border-radius: 40px !important;
+      padding: 2rem !important;
+    }
+    .form-control {
+      background: rgba(255,255,255,0.08) !important;
+      border: 1px solid rgba(255,255,255,0.15) !important;
+      border-radius: 40px !important;
+      color: white !important;
+      padding: 1rem 1.5rem !important;
+    }
+    .form-control:focus {
+      border-color: #3f7eff !important;
+      box-shadow: 0 0 30px #3f7eff !important;
+      background: rgba(255,255,255,0.15) !important;
+    }
+    button[type="submit"] {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 60px;
+      padding: 1rem 2.5rem;
+      font-size: 1.2rem;
+      color: white;
+      transition: 0.3s;
+    }
+    button[type="submit"]:hover {
+      background: #3f7eff; box-shadow: 0 0 40px #3f7eff; transform: scale(1.02);
+    }
+
+    /* footer dark glass */
+    #footer {
+      background: rgba(10, 10, 18, 0.7) !important;
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: white;
+    }
+
+    /* remove old bg */
+    .bg-light, .bg-white, .skills-section, .about-section {
+      background: transparent !important;
+    }
+    .icon-box { background: rgba(255,255,255,0.05) !important; backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.1); border-radius: 30px; color: white; }
+    .text-muted { color: rgba(255,255,255,0.6) !important; }
+
+    /* scroll indicator */
+    .scroll-indicator {
+      position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+      width: 40px; height: 70px; border: 2px solid rgba(255,255,255,0.3); border-radius: 30px;
+    }
+    .scroll-indicator::after {
+      content: ''; width: 6px; height: 12px; background: white; border-radius: 6px; display: block; margin: 12px auto 0;
+      animation: bounce 2.2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @keyframes bounce { 0% { transform: translateY(0); opacity:1; } 50% { transform: translateY(20px); opacity:0.3; } 100% { transform: translateY(0); opacity:1; } }
+  </style>
 </head>
 <body>
-    <div id="loading">✨ Loading Cinematic Experience...</div>
-    <div id="canvas-container"></div>
 
-    <!-- UI Overlays -->
-    <div id="stats-panel" class="ui-overlay" style="align-items: center;">
-        <div class="glass-panel" id="statsGlass">
-            <div class="stats-grid">
-                <div class="stat-item"><span class="stat-number" id="stat-projects">0</span><span class="stat-label">Projects+</span></div>
-                <div class="stat-item"><span class="stat-number" id="stat-role">0</span><span class="stat-label">Full Stack</span></div>
-                <div class="stat-item"><span class="stat-number" id="stat-ui">0</span><span class="stat-label">UI/UX Focus</span></div>
-                <div class="stat-item"><span class="stat-number" id="stat-hack">0</span><span class="stat-label">HackReady</span></div>
-            </div>
-        </div>
+<!-- CINEMATIC LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-text" id="loaderText"></div>
+  <div class="loader-sub">ARPIT KUKADIYA</div>
+</div>
+
+<!-- CUSTOM CURSOR GLOW -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- ANIMATED GRADIENT BG -->
+<div class="gradient-bg"></div>
+
+<!-- GLASS NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">ARPIT</a>
+    <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <i class="fas fa-bars text-white"></i>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="#home">HOME</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">ABOUT</a></li>
+        <li class="nav-item"><a class="nav-link" href="#projects">PROJECTS</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">CONTACT</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HOME SECTION (full screen hero) -->
+<section id="home" class="home-section">
+  <div class="container d-flex align-items-center justify-content-between flex-column flex-md-row">
+    <div class="home-text mb-4 mb-md-0" data-aos="fade-right">
+      <h1 class="hero-name" id="heroName">Hey, I'm <span class="fw-bold">Arpit Kukadiya</span></h1>
+      <h5 class="mb-3" id="dynamicText">Web Developer | Designer | Freelancer</h5>
+      <p class="text-white-50">I build clean, creative, and responsive websites for the modern web. Let's create something amazing together!</p>
+      <a href="#projects" class="btn btn-primary mt-3" style="background:#3f7eff; border:none; border-radius:60px; padding:12px 40px;">Explore Projects</a>
+      <div class="social-icons mt-4">
+        <a href="https://www.linkedin.com/in/arpit-kukadiya-943b64266/" target="_blank" class="icon-link"><i class="bi bi-linkedin"></i></a>
+        <a href="https://github.com/Arpitkukadiya" target="_blank" class="icon-link"><i class="bi bi-github"></i></a>
+        <a href="https://www.instagram.com/patidar_111_/" target="_blank" class="icon-link"><i class="bi bi-instagram"></i></a>
+      </div>
+    </div>
+    <div class="home-image" data-aos="fade-left">
+      <img src="arpit.jpeg" alt="Profile" class="img-fluid rounded shadow-lg" style="max-width: 380px; border-radius: 40px;">
+    </div>
+  </div>
+  <div class="scroll-indicator"></div>
+</section>
+
+<!-- ABOUT + SKILLS (glass) -->
+<section id="about" class="py-5">
+  <div class="container">
+    <h2 class="section-title text-center mb-5">About Me</h2>
+    <div class="row justify-content-center g-4">
+      <div class="col-12 col-sm-6 col-md-3" data-aos="zoom-in">
+        <div class="icon-box text-center p-4 h-100"><i class="fas fa-briefcase fa-2x text-info mb-3"></i><h6 class="fw-bold">Experience</h6><p class="fst-italic text-white-50 mb-0">Fresher</p></div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3" data-aos="zoom-in" data-aos-delay="100">
+        <div class="icon-box text-center p-4 h-100"><i class="fas fa-graduation-cap fa-2x text-success mb-3"></i><h6 class="fw-bold">Education</h6><p class="fst-italic text-white-50 mb-0">BCA Computer Science</p></div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3" data-aos="zoom-in" data-aos-delay="200">
+        <div class="icon-box text-center p-4 h-100"><i class="fas fa-map-marker-alt fa-2x text-danger mb-3"></i><h6 class="fw-bold">Location</h6><p class="fst-italic text-white-50 mb-0">India</p></div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3" data-aos="zoom-in" data-aos-delay="300">
+        <div class="icon-box text-center p-4 h-100"><i class="fas fa-code fa-2x text-warning mb-3"></i><h6 class="fw-bold">Speciality</h6><p class="fst-italic text-white-50 mb-0">Front-end Web Dev</p></div>
+      </div>
     </div>
 
-    <div id="final-panel" class="ui-overlay" style="align-items: center;">
-        <div class="glass-panel" id="finalGlass">
-            <div class="final-text">Let's Build<br>Something Extraordinary</div>
-            <div class="final-instagram">@patidar_111_</div>
-        </div>
+    <!-- skills glass -->
+    <div class="mt-5">
+      <h4 class="text-center mb-4" style="color:white;">Technical Skills</h4>
+      <div class="row g-4">
+        <div class="col-sm-6"><div class="skill-item"><h6>HTML <span class="float-end">90%</span></h6><div class="progress"><div class="progress-bar" data-percent="90"></div></div></div></div>
+        <div class="col-sm-6"><div class="skill-item"><h6>CSS <span class="float-end">75%</span></h6><div class="progress"><div class="progress-bar" data-percent="75"></div></div></div></div>
+        <div class="col-sm-6"><div class="skill-item"><h6>Bootstrap <span class="float-end">70%</span></h6><div class="progress"><div class="progress-bar" data-percent="70"></div></div></div></div>
+        <div class="col-sm-6"><div class="skill-item"><h6>JavaScript <span class="float-end">10%</span></h6><div class="progress"><div class="progress-bar" data-percent="10"></div></div></div></div>
+        <div class="col-sm-6"><div class="skill-item"><h6>POWER BI <span class="float-end">90%</span></h6><div class="progress"><div class="progress-bar" data-percent="90"></div></div></div></div>
+        <div class="col-sm-6"><div class="skill-item"><h6>DBA <span class="float-end">85%</span></h6><div class="progress"><div class="progress-bar" data-percent="85"></div></div></div></div>
+      </div>
     </div>
+  </div>
+</section>
 
-    <!-- Scripts - Core only -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<!-- PROJECTS (glass cards) -->
+<section id="projects" class="py-5">
+  <div class="container">
+    <h2 class="section-title text-center mb-5">Projects</h2>
+    <div class="row g-4">
+      <!-- card 1 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card h-100 position-relative overflow-hidden">
+          <div class="card-body text-center">
+            <img src="ims.png" alt="Internship" class="card-image mb-3 img-fluid" style="height:160px; object-fit:contain;">
+            <h3 class="card-title">INTERNSHIP MANAGEMENT</h3>
+            <p class="card-text text-white-50">Manage student internships with secure login.</p>
+          </div>
+          <div class="hover-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center opacity-0 transition" style="background:rgba(0,0,0,0.4); backdrop-filter:blur(4px);">
+            <a href="ims/login.html" target="_blank" class="text-white fs-1"><i class='bx bx-link'></i></a>
+          </div>
+        </div>
+      </div>
+      <!-- card 2 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card h-100 position-relative overflow-hidden">
+          <div class="card-body text-center">
+            <img src="farmer.png" alt="GreenHarvest" class="card-image mb-3 img-fluid" style="height:160px; object-fit:contain;">
+            <h3 class="card-title">GREENHARVEST</h3>
+            <p class="card-text text-white-50">Platform connecting farmers with buyers.</p>
+          </div>
+          <div class="hover-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center opacity-0 transition"><a href="farmer/login.html" target="_blank" class="text-white fs-1"><i class='bx bx-link'></i></a></div>
+        </div>
+      </div>
+      <!-- card 3 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card h-100 position-relative overflow-hidden">
+          <div class="card-body text-center">
+            <img src="footwear.png" alt="Footwear" class="card-image mb-3 img-fluid" style="height:160px; object-fit:contain;">
+            <h3 class="card-title">FOOTWEAR</h3>
+            <p class="card-text text-white-50">E‑commerce for footwear collections.</p>
+          </div>
+          <div class="hover-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center opacity-0 transition"><a href="footwear/login.html" target="_blank" class="text-white fs-1"><i class='bx bx-link'></i></a></div>
+        </div>
+      </div>
+      <!-- card 4 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card h-100 position-relative overflow-hidden">
+          <div class="card-body text-center">
+            <img src="docker/docker.png" alt="Docker" class="card-image mb-3 img-fluid" style="height:160px; object-fit:contain;">
+            <h3 class="card-title">Docker Cheat Sheet</h3>
+            <p class="card-text text-white-50">DevOps & Docker Dashboard</p>
+          </div>
+          <div class="hover-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center opacity-0 transition"><a href="docker/index.html" target="_blank" class="text-white fs-1"><i class='bx bx-link'></i></a></div>
+        </div>
+      </div>
+      <!-- card 5 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card h-100 position-relative overflow-hidden">
+          <div class="card-body text-center">
+            <img src="wather.png" alt="Weather" class="card-image mb-3 img-fluid" style="height:160px; object-fit:contain;">
+            <h3 class="card-title">WEATHER FORECAST</h3>
+            <p class="card-text text-white-50">Live weather using OpenWeatherMap.</p>
+          </div>
+          <div class="hover-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center opacity-0 transition"><a href="wather.html" target="_blank" class="text-white fs-1"><i class='bx bx-link'></i></a></div>
+        </div>
+      </div>
+      <!-- card 6 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card h-100 position-relative overflow-hidden">
+          <div class="card-body text-center">
+            <img src="game.png" alt="Game" class="card-image mb-3 img-fluid" style="height:160px; object-fit:contain;">
+            <h3 class="card-title">GAME</h3>
+            <p class="card-text text-white-50">Fun browser game with JS.</p>
+          </div>
+          <div class="hover-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center opacity-0 transition"><a href="game.html" target="_blank" class="text-white fs-1"><i class='bx bx-link'></i></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script>
-        // Hide loading after 2 seconds (scene will be visible)
-        setTimeout(() => {
-            document.getElementById('loading').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('loading').style.display = 'none';
-            }, 1000);
-        }, 2000);
+<!-- CONTACT (glass) -->
+<section id="contact" class="contact py-5">
+  <div class="container" data-aos="fade-up">
+    <div class="section-title text-center"><h2>Contact</h2></div>
+    <div class="row mt-1">
+      <div class="col-lg-4">
+        <div class="info glass">
+          <div class="address mb-4"><i class="bi bi-geo-alt fs-4 me-2"></i><h4 class="d-inline">Location:</h4><p>Gandhinagar</p></div>
+          <div class="email mb-4"><i class="bi bi-envelope fs-4 me-2"></i><h4 class="d-inline">Email:</h4><p>arpitkukadiya10@gmail.com</p></div>
+          <div class="phone mb-4"><i class="bi bi-phone fs-4 me-2"></i><h4 class="d-inline">Call:</h4><p>+91 7862899655</p></div>
+        </div>
+      </div>
+      <div class="col-lg-8 mt-5 mt-lg-0">
+        <form action="https://api.web3forms.com/submit" method="POST" class="glass">
+          <input type="hidden" name="access_key" value="b1311ffb-e2b9-4870-973f-c052bc44ba6b">
+          <div class="row">
+            <div class="col-md-6 form-group"><input type="text" name="name" class="form-control" placeholder="Your name" required></div>
+            <div class="col-md-6 form-group mt-3 mt-md-0"><input type="email" class="form-control" name="email" placeholder="Your Email" required></div>
+          </div>
+          <div class="form-group mt-3"><input type="text" class="form-control" name="subject" placeholder="Subject" required></div>
+          <div class="form-group mt-3"><textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea></div>
+          <div class="text-center mt-4"><button type="submit">Send Message →</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
 
-        // --- Setup Scene ---
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x050b18);
-        scene.fog = new THREE.FogExp2(0x050b18, 0.03);
+<!-- FOOTER -->
+<footer id="footer" class="py-5">
+  <div class="footer-container">
+    <div class="footer-content text-center">
+      <div class="footer-about mb-4"><h3>Arpit Kukadiya</h3><p>Front-end architect · cinematic web designer</p></div>
+      <div class="footer-social mb-3">
+        <a href="https://github.com/Arpitkukadiya" class="text-white mx-3 fs-3"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/arpit-kukadiya-943b64266/" class="text-white mx-3 fs-3"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/patidar_111_/" class="text-white mx-3 fs-3"><i class="fab fa-instagram"></i></a>
+      </div>
+      <div class="footer-bottom"><p>© 2025 Arpit Kukadiya. All rights reserved.</p></div>
+    </div>
+  </div>
+</footer>
 
-        // --- Camera (9:16 vertical friendly) ---
-        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 2, 15);
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 1000, once: true });
 
-        // --- Renderer ---
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: "high-performance" });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.toneMapping = THREE.ReinhardToneMapping;
-        renderer.toneMappingExposure = 1.2;
-        document.getElementById('canvas-container').appendChild(renderer.domElement);
+  // ----- CINEMATIC LOADER (letter by letter) -----
+  const loader = document.getElementById('loader');
+  const loaderText = document.getElementById('loaderText');
+  const fullName = 'ARPIT KUKADIYA';
+  let idx = 0;
+  loaderText.textContent = '';
+  function typeLoader() {
+    if (idx < fullName.length) {
+      loaderText.textContent += fullName[idx];
+      idx++;
+      setTimeout(typeLoader, 120);
+    } else {
+      setTimeout(() => {
+        gsap.to(loader, { opacity: 0, duration: 1.2, ease: 'power3.inOut', onComplete: () => loader.style.display = 'none' });
+      }, 600);
+    }
+  }
+  typeLoader();
 
-        // --- Simple OrbitControls replacement (manual camera control disabled) ---
-        // We'll just handle the camera with GSAP
+  // ----- HERO TITLE SPLIT (optional) -----
+  // (already plain, we can skip extra split, but GSAP fade for dynamicText is fine)
 
-        // --- Lighting ---
-        // Ambient
-        const ambient = new THREE.AmbientLight(0x404060);
-        scene.add(ambient);
+  // ----- GSAP SCROLL TRIGGER for progress bars & reveals -----
+  gsap.registerPlugin(ScrollTrigger);
 
-        // Key light
-        const keyLight = new THREE.DirectionalLight(0xaaccff, 1.2);
-        keyLight.position.set(2, 5, 5);
-        scene.add(keyLight);
+  // progress bars animation (fill width + counter)
+  document.querySelectorAll('.skill-item').forEach((item) => {
+    const bar = item.querySelector('.progress-bar');
+    const percentSpan = item.querySelector('h6 .float-end');
+    if (!bar || !percentSpan) return;
+    const target = parseInt(bar.dataset.percent, 10) || 0;
+    let animated = false;
+    ScrollTrigger.create({
+      trigger: item,
+      start: 'top 75%',
+      onEnter: () => {
+        if (animated) return;
+        animated = true;
+        gsap.to(bar, { width: target + '%', duration: 1.5, ease: 'power2.out' });
+        gsap.to(percentSpan, { innerText: target, duration: 1.8, snap: { innerText: 1 }, onUpdate: function() { percentSpan.innerText = Math.floor(percentSpan.innerText) + '%'; } });
+      }
+    });
+  });
 
-        // Fill light
-        const fillLight = new THREE.DirectionalLight(0x5577aa, 0.6);
-        fillLight.position.set(-3, 1, 3);
-        scene.add(fillLight);
+  // project cards tilt
+  document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const rotX = (y - rect.height/2) / 20;
+      const rotY = (rect.width/2 - x) / 20;
+      gsap.to(card, { rotateX: rotX, rotateY: rotY, duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
+    });
+    card.addEventListener('mouseleave', () => gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.7, ease: 'elastic.out(1, 0.3)' }));
+  });
 
-        // Back light
-        const backLight = new THREE.PointLight(0x3366aa, 0.8);
-        backLight.position.set(0, 2, -5);
-        scene.add(backLight);
+  // cursor follower
+  const cursor = document.getElementById('cursorGlow');
+  document.addEventListener('mousemove', (e) => gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.3, ease: 'power1.out' }));
 
-        // Colored point lights
-        const light1 = new THREE.PointLight(0x3366ff, 1, 20);
-        light1.position.set(2, 1, 2);
-        scene.add(light1);
-        
-        const light2 = new THREE.PointLight(0xff44aa, 0.8, 20);
-        light2.position.set(-2, 0.5, 3);
-        scene.add(light2);
+  // navbar active highlight
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('.nav-link');
+  function updateActive() {
+    let current = '';
+    sections.forEach(s => {
+      const rect = s.getBoundingClientRect();
+      if (rect.top <= 200 && rect.bottom >= 200) current = s.getAttribute('id');
+    });
+    navLinks.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === `#${current}`) a.classList.add('active');
+    });
+  }
+  window.addEventListener('scroll', updateActive);
 
-        // Moving light
-        const movingLight = new THREE.PointLight(0x00ccff, 1.5, 30);
-        movingLight.position.set(0, 3, 0);
-        scene.add(movingLight);
-
-        // --- Particle Background ---
-        const particleGeo = new THREE.BufferGeometry();
-        const particleCount = 2000;
-        const positions = new Float32Array(particleCount * 3);
-        const colors = new Float32Array(particleCount * 3);
-
-        for (let i = 0; i < particleCount; i++) {
-            // Spherical distribution
-            const radius = 20 + Math.random() * 40;
-            const theta = Math.random() * Math.PI * 2;
-            const phi = Math.acos((Math.random() * 2) - 1);
-            
-            positions[i*3] = radius * Math.sin(phi) * Math.cos(theta);
-            positions[i*3+1] = radius * Math.sin(phi) * Math.sin(theta) * 0.5; // Flatten vertically
-            positions[i*3+2] = radius * Math.cos(phi);
-            
-            // Colors: blues and purples
-            const hue = 0.65 + Math.random() * 0.3;
-            const color = new THREE.Color().setHSL(hue, 0.9, 0.6);
-            colors[i*3] = color.r;
-            colors[i*3+1] = color.g;
-            colors[i*3+2] = color.b;
-        }
-
-        particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        particleGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-        const particleMat = new THREE.PointsMaterial({ 
-            size: 0.15, 
-            vertexColors: true, 
-            transparent: true, 
-            opacity: 0.8,
-            blending: THREE.AdditiveBlending,
-            depthWrite: false
-        });
-        
-        const particles = new THREE.Points(particleGeo, particleMat);
-        scene.add(particles);
-
-        // --- Central Platform ---
-        const platformGroup = new THREE.Group();
-        
-        // Base disk
-        const diskGeo = new THREE.CylinderGeometry(2.5, 2.5, 0.2, 64);
-        const diskMat = new THREE.MeshStandardMaterial({ 
-            color: 0x1a2b4a, 
-            emissive: 0x112244, 
-            roughness: 0.3, 
-            metalness: 0.8,
-            transparent: true, 
-            opacity: 0.9 
-        });
-        const disk = new THREE.Mesh(diskGeo, diskMat);
-        disk.position.y = -0.1;
-        disk.castShadow = false;
-        disk.receiveShadow = false;
-        platformGroup.add(disk);
-        
-        // Outer ring
-        const ringGeo = new THREE.TorusGeometry(2.5, 0.05, 32, 100);
-        const ringMat = new THREE.MeshStandardMaterial({ color: 0x44aaff, emissive: 0x2266aa });
-        const ring = new THREE.Mesh(ringGeo, ringMat);
-        ring.rotation.x = Math.PI / 2;
-        ring.position.y = 0.05;
-        platformGroup.add(ring);
-        
-        // Inner ring
-        const innerRingGeo = new THREE.TorusGeometry(1.8, 0.03, 32, 100);
-        const innerRingMat = new THREE.MeshStandardMaterial({ color: 0xff88cc, emissive: 0x440044 });
-        const innerRing = new THREE.Mesh(innerRingGeo, innerRingMat);
-        innerRing.rotation.x = Math.PI / 2;
-        innerRing.position.y = 0.1;
-        platformGroup.add(innerRing);
-        
-        // Center glow sphere
-        const glowGeo = new THREE.SphereGeometry(0.3, 32, 32);
-        const glowMat = new THREE.MeshStandardMaterial({ color: 0x88aaff, emissive: 0x3355aa });
-        const glowSphere = new THREE.Mesh(glowGeo, glowMat);
-        glowSphere.position.y = 0.2;
-        platformGroup.add(glowSphere);
-        
-        scene.add(platformGroup);
-        platformGroup.position.y = -0.2;
-
-        // --- Text using Canvas Sprites ---
-        function createTextSprite(message, color, size = 1, bgColor = 'rgba(0,0,0,0)') {
-            const canvas = document.createElement('canvas');
-            canvas.width = 1024;
-            canvas.height = 512;
-            const ctx = canvas.getContext('2d');
-            
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Text style
-            ctx.font = `Bold ${size*60}px 'Arial', sans-serif`;
-            ctx.fillStyle = color;
-            ctx.shadowColor = '#00aaff';
-            ctx.shadowBlur = 30;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(message, canvas.width/2, canvas.height/2);
-            
-            const texture = new THREE.CanvasTexture(canvas);
-            const material = new THREE.SpriteMaterial({ 
-                map: texture, 
-                blending: THREE.AdditiveBlending,
-                depthTest: true,
-                depthWrite: false,
-                transparent: true
-            });
-            const sprite = new THREE.Sprite(material);
-            sprite.scale.set(4, 2, 1);
-            return sprite;
-        }
-
-        // Add name and title
-        const nameSprite = createTextSprite('ARPIT KUKADIYA', '#ffffff', 0.8);
-        nameSprite.position.set(0, 2.8, 0);
-        scene.add(nameSprite);
-
-        const titleSprite = createTextSprite('FULL STACK DEVELOPER', '#88ccff', 0.5);
-        titleSprite.position.set(0, 1.8, 0);
-        scene.add(titleSprite);
-
-        // --- Laptop Model ---
-        const laptopGroup = new THREE.Group();
-        
-        // Base
-        const baseGeo = new THREE.BoxGeometry(2.2, 0.1, 1.6);
-        const baseMat = new THREE.MeshStandardMaterial({ color: 0x222233, emissive: 0x111122, roughness: 0.4, metalness: 0.8 });
-        const base = new THREE.Mesh(baseGeo, baseMat);
-        base.position.y = 0;
-        laptopGroup.add(base);
-        
-        // Keyboard
-        const keysGeo = new THREE.BoxGeometry(2.0, 0.05, 1.4);
-        const keysMat = new THREE.MeshStandardMaterial({ color: 0x334455, emissive: 0x112233 });
-        const keys = new THREE.Mesh(keysGeo, keysMat);
-        keys.position.y = 0.1;
-        laptopGroup.add(keys);
-        
-        // Screen group
-        const screenGroup = new THREE.Group();
-        const screenBaseGeo = new THREE.BoxGeometry(2.2, 0.1, 1.6);
-        const screenBaseMat = new THREE.MeshStandardMaterial({ color: 0x222233, emissive: 0x111122 });
-        const screenBase = new THREE.Mesh(screenBaseGeo, screenBaseMat);
-        screenBase.position.set(0, 1.1, -0.8);
-        screenGroup.add(screenBase);
-        
-        // Display (emissive)
-        const displayGeo = new THREE.BoxGeometry(2.0, 1.2, 0.05);
-        const displayMat = new THREE.MeshStandardMaterial({ color: 0x113355, emissive: 0x224488 });
-        const display = new THREE.Mesh(displayGeo, displayMat);
-        display.position.set(0, 1.7, -0.85);
-        screenGroup.add(display);
-        
-        screenGroup.position.set(0, 0.2, 0.3);
-        screenGroup.rotation.x = 0;
-        
-        laptopGroup.add(screenGroup);
-        laptopGroup.position.set(0, 0.4, 1);
-        laptopGroup.visible = false;
-        scene.add(laptopGroup);
-
-        // --- Project Cards ---
-        const cardGroup = new THREE.Group();
-        const projectNames = ['IRIM', 'Peanut Farming', 'Campus Recruitment', 'FoodZone'];
-        const cardColors = [0x3a6ea5, 0x6a4e9a, 0x2a9d8f, 0xe76f51];
-        
-        projectNames.forEach((name, i) => {
-            // Main card
-            const cardMat = new THREE.MeshStandardMaterial({
-                color: cardColors[i],
-                emissive: cardColors[i],
-                transparent: true,
-                opacity: 0.15,
-                side: THREE.DoubleSide
-            });
-            
-            const card = new THREE.Mesh(new THREE.PlaneGeometry(1.0, 0.7), cardMat);
-            
-            // Border
-            const edges = new THREE.EdgesGeometry(new THREE.PlaneGeometry(1.0, 0.7));
-            const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x88ccff }));
-            card.add(line);
-            
-            // Text on card
-            const textCanvas = document.createElement('canvas');
-            textCanvas.width = 512;
-            textCanvas.height = 256;
-            const ctx = textCanvas.getContext('2d');
-            ctx.fillStyle = '#ffffff';
-            ctx.font = 'Bold 40px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.shadowColor = '#00aaff';
-            ctx.shadowBlur = 15;
-            ctx.fillText(name, 256, 128);
-            
-            const textTexture = new THREE.CanvasTexture(textCanvas);
-            const textPlane = new THREE.Mesh(
-                new THREE.PlaneGeometry(0.8, 0.4),
-                new THREE.MeshStandardMaterial({ map: textTexture, emissive: 0x335588, transparent: true, side: THREE.DoubleSide })
-            );
-            textPlane.position.z = 0.02;
-            card.add(textPlane);
-            
-            // Position cards in a row
-            card.position.set((i-1.5)*1.3, 0.8, 0.5);
-            cardGroup.add(card);
-        });
-        
-        cardGroup.position.set(0, 0.8, 0.8);
-        cardGroup.visible = false;
-        scene.add(cardGroup);
-
-        // --- Skills Orbit ---
-        const skillsGroup = new THREE.Group();
-        const skills = ['HTML', 'CSS', 'Bootstrap', 'JavaScript', 'PHP', 'MySQL'];
-        
-        skills.forEach((skill, i) => {
-            const canvas = document.createElement('canvas');
-            canvas.width = 512;
-            canvas.height = 256;
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = '#ffffff';
-            ctx.font = 'Bold 60px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.shadowColor = '#00aaff';
-            ctx.shadowBlur = 20;
-            ctx.fillText(skill, 256, 128);
-            
-            const texture = new THREE.CanvasTexture(canvas);
-            const material = new THREE.SpriteMaterial({ map: texture, blending: THREE.AdditiveBlending });
-            const sprite = new THREE.Sprite(material);
-            
-            const angle = (i / skills.length) * Math.PI * 2;
-            const radius = 3.0;
-            sprite.position.set(
-                Math.cos(angle) * radius,
-                Math.sin(angle) * radius * 0.7 + 0.5,
-                0
-            );
-            sprite.scale.set(2.0, 1.0, 1);
-            
-            skillsGroup.add(sprite);
-        });
-        
-        skillsGroup.position.set(0, 1.8, 1);
-        skillsGroup.visible = false;
-        scene.add(skillsGroup);
-
-        // --- Floating Glass Spheres (decoration) ---
-        const spheres = [];
-        for (let i = 0; i < 5; i++) {
-            const sphereGeo = new THREE.SphereGeometry(0.1 + Math.random()*0.1, 16);
-            const sphereMat = new THREE.MeshStandardMaterial({ 
-                color: 0x88aaff, 
-                emissive: 0x224466,
-                transparent: true, 
-                opacity: 0.4,
-                wireframe: true
-            });
-            const sphere = new THREE.Mesh(sphereGeo, sphereMat);
-            sphere.position.set(
-                (Math.random() - 0.5) * 4,
-                Math.random() * 2,
-                (Math.random() - 0.5) * 3
-            );
-            scene.add(sphere);
-            spheres.push(sphere);
-        }
-
-        // --- Simple Bloom Effect (custom) ---
-        // Since we don't have UnrealBloomPass, we'll use a combination of lights and emissive materials
-        // and add a second scene with additive blending for glow effect
-        
-        // Create a glow layer
-        const glowScene = new THREE.Scene();
-        const glowCamera = camera.clone();
-        
-        // Add some extra glow sprites
-        const glowSprites = [];
-        for (let i = 0; i < 10; i++) {
-            const glowCanvas = document.createElement('canvas');
-            glowCanvas.width = 64;
-            glowCanvas.height = 64;
-            const ctx = glowCanvas.getContext('2d');
-            ctx.fillStyle = '#88aaff';
-            ctx.beginPath();
-            ctx.arc(32, 32, 16, 0, Math.PI*2);
-            ctx.fill();
-            
-            const glowTex = new THREE.CanvasTexture(glowCanvas);
-            const glowMat = new THREE.SpriteMaterial({ map: glowTex, blending: THREE.AdditiveBlending, depthWrite: false });
-            const glowSprite = new THREE.Sprite(glowMat);
-            glowSprite.position.set(
-                (Math.random() - 0.5) * 5,
-                Math.random() * 3,
-                (Math.random() - 0.5) * 4
-            );
-            glowSprite.scale.set(0.5, 0.5, 1);
-            scene.add(glowSprite);
-            glowSprites.push(glowSprite);
-        }
-
-        // --- GSAP Timeline ---
-        const tl = gsap.timeline({ repeat: 0, delay: 1 });
-
-        // Initial camera
-        camera.position.set(0, 2, 15);
-        camera.lookAt(0, 1, 0);
-        
-        // Animate particles rotation
-        gsap.to(particles.rotation, { duration: 30, y: Math.PI*2, repeat: -1, ease: "none" });
-        
-        // Animate moving light
-        gsap.to(movingLight.position, { 
-            duration: 10, 
-            x: 4, y: 3, z: 3, 
-            repeat: -1, 
-            yoyo: true, 
-            ease: "sine.inOut" 
-        });
-        
-        // Animate floating spheres
-        spheres.forEach((sphere, i) => {
-            gsap.to(sphere.position, {
-                duration: 3 + i,
-                y: sphere.position.y + 0.3,
-                repeat: -1,
-                yoyo: true,
-                ease: "sine.inOut",
-                delay: i * 0.5
-            });
-            
-            gsap.to(sphere.rotation, {
-                duration: 5,
-                y: Math.PI*2,
-                repeat: -1,
-                ease: "none"
-            });
-        });
-
-        // Scene 1: Intro
-        tl.to(camera.position, { 
-            duration: 4, 
-            z: 8, 
-            y: 1.5, 
-            ease: "power2.inOut",
-            onUpdate: () => {
-                camera.lookAt(0, 1, 0);
-            }
-        }, 0)
-        
-        // Scene 2: Laptop appears
-        .set(laptopGroup, { visible: true }, 4)
-        .from(laptopGroup.position, { 
-            y: -2, 
-            duration: 2, 
-            ease: "back.out(1.2)" 
-        }, 4)
-        .to(screenGroup.rotation, { 
-            duration: 1.5, 
-            x: -0.8, 
-            ease: "power2.inOut" 
-        }, 5)
-        
-        // Scene 3: Cards appear
-        .set(cardGroup, { visible: true }, 7)
-        .from(cardGroup.children, { 
-            opacity: 0, 
-            scale: 0.3, 
-            stagger: 0.2, 
-            duration: 1.5, 
-            ease: "back.out(1.2)" 
-        }, 7.5)
-        
-        // Animate cards floating
-        .to(cardGroup.children.map(c => c.position), {
-            y: "+=0.15",
-            duration: 2,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut"
-        }, 8)
-        
-        // Scene 4: Skills appear (fade out laptop/cards)
-        .to([laptopGroup.children, cardGroup.children], { 
-            opacity: 0, 
-            duration: 1.5, 
-            ease: "power2.in" 
-        }, 11)
-        .set(laptopGroup, { visible: false }, 12.5)
-        .set(cardGroup, { visible: false }, 12.5)
-        .set(skillsGroup, { visible: true }, 12.5)
-        .from(skillsGroup.children, { 
-            scale: 0, 
-            opacity: 0,
-            stagger: 0.1, 
-            duration: 1.5, 
-            ease: "elastic.out(1, 0.3)" 
-        }, 12.5)
-        .to(skillsGroup.rotation, { 
-            duration: 10, 
-            y: Math.PI*2, 
-            repeat: -1, 
-            ease: "none" 
-        }, 13)
-        
-        // Scene 5: Stats Counter
-        .call(() => {
-            document.getElementById('statsGlass').classList.add('visible');
-            // Count up
-            gsap.to('#stat-projects', { 
-                duration: 2, 
-                innerText: 5, 
-                snap: { innerText: 1 },
-                ease: "power2.out"
-            });
-            gsap.to('#stat-role', { 
-                duration: 2, 
-                innerText: 1, 
-                snap: { innerText: 1 },
-                ease: "power2.out"
-            });
-            gsap.to('#stat-ui', { 
-                duration: 2, 
-                innerText: 1, 
-                snap: { innerText: 1 },
-                ease: "power2.out"
-            });
-            gsap.to('#stat-hack', { 
-                duration: 2, 
-                innerText: 1, 
-                snap: { innerText: 1 },
-                ease: "power2.out"
-            });
-        }, null, 14)
-        
-        // Move camera for stats view
-        .to(camera.position, { 
-            duration: 3, 
-            x: -1, 
-            y: 2.2, 
-            z: 6,
-            ease: "sine.inOut",
-            onUpdate: () => {
-                camera.lookAt(0, 1.5, 0);
-            }
-        }, 14.5)
-        
-        // Scene 6: Final
-        .call(() => {
-            document.getElementById('statsGlass').classList.remove('visible');
-            document.getElementById('finalGlass').classList.add('visible');
-        }, null, 18)
-        
-        // Final camera move
-        .to(camera.position, { 
-            duration: 6, 
-            x: 2, 
-            y: 2.5, 
-            z: 7,
-            ease: "sine.inOut",
-            onUpdate: () => {
-                camera.lookAt(0, 1.5, 0);
-            }
-        }, 18.5)
-        
-        // Final look around
-        .to(camera.position, { 
-            duration: 6, 
-            x: -2, 
-            y: 2.5, 
-            z: 7,
-            ease: "sine.inOut",
-            onUpdate: () => {
-                camera.lookAt(0, 1.5, 0);
-            }
-        }, 24);
-
-        // --- Animation Loop ---
-        function animate() {
-            requestAnimationFrame(animate);
-            
-            // Render main scene
-            renderer.render(scene, camera);
-        }
-        
-        animate();
-
-        // --- Handle Resize ---
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        // Force hide loading after 3 seconds just in case
-        setTimeout(() => {
-            document.getElementById('loading').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('loading').style.display = 'none';
-            }, 500);
-        }, 3000);
-
-        console.log('Scene initialized successfully');
-    </script>
+  // dynamic text typewriter (preserved)
+  const dynamicEl = document.getElementById('dynamicText');
+  const textArray = ["Web Developer", "UI/UX Designer", "Tech Enthusiast", "Creative Thinker"];
+  let i = 0, j = 0, isDeleting = false;
+  function typeWriter() {
+    let current = textArray[i];
+    dynamicEl.innerText = isDeleting ? current.substring(0, j--) : current.substring(0, j++);
+    if (!isDeleting && j === current.length) { isDeleting = true; setTimeout(typeWriter, 1500); }
+    else if (isDeleting && j === 0) { isDeleting = false; i = (i + 1) % textArray.length; setTimeout(typeWriter, 500); }
+    else setTimeout(typeWriter, isDeleting ? 50 : 100);
+  }
+  document.addEventListener("DOMContentLoaded", typeWriter);
+</script>
 </body>
 </html>
