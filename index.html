@@ -3,16 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Arpit Kukadiya · DevOps & Cloud Engineer</title>
+  <title>Arpit Kukadiya · Cloud & DevOps Engineer</title>
 
-  <!-- Font Awesome 6 (free) -->
+  <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Google Font: Inter (clean technical) -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-  <!-- Boxicons (optional, for some icons) -->
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <!-- Google Fonts: Inter (technical) + Playfair (for headings) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   
@@ -21,18 +19,19 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <style>
-    /* ----- RESET & DEVOPS DARK THEME (enterprise) ----- */
+    /* ---------- RESET & DARK BASE (cinematic + devops) ---------- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background-color: #0b1220;  /* deep navy cloud */
+      background-color: #0b1220;  /* deep navy (cloud) */
       font-family: 'Inter', sans-serif;
       color: #e6edf3;
       line-height: 1.6;
       overflow-x: hidden;
       transition: background-color 0.3s, color 0.3s;
     }
-    /* light mode (toggle) */
+
+    /* light mode toggle (optional but keep) */
     body.light-mode {
       background-color: #f4f7fb;
       color: #1a2634;
@@ -49,19 +48,11 @@
       border-color: #d0d9e6 !important;
       color: #1e2a3a;
     }
-    body.light-mode .text-muted, 
-    body.light-mode .text-white-50 {
-      color: #4a5b6e !important;
-    }
-    body.light-mode .navbar {
-      background: rgba(255,255,255,0.8) !important;
-      border-color: #cbd5e1 !important;
-    }
-    body.light-mode .nav-link {
-      color: #1e2a3a !important;
-    }
+    body.light-mode .text-muted { color: #4a5b6e !important; }
+    body.light-mode .navbar { background: rgba(255,255,255,0.8) !important; border-color: #cbd5e1 !important; }
+    body.light-mode .nav-link { color: #1e2a3a !important; }
 
-    /* subtle grid background (terminal/dashboard) */
+    /* GRID BACKGROUND (subtle tech) */
     .grid-bg {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -73,7 +64,7 @@
       z-index: -1;
     }
 
-    /* animated cloud particles (very subtle) */
+    /* CLOUD PARTICLES (very subtle) */
     .cloud-particles {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -92,64 +83,84 @@
       100% { transform: translate(-5%, -5%) scale(1.2); }
     }
 
-    /* remove cinematic blur/noise/glow cursor */
-    .cursor-glow, body::after, .gradient-bg { display: none; }
+    /* original loader (cinematic) – keep but hidden after load */
+    .loader {
+      position: fixed;
+      top:0; left:0; width:100%; height:100%;
+      background: #0a0a0a;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      transition: opacity 1s cubic-bezier(0.76, 0, 0.24, 1);
+      pointer-events: none;
+    }
+    .loader-text {
+      font-size: clamp(4rem, 14vw, 7.5rem);
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      color: white;
+      text-shadow: 0 0 20px #8095ff, 0 0 60px #aa99ff;
+      letter-spacing: 6px;
+    }
+    .loader-sub {
+      color: rgba(255,255,255,0.5);
+      font-size: 1rem;
+      letter-spacing: 4px;
+    }
 
-    /* cards: no glass, sharp borders, slight radius */
+    /* remove old glow cursor / noise (we keep clean) */
+    .cursor-glow, body::after { display: none; }
+
+    /* cards – sharp borders, slight radius, devops style */
     .card, .project-card, .skill-card, .cert-card, .timeline-item, .contact-card, .server-dashboard {
       background: #0f1b2d !important;
       border: 1px solid #2a3a4f !important;
-      border-radius: 12px !important;
+      border-radius: 16px !important;
       box-shadow: 0 8px 20px -10px rgba(0,0,0,0.8) !important;
       transition: transform 0.2s, border-color 0.2s;
     }
-    .project-card:hover, .skill-card:hover {
+    .project-card:hover {
       border-color: #00c2ff !important;
-      transform: translateY(-2px);
+      transform: translateY(-3px);
     }
 
     /* accent colors */
     .accent-blue { color: #00c2ff; }
     .accent-green { color: #00ff9d; }
     .accent-orange { color: #ffb020; }
-    .badge-devops {
-      background: #1e3347;
-      color: #b4e6ff;
-      border-radius: 20px;
-      padding: 0.3rem 1rem;
-      font-size: 0.75rem;
-      border: 1px solid #2e4b66;
-    }
 
-    /* navbar – clean, no blur heavy */
+    /* navbar – glass but cleaner, sharper */
     .navbar {
-      background: #0f1b2d !important;
+      background: rgba(10, 20, 30, 0.8) !important;
+      backdrop-filter: blur(12px);
       border: 1px solid #2a3a4f !important;
-      border-radius: 40px !important;
+      border-radius: 50px !important;
       width: 90%;
       max-width: 1000px;
       left: 50%;
       transform: translateX(-50%);
       top: 15px;
-      padding: 0.5rem 1.8rem !important;
+      padding: 0.5rem 2rem !important;
       box-shadow: 0 10px 25px -10px black;
     }
     .navbar-brand {
-      font-weight: 600;
-      color: #e6edf3 !important;
-      letter-spacing: 0.5px;
+      font-weight: 700;
+      color: white !important;
+      letter-spacing: 1px;
+      font-family: 'Playfair Display', serif;
     }
     .nav-link {
       color: #b4c6d9 !important;
       font-weight: 500;
       margin: 0 12px;
-      padding: 0.4rem 0 !important;
       position: relative;
     }
     .nav-link::after {
       content: '';
       position: absolute;
-      bottom: 0; left: 0;
+      bottom: -2px; left: 0;
       width: 0%; height: 2px;
       background: #00c2ff;
       transition: width 0.2s;
@@ -157,19 +168,18 @@
     .nav-link:hover::after,
     .nav-link.active::after { width: 100%; }
 
-    /* toggle button */
+    /* theme toggle */
     .theme-toggle {
       background: transparent;
       border: 1px solid #3f556a;
       border-radius: 40px;
-      padding: 0.25rem 0.9rem;
+      padding: 0.25rem 1rem;
       color: #e6edf3;
       cursor: pointer;
       font-size: 0.9rem;
     }
-    .light-mode .theme-toggle { color: #1e2a3a; border-color: #9aaec2; }
 
-    /* HERO SECTION — devops style */
+    /* HERO SECTION – devops + cinematic blend */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -179,7 +189,10 @@
     .hero h1 {
       font-size: clamp(3rem, 7vw, 5rem);
       font-weight: 700;
-      line-height: 1.1;
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(135deg, #ffffff, #b0c8ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
     .hero-sub {
       font-size: 1.8rem;
@@ -190,16 +203,14 @@
       background: #0a121f;
       border-left: 4px solid #00ff9d;
       padding: 1.2rem 1.8rem;
-      border-radius: 8px;
+      border-radius: 12px;
       font-family: 'Inter', monospace;
       font-size: 0.95rem;
       margin: 1.5rem 0;
       border: 1px solid #2e4b66;
       color: #c0e0ff;
     }
-    .terminal-line {
-      margin: 0.2rem 0;
-    }
+    .terminal-line { margin: 0.2rem 0; }
     .cursor-blink {
       background: #00ff9d;
       width: 8px; height: 1.2rem;
@@ -208,7 +219,7 @@
     }
     @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
 
-    /* devops icon row */
+    /* devops icons row */
     .devops-icons i {
       font-size: 2rem;
       margin: 0 0.8rem;
@@ -221,10 +232,9 @@
     .server-dashboard {
       padding: 1.5rem;
       margin: 2rem 0;
+      background: #0f1b2d !important;
     }
-    .metric {
-      margin-bottom: 1rem;
-    }
+    .metric { margin-bottom: 1rem; }
     .metric-label {
       font-size: 0.8rem;
       text-transform: uppercase;
@@ -235,15 +245,33 @@
       height: 8px;
       border-radius: 20px;
     }
-    .progress-bar.cpu { background: #00c2ff; width: 42%; }
-    .progress-bar.memory { background: #00ff9d; width: 68%; }
-    .progress-bar.uptime { background: #ffb020; width: 100%; }
+    .progress-bar.cpu { background: #00c2ff; }
+    .progress-bar.memory { background: #00ff9d; }
+    .progress-bar.uptime { background: #ffb020; }
     .metric-value { font-weight: 600; }
 
-    /* skill categories */
-    .skill-category {
-      margin-bottom: 2rem;
+    /* social icons (from first code but refined) */
+    .social-icons .icon-link {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid #2a3a4f;
+      color: white;
+      width: 48px; height: 48px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: 0.2s;
+      margin: 0 6px;
     }
+    .social-icons .icon-link:hover { background: #00c2ff; border-color: transparent; }
+
+    /* about / skills (mixed) */
+    .icon-box {
+      background: #0f1b2d !important;
+      border: 1px solid #2a3a4f !important;
+      border-radius: 16px !important;
+      padding: 1.5rem;
+      transition: 0.2s;
+    }
+    .icon-box:hover { border-color: #00c2ff; }
+
     .skill-category h5 {
       color: #b4c6d9;
       border-bottom: 1px solid #2e4b66;
@@ -260,37 +288,65 @@
       background: #00c2ff;
     }
 
-    /* projects */
-    .project-card {
-      padding: 1.5rem;
-    }
-    .project-card h3 { font-size: 1.5rem; }
+    /* tech badges / tags */
     .tech-badge {
       background: #1a2b3c;
       color: #b4c6d9;
-      border-radius: 16px;
+      border-radius: 20px;
       padding: 0.2rem 1rem;
       font-size: 0.75rem;
       display: inline-block;
       margin: 0.2rem 0.3rem;
       border: 1px solid #3f556a;
     }
-    .diagram-btn {
+    .badge-devops {
+      background: #1e3347;
+      color: #b4e6ff;
+      border-radius: 20px;
+      padding: 0.3rem 1rem;
+      font-size: 0.75rem;
+      border: 1px solid #2e4b66;
+    }
+
+    /* project cards – merge both styles */
+    .project-card {
+      padding: 1.5rem;
+      background: #0f1b2d !important;
+      border: 1px solid #2a3a4f !important;
+    }
+    .project-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+    }
+    .project-card .tech-tag {
+      background: #1e3347;
+      border-radius: 30px;
+      padding: 0.2rem 1rem;
+      border: 1px solid #3f556a;
+      font-size: 0.75rem;
+      display: inline-block;
+      margin: 0.2rem;
+    }
+    .card-actions a {
       border: 1px solid #3f556a;
       background: transparent;
       color: #e6edf3;
-      border-radius: 20px;
-      padding: 0.3rem 1rem;
-      font-size: 0.8rem;
+      border-radius: 30px;
+      padding: 0.3rem 1.2rem;
+      font-size: 0.85rem;
       transition: 0.2s;
+      text-decoration: none;
+      display: inline-block;
+      margin-right: 8px;
     }
-    .diagram-btn:hover { border-color: #00c2ff; }
+    .card-actions a:hover { border-color: #00c2ff; }
 
     /* timeline */
     .timeline-item {
       padding: 1.2rem;
       margin-bottom: 1rem;
       border-left: 3px solid #00c2ff;
+      background: #0f1b2d !important;
     }
     .timeline-date { color: #8b949e; font-size: 0.85rem; }
 
@@ -298,6 +354,7 @@
     .cert-card {
       padding: 1rem;
       text-align: center;
+      background: #0f1b2d !important;
     }
     .cert-card i { font-size: 2.5rem; color: #ffb020; }
 
@@ -305,16 +362,18 @@
     .arch-diagram {
       background: #0a121f;
       border: 1px dashed #3f556a;
-      border-radius: 16px;
+      border-radius: 20px;
       padding: 3rem 1rem;
       text-align: center;
       color: #8b949e;
     }
 
-    /* footer / contact */
+    /* contact & footer */
     .contact-card {
       padding: 2rem;
-      background: #0f1b2d;
+      background: #0f1b2d !important;
+      border: 1px solid #2a3a4f !important;
+      border-radius: 24px;
     }
     .btn-outline-devops {
       border: 1px solid #00c2ff;
@@ -323,15 +382,20 @@
       padding: 0.6rem 2rem;
       background: transparent;
     }
-    .btn-outline-devops:hover {
-      background: #00c2ff;
-      color: #0b1220;
+    .btn-outline-devops:hover { background: #00c2ff; color: #0b1220; }
+
+    /* scroll indicator (optional, keep from first) */
+    .scroll-indicator {
+      position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+      width: 34px; height: 60px; border: 1.5px solid rgba(255,255,255,0.25); border-radius: 30px;
     }
+    .scroll-indicator::after {
+      content: ''; width: 4px; height: 12px; background: rgba(255,255,255,0.6); border-radius: 4px; display: block; margin: 10px auto 0;
+      animation: bounce 2.4s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @keyframes bounce { 0% { transform: translateY(0); opacity:1; } 50% { transform: translateY(18px); opacity:0.2; } 100% { transform: translateY(0); opacity:1; } }
 
-    /* remove old glass, etc. */
-    .glass, .icon-box, .skill-item { backdrop-filter: none !important; background: transparent !important; }
-
-    /* mobile adjustments */
+    /* mobile */
     @media (max-width: 768px) {
       .navbar { width: 95%; padding: 0.5rem 1rem; }
     }
@@ -339,19 +403,25 @@
 </head>
 <body>
 
-<!-- DARK/LIGHT TOGGLE (simple) -->
+<!-- CINEMATIC LOADER (from first code) -->
+<div class="loader" id="loader">
+  <div class="loader-text" id="loaderText"></div>
+  <div class="loader-sub">ARPIT KUKADIYA</div>
+</div>
+
+<!-- DARK/LIGHT TOGGLE (position fixed) -->
 <div class="position-fixed top-0 end-0 m-4 z-3">
   <button class="theme-toggle" id="themeToggle"><i class="bi bi-moon-stars me-1"></i> Dark / Light</button>
 </div>
 
-<!-- GRID BACKGROUND + CLOUD PARTICLES -->
+<!-- GRID + CLOUD PARTICLES (devops style) -->
 <div class="grid-bg"></div>
 <div class="cloud-particles">
   <div class="cloud" style="width:300px;height:200px;top:10%;left:5%;"></div>
   <div class="cloud" style="width:400px;height:250px;bottom:5%;right:0;background:rgba(0,255,157,0.02);"></div>
 </div>
 
-<!-- NAVBAR (clean, minimal) -->
+<!-- NAVBAR (glass, refined) -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
   <div class="container">
     <a class="navbar-brand" href="#">Arpit Kukadiya</a>
@@ -369,19 +439,19 @@
   </div>
 </nav>
 
-<!-- HERO SECTION (DEVOPS STYLE) -->
+<!-- HERO SECTION (merged: devops + cinematic) -->
 <section id="home" class="hero">
   <div class="container">
     <div class="row align-items-center">
       <div class="col-lg-7">
         <h1>Arpit Kukadiya</h1>
         <div class="hero-sub">Cloud & DevOps Engineer</div>
-        <p class="text-muted my-3" style="color:#8b949e !important; max-width: 500px;">
+        <p class="text-muted my-3" style="max-width: 550px;">
           Designing scalable cloud infrastructure, automating deployments, and building resilient production systems.
         </p>
 
-        <!-- terminal animation (simulated) -->
-        <div class="terminal-intro" id="terminalAnim">
+        <!-- terminal animation (devops) -->
+        <div class="terminal-intro">
           <div class="terminal-line">$ kubectl get pods --namespace=production</div>
           <div class="terminal-line">> deployment/backend   1/1   Running</div>
           <div class="terminal-line">> deployment/frontend  1/1   Running</div>
@@ -392,14 +462,13 @@
         <div class="devops-icons mt-4">
           <i class="fab fa-aws"></i>
           <i class="fab fa-docker"></i>
-          <i class="fa-solid fa-dharmachakra"></i> <!-- k8s placeholder (helm) -->
-          <i class="fa-solid fa-code"></i> <!-- terraform symbol not in free? using hammer -->
-          <i class="fa-solid fa-hammer"></i> <!-- terraform substitute -->
+          <i class="fa-solid fa-dharmachakra"></i> <!-- k8s -->
+          <i class="fa-solid fa-hammer"></i> <!-- terraform -->
           <i class="fa-brands fa-linux"></i>
           <i class="fa-brands fa-github-alt"></i>
         </div>
 
-        <!-- server dashboard (simulated live) -->
+        <!-- server dashboard -->
         <div class="server-dashboard mt-4">
           <div class="row">
             <div class="col-4 metric">
@@ -419,19 +488,45 @@
             </div>
           </div>
         </div>
+
+        <!-- social icons (from first code) -->
+        <div class="social-icons mt-4">
+          <a href="https://www.linkedin.com/in/arpit-kukadiya-943b64266/" target="_blank" class="icon-link"><i class="bi bi-linkedin"></i></a>
+          <a href="https://github.com/Arpitkukadiya" target="_blank" class="icon-link"><i class="bi bi-github"></i></a>
+          <a href="https://www.instagram.com/patidar_111_/" target="_blank" class="icon-link"><i class="bi bi-instagram"></i></a>
+        </div>
       </div>
-      <!-- profile image (optional, but we keep for now) -->
       <div class="col-lg-5 text-center mt-4 mt-lg-0">
-        <img src="arpit.jpeg" alt="Arpit" class="img-fluid rounded-3 border" style="max-width: 300px; border: 2px solid #2e4b66 !important;">
+        <img src="arpit.jpeg" alt="Arpit" class="img-fluid rounded-4 border" style="max-width: 320px; border: 2px solid #2e4b66 !important;">
       </div>
     </div>
   </div>
+  <!-- scroll indicator (from first) -->
+  <div class="scroll-indicator"></div>
 </section>
 
-<!-- ABOUT / SKILLS (DevOps categories) -->
+<!-- ABOUT + SKILLS (merged: includes both original about boxes + devops skill categories) -->
 <section id="about" class="py-5">
   <div class="container">
-    <h2 class="mb-4" style="font-weight:600;">Infrastructure & Automation</h2>
+    <!-- original about icon boxes (from first code) -->
+    <h2 class="section-title text-center" style="font-family:'Playfair Display'; margin-bottom:2rem;">About Me</h2>
+    <div class="row justify-content-center g-4">
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="icon-box text-center p-4 h-100"><i class="fas fa-briefcase fa-2x text-info mb-3"></i><h6 class="fw-bold">Experience</h6><p class="text-white-50 mb-0">Fresher</p></div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="icon-box text-center p-4 h-100"><i class="fas fa-graduation-cap fa-2x text-success mb-3"></i><h6 class="fw-bold">Education</h6><p class="text-white-50 mb-0">BCA Computer Science</p></div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="icon-box text-center p-4 h-100"><i class="fas fa-map-marker-alt fa-2x text-danger mb-3"></i><h6 class="fw-bold">Location</h6><p class="text-white-50 mb-0">India</p></div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="icon-box text-center p-4 h-100"><i class="fas fa-code fa-2x text-warning mb-3"></i><h6 class="fw-bold">Speciality</h6><p class="text-white-50 mb-0">Cloud & DevOps</p></div>
+      </div>
+    </div>
+
+    <!-- DEVOPS SKILLS (categories) -->
+    <h2 class="mt-5 mb-4" style="font-weight:600;">Infrastructure & Automation</h2>
     <div class="row">
       <div class="col-md-6">
         <div class="skill-category">
@@ -460,8 +555,7 @@
         </div>
       </div>
     </div>
-
-    <!-- monitoring / linux -->
+    <!-- monitoring / linux badges -->
     <div class="row mt-3">
       <div class="col-md-6">
         <span class="badge-devops"><i class="fa-solid fa-chart-line me-1"></i> Prometheus</span>
@@ -472,7 +566,7 @@
       </div>
     </div>
 
-    <!-- EXPERIENCE TIMELINE (new) -->
+    <!-- EXPERIENCE TIMELINE -->
     <h2 class="mt-5 mb-4">DevOps Journey</h2>
     <div class="timeline-item">
       <div class="timeline-date">2024 – present</div>
@@ -496,55 +590,69 @@
   </div>
 </section>
 
-<!-- PROJECTS (infrastructure style) -->
+<!-- PROJECTS (merged: original project cards + infrastructure style) -->
 <section id="projects" class="py-5">
   <div class="container">
-    <h2 class="mb-4">Production Deployments</h2>
+    <h2 class="section-title text-center" style="font-family:'Playfair Display';">Projects</h2>
     <div class="row g-4">
-      <!-- project 1 -->
+      <!-- original projects with devops twist -->
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card h-100">
+          <img src="ims.png" alt="Internship" class="img-fluid mb-3" style="height:120px; object-fit:contain;">
+          <h3>Internship Management</h3>
+          <p class="text-muted small">Automated student internship portal with secure login & reporting.</p>
+          <div><span class="tech-tag">PHP</span><span class="tech-tag">MySQL</span><span class="tech-tag">Docker</span></div>
+          <div class="card-actions mt-3"><a href="#">GitHub</a><a href="#">Demo</a></div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card h-100">
+          <img src="farmer.png" alt="GreenHarvest" class="img-fluid mb-3" style="height:120px; object-fit:contain;">
+          <h3>GreenHarvest</h3>
+          <p class="text-muted small">Farmer-buyer platform, containerized with Node.js & MongoDB.</p>
+          <div><span class="tech-tag">React</span><span class="tech-tag">Node</span><span class="tech-tag">K8s</span></div>
+          <div class="card-actions mt-3"><a href="#">GitHub</a><a href="#">Demo</a></div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="project-card h-100">
+          <img src="footwear.png" alt="Footwear" class="img-fluid mb-3" style="height:120px; object-fit:contain;">
+          <h3>Footwear E‑commerce</h3>
+          <p class="text-muted small">Microservice-based e‑commerce with Vue & Express, deployed on EKS.</p>
+          <div><span class="tech-tag">Vue</span><span class="tech-tag">Express</span><span class="tech-tag">AWS</span></div>
+          <div class="card-actions mt-3"><a href="#">GitHub</a><a href="#">Arch</a></div>
+        </div>
+      </div>
+      <!-- more devops-style projects -->
       <div class="col-md-6 col-lg-4">
         <div class="project-card h-100">
           <h3>K8s Microservice</h3>
-          <p class="text-muted small">Deployed scalable Node.js app on EKS with HPA, Ingress, and cert-manager.</p>
-          <div><span class="tech-badge">K8s</span><span class="tech-badge">AWS EKS</span><span class="tech-badge">Helm</span></div>
-          <p class="mt-2"><i class="fa-solid fa-diagram-project accent-blue me-1"></i> 3 replicas, rolling update</p>
-          <div class="d-flex gap-2 mt-3">
-            <a href="#" class="diagram-btn"><i class="fa-brands fa-github"></i> GitHub</a>
-            <a href="#" class="diagram-btn"><i class="fa-regular fa-diagram"></i> Arch</a>
-          </div>
+          <p class="text-muted small">Scalable Node.js app on EKS with HPA, Ingress, cert-manager.</p>
+          <div><span class="tech-tag">K8s</span><span class="tech-tag">Helm</span><span class="tech-tag">AWS</span></div>
+          <div class="card-actions mt-3"><a href="#">GitHub</a><a href="#">Arch</a></div>
         </div>
       </div>
-      <!-- project 2 -->
       <div class="col-md-6 col-lg-4">
         <div class="project-card h-100">
           <h3>CI/CD with Jenkins</h3>
-          <p class="text-muted small">Pipeline as Code: build, test, push to ECR, deploy to ECS. Slack notifications.</p>
-          <div><span class="tech-badge">Jenkins</span><span class="tech-badge">Groovy</span><span class="tech-badge">AWS</span></div>
-          <p class="mt-2"><i class="fa-regular fa-clock accent-green me-1"></i> Deploy time: 2m 30s</p>
-          <div class="d-flex gap-2 mt-3">
-            <a href="#" class="diagram-btn">GitHub</a>
-            <a href="#" class="diagram-btn">Arch</a>
-          </div>
+          <p class="text-muted small">Pipeline as Code: build, push to ECR, deploy to ECS.</p>
+          <div><span class="tech-tag">Jenkins</span><span class="tech-tag">Groovy</span><span class="tech-tag">AWS</span></div>
+          <div class="card-actions mt-3"><a href="#">GitHub</a><a href="#">Arch</a></div>
         </div>
       </div>
-      <!-- project 3 -->
       <div class="col-md-6 col-lg-4">
         <div class="project-card h-100">
           <h3>Terraform AWS Infra</h3>
-          <p class="text-muted small">Modular VPC, EC2, RDS, S3 backend. Remote state locking with DynamoDB.</p>
-          <div><span class="tech-badge">Terraform</span><span class="tech-badge">AWS</span><span class="tech-badge">DynamoDB</span></div>
-          <p class="mt-2"><i class="fa-solid fa-code-branch accent-orange me-1"></i> 5 modules</p>
-          <div class="d-flex gap-2 mt-3">
-            <a href="#" class="diagram-btn">GitHub</a>
-            <a href="#" class="diagram-btn">Arch</a>
-          </div>
+          <p class="text-muted small">Modular VPC, EC2, RDS, S3 backend, remote state locking.</p>
+          <div><span class="tech-tag">Terraform</span><span class="tech-tag">AWS</span></div>
+          <div class="card-actions mt-3"><a href="#">GitHub</a><a href="#">Arch</a></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ARCHITECTURE DIAGRAM + GITHUB API section (simulated) -->
+<!-- ARCHITECTURE DIAGRAM + GITHUB STATS (simulated) -->
 <section class="py-4">
   <div class="container">
     <div class="arch-diagram">
@@ -552,7 +660,6 @@
       <h4>Reference Architecture: 3‑tier web on AWS</h4>
       <p class="text-muted">VPC · public/private subnets · ALB · ECS Fargate · RDS Aurora</p>
       <span class="badge-devops"><i class="fa-brands fa-github"></i> github/Arpitkukadiya/aws-3tier</span>
-      <!-- Simulated github api section -->
       <div class="mt-3 text-start small" style="max-width:400px;margin:0 auto;">
         <i class="fa-regular fa-star"></i> 23 stars · <i class="fa-regular fa-code-fork"></i> 6 forks
       </div>
@@ -560,11 +667,11 @@
   </div>
 </section>
 
-<!-- CONTACT + FOOTER (Let's Deploy Together) -->
+<!-- CONTACT + FOOTER (merged) -->
 <section id="contact" class="py-5">
   <div class="container">
     <div class="contact-card">
-      <h2 class="mb-3">Let's Deploy Together</h2>
+      <h2 class="mb-3" style="font-family:'Playfair Display';">Let's Deploy Together</h2>
       <div class="row">
         <div class="col-md-6">
           <p><i class="fa-regular fa-envelope me-2 accent-blue"></i> arpitkukadiya10@gmail.com</p>
@@ -581,12 +688,31 @@
       <p>© 2025 Arpit Kukadiya · Cloud & DevOps Engineer · uptime 99.9%</p>
     </footer>
   </div>
-</section>
+</footer>
 
 <!-- SCRIPTS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   gsap.registerPlugin(ScrollTrigger);
+
+  // ---------- LOADER (cinematic from first code) ----------
+  const loader = document.getElementById('loader');
+  const loaderText = document.getElementById('loaderText');
+  const fullName = 'ARPIT KUKADIYA';
+  let idx = 0;
+  loaderText.textContent = '';
+  function typeLoader() {
+    if (idx < fullName.length) {
+      loaderText.textContent += fullName[idx];
+      idx++;
+      setTimeout(typeLoader, 110);
+    } else {
+      setTimeout(() => {
+        gsap.to(loader, { opacity: 0, duration: 1.2, ease: 'power3.inOut', onComplete: () => loader.style.display = 'none' });
+      }, 500);
+    }
+  }
+  typeLoader();
 
   // ---------- THEME TOGGLE ----------
   const toggle = document.getElementById('themeToggle');
@@ -595,12 +721,12 @@
     toggle.innerHTML = document.body.classList.contains('light-mode') ? '<i class="bi bi-brightness-high me-1"></i> Light' : '<i class="bi bi-moon-stars me-1"></i> Dark';
   });
 
-  // ---------- TERMINAL TYPING ANIMATION (simulated extra line) ----------
+  // ---------- TERMINAL TYPING ----------
   const terminalSpan = document.getElementById('typingTerminal');
   const texts = ["CI/CD pipeline active", "kubectl get svc -A", "terraform apply -auto-approve"];
-  let idx = 0, charIdx = 0, isDel = false;
+  let tidx = 0, charIdx = 0, isDel = false;
   function typeTerminal() {
-    let current = texts[idx];
+    let current = texts[tidx];
     if (!isDel && charIdx <= current.length) {
       terminalSpan.innerText = current.substring(0, charIdx++);
       setTimeout(typeTerminal, 100);
@@ -612,32 +738,31 @@
       setTimeout(typeTerminal, 50);
     } else {
       isDel = false;
-      idx = (idx + 1) % texts.length;
+      tidx = (tidx + 1) % texts.length;
       setTimeout(typeTerminal, 300);
     }
   }
   typeTerminal();
 
-  // ---------- LIVE DASHBOARD (simulated changing values) ----------
+  // ---------- LIVE DASHBOARD SIMULATION ----------
   const cpuEl = document.getElementById('cpuVal');
   const memEl = document.getElementById('memVal');
   const uptimeEl = document.getElementById('uptimeVal');
   setInterval(() => {
-    let cpu = Math.floor(Math.random() * 30 + 30);  // 30-60%
-    let mem = Math.floor(Math.random() * 20 + 60); // 60-80%
+    let cpu = Math.floor(Math.random() * 30 + 30);
+    let mem = Math.floor(Math.random() * 20 + 60);
     cpuEl.innerText = cpu + '%';
     memEl.innerText = mem + '%';
-    // uptime slowly increments (simulated)
-    let uptime = parseInt(uptimeEl.innerText) || 27;
+    let uptime = parseFloat(uptimeEl.innerText) || 27;
     uptimeEl.innerText = (uptime + 0.01).toFixed(2) + 'd';
   }, 4000);
 
-  // ---------- GSAP SCROLL REVEAL (subtle) ----------
-  gsap.utils.toArray('.project-card, .skill-category, .timeline-item, .cert-card').forEach(el => {
-    gsap.from(el, { opacity: 0, y: 15, duration: 0.8, scrollTrigger: { trigger: el, start: 'top 85%' } });
+  // ---------- GSAP SCROLL REVEAL ----------
+  gsap.utils.toArray('.project-card, .skill-category, .timeline-item, .cert-card, .icon-box').forEach(el => {
+    gsap.from(el, { opacity: 0, y: 20, duration: 0.8, scrollTrigger: { trigger: el, start: 'top 85%' } });
   });
 
-  // active nav highlight
+  // ---------- NAV ACTIVE ----------
   const sections = document.querySelectorAll('section');
   const navLinks = document.querySelectorAll('.nav-link');
   function updateActive() {
