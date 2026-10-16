@@ -46,7 +46,9 @@
       box-sizing: border-box;
     }
 
-    html {
+    html, body {
+      width: 100%;
+      overflow-x: hidden;
       scroll-behavior: smooth;
       scroll-padding-top: 80px;
     }
@@ -56,7 +58,6 @@
       background: var(--bg-deep);
       color: var(--text-light);
       line-height: 1.6;
-      overflow-x: hidden;
       position: relative;
     }
 
@@ -76,6 +77,21 @@
       letter-spacing: -0.02em;
     }
 
+    /* ================= FULL WIDTH CONTAINER (No side gap) ================= */
+    .full-container {
+      width: 100%;
+      max-width: 100%;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+      margin: 0 auto;
+    }
+    @media (min-width: 1400px) {
+      .full-container {
+        padding-left: 3rem;
+        padding-right: 3rem;
+      }
+    }
+
     /* ================= SCROLLBAR ================= */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: var(--bg-deep); }
@@ -85,9 +101,11 @@
     .navbar {
       background: rgba(11, 15, 26, 0.85);
       backdrop-filter: blur(12px);
-      padding: 1rem 2rem;
+      -webkit-backdrop-filter: blur(12px);
+      padding: 0.9rem 0;
       border-bottom: 1px solid var(--border-glass);
       transition: all 0.3s ease;
+      width: 100%;
     }
     .navbar.scrolled {
       background: rgba(11, 15, 26, 0.98);
@@ -125,15 +143,16 @@
     .navbar-nav .nav-link:hover { color: #fff !important; }
     .navbar-toggler {
       border: 1px solid var(--primary);
-      padding: 0.5rem 0.75rem;
+      padding: 0.4rem 0.65rem;
     }
-    .navbar-toggler i { color: var(--primary); font-size: 1.25rem; }
+    .navbar-toggler i { color: var(--primary); font-size: 1.2rem; }
+    .navbar-toggler:focus { box-shadow: none; }
 
     /* ================= BUTTONS ================= */
     .btn-primary-custom {
       background: var(--primary);
       border: none;
-      padding: 0.9rem 2.2rem;
+      padding: 0.85rem 2rem;
       font-weight: 600;
       border-radius: 50px;
       color: #fff;
@@ -141,6 +160,7 @@
       box-shadow: 0 8px 18px -6px rgba(59, 130, 246, 0.4);
       text-decoration: none;
       display: inline-block;
+      font-size: 0.95rem;
     }
     .btn-primary-custom:hover {
       background: var(--primary-glow);
@@ -150,24 +170,31 @@
     }
     .btn-outline-custom {
       border: 2px solid rgba(255, 255, 255, 0.2);
-      padding: 0.9rem 2.2rem;
+      padding: 0.85rem 2rem;
       font-weight: 600;
       border-radius: 50px;
       color: #fff;
       transition: all 0.3s ease;
       text-decoration: none;
       display: inline-block;
+      font-size: 0.95rem;
     }
     .btn-outline-custom:hover {
       border-color: var(--primary);
       background: rgba(59, 130, 246, 0.1);
       transform: translateY(-3px);
+      color: #fff;
     }
 
     /* ================= SECTIONS ================= */
-    section { padding: 6rem 0; position: relative; z-index: 2; }
+    section {
+      padding: 5rem 0;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
     .section-title {
-      font-size: 2.75rem;
+      font-size: 2.5rem;
       font-weight: 700;
       margin-bottom: 1rem;
       color: #fff;
@@ -178,7 +205,8 @@
       content: '';
       position: absolute;
       bottom: -12px;
-      left: 0;
+      left: 50%;
+      transform: translateX(-50%);
       width: 60px;
       height: 4px;
       background: var(--primary);
@@ -186,7 +214,7 @@
     }
     .section-subtitle {
       color: var(--text-muted);
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       max-width: 600px;
       margin: 0 auto 3rem auto;
     }
@@ -197,9 +225,11 @@
       display: flex;
       align-items: center;
       background: var(--gradient-hero);
-      padding-top: 5rem;
+      padding-top: 6rem;
+      padding-bottom: 3rem;
       position: relative;
       overflow: hidden;
+      width: 100%;
     }
     .hero-section::after {
       content: '';
@@ -212,10 +242,21 @@
       border-radius: 50%;
       pointer-events: none;
     }
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: -10%;
+      left: -5%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
     .hero-name {
-      font-size: 3.8rem;
+      font-size: 3.5rem;
       font-weight: 800;
-      line-height: 1.2;
+      line-height: 1.15;
       margin-bottom: 0.5rem;
     }
     .hero-name span {
@@ -225,30 +266,29 @@
       background-clip: text;
     }
     .dynamic-text {
-      font-size: 1.8rem;
+      font-size: 1.7rem;
       font-weight: 500;
       color: var(--text-muted);
-      margin-bottom: 1.5rem;
-      min-height: 3.5rem;
+      margin-bottom: 1.25rem;
+      min-height: 3rem;
       font-family: var(--font-display);
     }
     .hero-desc {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       color: var(--text-muted);
-      max-width: 500px;
-      margin-bottom: 2rem;
-      line-height: 1.8;
+      max-width: 540px;
+      margin-bottom: 1.75rem;
+      line-height: 1.75;
     }
 
-    /* ========== CLEAN HERO PHOTO (No thumbnails) ========== */
+    /* ========== CLEAN HERO PHOTO ========== */
     .hero-photo-wrapper {
       display: flex;
       justify-content: center;
       align-items: center;
       position: relative;
-      padding: 2rem;
+      padding: 1.5rem;
     }
-    /* Animated glowing ring behind photo */
     .hero-photo-wrapper::before {
       content: '';
       position: absolute;
@@ -266,7 +306,6 @@
       0%, 100% { transform: scale(1); opacity: 0.7; }
       50% { transform: scale(1.15); opacity: 1; }
     }
-    /* Decorative rotating dashed ring */
     .hero-photo-wrapper::after {
       content: '';
       position: absolute;
@@ -287,7 +326,7 @@
       position: relative;
       z-index: 2;
       width: 100%;
-      max-width: 380px;
+      max-width: 360px;
       aspect-ratio: 1/1;
       object-fit: cover;
       border-radius: 50%;
@@ -306,25 +345,25 @@
         0 0 80px rgba(59, 130, 246, 0.7),
         inset 0 0 40px rgba(59, 130, 246, 0.2);
     }
-    /* Available for work badge */
     .available-badge {
       position: absolute;
-      bottom: 10%;
-      right: 5%;
+      bottom: 8%;
+      right: 8%;
       background: rgba(11, 15, 26, 0.95);
       backdrop-filter: blur(10px);
-      padding: 0.6rem 1.2rem;
+      padding: 0.55rem 1.1rem;
       border-radius: 50px;
       border: 1px solid rgba(16, 185, 129, 0.5);
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 600;
       color: #10b981;
       z-index: 3;
       box-shadow: 0 10px 25px -10px rgba(16, 185, 129, 0.5);
       animation: float-badge 3s ease-in-out infinite;
+      white-space: nowrap;
     }
     @keyframes float-badge {
       0%, 100% { transform: translateY(0); }
@@ -337,6 +376,7 @@
       border-radius: 50%;
       box-shadow: 0 0 10px #10b981;
       animation: pulse-dot-green 1.5s ease-in-out infinite;
+      flex-shrink: 0;
     }
     @keyframes pulse-dot-green {
       0%, 100% { transform: scale(1); opacity: 1; }
@@ -348,14 +388,14 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 48px;
-      height: 48px;
+      width: 46px;
+      height: 46px;
       border-radius: 12px;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border-glass);
       color: var(--text-light);
-      font-size: 1.3rem;
-      margin-right: 1rem;
+      font-size: 1.25rem;
+      margin-right: 0.9rem;
       transition: all 0.3s ease;
       text-decoration: none;
     }
@@ -372,7 +412,7 @@
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-card);
-      padding: 2rem 1.5rem;
+      padding: 1.8rem 1.2rem;
       text-align: center;
       height: 100%;
       transition: all 0.35s ease;
@@ -384,28 +424,28 @@
       box-shadow: 0 25px 35px -15px rgba(0, 0, 0, 0.6);
     }
     .icon-card i {
-      font-size: 2.5rem;
+      font-size: 2.25rem;
       color: var(--primary);
-      margin-bottom: 1.2rem;
+      margin-bottom: 1rem;
     }
     .icon-card h6 {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-weight: 600;
       color: #fff;
       margin-bottom: 0.5rem;
     }
     .icon-card p {
       color: var(--text-muted);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       margin: 0;
     }
 
     /* ================= SKILLS ================= */
-    .skill-item { margin-bottom: 1.8rem; }
+    .skill-item { margin-bottom: 1.6rem; }
     .skill-item h6 {
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 600;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.55rem;
       color: #fff;
       display: flex;
       justify-content: space-between;
@@ -460,24 +500,26 @@
       height: 200px;
       object-fit: cover;
       border-bottom: 1px solid var(--border-glass);
+      display: block;
     }
     .card-body {
-      padding: 1.5rem;
+      padding: 1.4rem;
       flex: 1;
       display: flex;
       flex-direction: column;
       background: var(--bg-card);
     }
     .card-title {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.65rem;
     }
     .card-text {
       color: var(--text-muted);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       flex: 1;
+      margin: 0;
     }
     .hover-overlay {
       position: absolute;
@@ -519,9 +561,9 @@
       right: 1rem;
       background: rgba(16, 185, 129, 0.9);
       color: #fff;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 700;
-      padding: 0.3rem 0.8rem;
+      padding: 0.3rem 0.75rem;
       border-radius: 30px;
       letter-spacing: 1px;
       text-transform: uppercase;
@@ -550,51 +592,54 @@
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-card);
-      padding: 2rem;
+      padding: 1.8rem;
       height: 100%;
     }
     .contact-info-item {
       display: flex;
       align-items: flex-start;
-      margin-bottom: 2rem;
+      margin-bottom: 1.6rem;
     }
+    .contact-info-item:last-child { margin-bottom: 0; }
     .contact-info-item i {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       color: var(--primary);
       margin-right: 1rem;
       background: rgba(59, 130, 246, 0.1);
-      width: 50px;
-      height: 50px;
+      width: 48px;
+      height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 14px;
       border: 1px solid var(--border-glass);
+      flex-shrink: 0;
     }
     .contact-info-item h4 {
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: var(--text-muted);
       margin-bottom: 0.2rem;
     }
     .contact-info-item p {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 500;
       color: #fff;
       margin: 0;
+      word-break: break-word;
     }
     .contact-form {
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-card);
-      padding: 2.2rem;
+      padding: 2rem;
     }
     .contact-form .form-control {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border-glass);
       border-radius: 12px;
-      padding: 1rem 1.2rem;
+      padding: 0.9rem 1.1rem;
       color: #fff;
-      font-size: 1rem;
+      font-size: 0.95rem;
       transition: all 0.2s;
     }
     .contact-form .form-control:focus {
@@ -607,13 +652,14 @@
     .contact-form button[type="submit"] {
       background: var(--primary);
       border: none;
-      padding: 0.9rem 2.5rem;
+      padding: 0.85rem 2.5rem;
       font-weight: 600;
       border-radius: 50px;
       color: #fff;
       transition: all 0.3s ease;
       box-shadow: 0 8px 18px -6px rgba(59, 130, 246, 0.4);
       width: 100%;
+      font-size: 0.95rem;
     }
     .contact-form button[type="submit"]:hover {
       background: var(--primary-glow);
@@ -624,26 +670,28 @@
     /* ================= FOOTER ================= */
     #footer {
       background: #070b14;
-      padding: 4rem 0 2rem;
+      padding: 3.5rem 0 1.5rem;
       border-top: 1px solid var(--border-glass);
+      width: 100%;
     }
     .footer-logo {
-      font-size: 2rem;
+      font-size: 1.9rem;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
       font-family: var(--font-display);
     }
     .footer-logo span { color: var(--primary); }
     .footer-desc {
       color: var(--text-muted);
-      font-size: 0.95rem;
-      max-width: 300px;
+      font-size: 0.92rem;
+      max-width: 320px;
+      line-height: 1.7;
     }
     .footer-heading {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 600;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.3rem;
       color: #fff;
       position: relative;
       display: inline-block;
@@ -658,36 +706,37 @@
       background: var(--primary);
       border-radius: 4px;
     }
-    .footer-links { list-style: none; padding: 0; }
-    .footer-links li { margin-bottom: 0.9rem; }
+    .footer-links { list-style: none; padding: 0; margin: 0; }
+    .footer-links li { margin-bottom: 0.8rem; }
     .footer-links a {
       color: var(--text-muted);
       text-decoration: none;
       transition: all 0.2s;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
     }
     .footer-links a:hover { color: var(--primary); padding-left: 5px; }
     .footer-contact-item {
       color: var(--text-muted);
-      margin-bottom: 1rem;
+      margin-bottom: 0.9rem;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      font-size: 0.95rem;
+      gap: 0.7rem;
+      font-size: 0.92rem;
+      word-break: break-word;
     }
-    .footer-contact-item i { color: var(--primary); width: 20px; }
+    .footer-contact-item i { color: var(--primary); width: 20px; flex-shrink: 0; }
     .footer-social a {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 42px;
-      height: 42px;
+      width: 40px;
+      height: 40px;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border-glass);
       border-radius: 12px;
       color: var(--text-muted);
-      font-size: 1.2rem;
-      margin-right: 0.75rem;
+      font-size: 1.15rem;
+      margin-right: 0.6rem;
       transition: all 0.3s ease;
       text-decoration: none;
     }
@@ -700,48 +749,93 @@
     }
     .footer-bottom {
       border-top: 1px solid var(--border-glass);
-      margin-top: 3rem;
-      padding-top: 2rem;
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
       text-align: center;
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }
+    .footer-bottom p { margin: 0; }
 
     /* ================= RESPONSIVE ================= */
-    @media (max-width: 991px) {
+    @media (max-width: 1199px) {
       .hero-name { font-size: 3rem; }
       .dynamic-text { font-size: 1.5rem; }
-      section { padding: 4rem 0; }
-      .section-title { font-size: 2.25rem; }
-      .navbar { padding: 0.8rem 1rem; }
-      .navbar-nav .nav-link { margin: 0.3rem 0; }
       .hero-photo { max-width: 320px; }
-      .available-badge { bottom: 5%; right: 10%; font-size: 0.75rem; }
+    }
+
+    @media (max-width: 991px) {
+      section { padding: 4rem 0; }
+      .section-title { font-size: 2.1rem; }
+      .full-container {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+      }
+      .hero-section { padding-top: 6rem; padding-bottom: 2rem; }
+      .hero-name { font-size: 2.8rem; }
+      .dynamic-text { font-size: 1.4rem; min-height: 2.6rem; }
+      .hero-desc { font-size: 1rem; }
+      .hero-photo { max-width: 280px; }
+      .navbar-nav .nav-link { margin: 0.4rem 0; }
+      .navbar-nav { padding: 0.75rem 0; }
+      .section-title::after { left: 50%; transform: translateX(-50%); }
     }
 
     @media (max-width: 767px) {
-      .hero-name { font-size: 2.5rem; }
-      .dynamic-text { font-size: 1.25rem; min-height: 2.8rem; }
-      .hero-photo { max-width: 260px; }
+      .hero-name { font-size: 2.3rem; }
+      .dynamic-text { font-size: 1.2rem; min-height: 2.4rem; }
+      .hero-photo { max-width: 240px; }
       .hero-photo-wrapper { padding: 1rem; }
-      .available-badge { bottom: 5%; right: 15%; font-size: 0.7rem; padding: 0.4rem 0.9rem; }
+      .available-badge { bottom: 5%; right: 5%; font-size: 0.7rem; padding: 0.4rem 0.85rem; }
       .btn-primary-custom,
-      .btn-outline-custom { padding: 0.75rem 1.8rem; font-size: 0.95rem; }
-      .section-title { font-size: 2rem; }
+      .btn-outline-custom { padding: 0.7rem 1.6rem; font-size: 0.9rem; }
+      .section-title { font-size: 1.9rem; }
+      .section-subtitle { font-size: 1rem; }
       .project-card .card-image { height: 180px; }
       .contact-info-card,
-      .contact-form { padding: 1.5rem; }
-      .social-icon { width: 42px; height: 42px; font-size: 1.1rem; }
+      .contact-form { padding: 1.4rem; }
+      .social-icon { width: 42px; height: 42px; font-size: 1.1rem; margin-right: 0.7rem; }
+      section { padding: 3.5rem 0; }
+      .full-container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 575px) {
       .hero-name { font-size: 2rem; }
-      .dynamic-text { font-size: 1rem; min-height: 2.5rem; }
-      .section-title { font-size: 1.75rem; }
-      .icon-card { padding: 1.5rem 1rem; }
+      .dynamic-text { font-size: 1.05rem; min-height: 2.1rem; }
+      .hero-desc { font-size: 0.92rem; }
+      .section-title { font-size: 1.7rem; }
+      .icon-card { padding: 1.4rem 1rem; }
       .icon-card i { font-size: 2rem; }
-      .hero-photo { max-width: 220px; }
-      .available-badge { bottom: 5%; right: 10%; font-size: 0.65rem; padding: 0.35rem 0.8rem; }
+      .icon-card h6 { font-size: 1.05rem; }
+      .hero-photo { max-width: 200px; }
+      .available-badge { bottom: 3%; right: 3%; font-size: 0.65rem; padding: 0.35rem 0.75rem; }
+      .card-body { padding: 1.2rem; }
+      .card-title { font-size: 1.1rem; }
+      .contact-form { padding: 1.2rem; }
+      .contact-info-item i { width: 42px; height: 42px; font-size: 1.2rem; }
+      .btn-primary-custom,
+      .btn-outline-custom { padding: 0.65rem 1.4rem; font-size: 0.88rem; }
+      .full-container {
+        padding-left: 0.85rem;
+        padding-right: 0.85rem;
+      }
+      .footer-social a { width: 36px; height: 36px; font-size: 1rem; margin-right: 0.5rem; }
+      section { padding: 3rem 0; }
+    }
+
+    @media (max-width: 375px) {
+      .hero-name { font-size: 1.75rem; }
+      .dynamic-text { font-size: 0.95rem; min-height: 1.9rem; }
+      .hero-photo { max-width: 180px; }
+      .available-badge { font-size: 0.6rem; padding: 0.3rem 0.65rem; }
+      .section-title { font-size: 1.5rem; }
+      .full-container {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+      }
     }
 
     /* utility */
@@ -759,26 +853,28 @@
 
 <!-- ================= NAVBAR ================= -->
 <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
-  <div class="container">
-    <a class="navbar-brand" href="#">Arpit<span>.</span></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <i class="fas fa-bars"></i>
-    </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-      </ul>
+  <div class="full-container">
+    <div class="d-flex justify-content-between align-items-center w-100">
+      <a class="navbar-brand" href="#">Arpit<span>.</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </nav>
 
 <!-- ================= HERO ================= -->
 <section id="home" class="hero-section">
-  <div class="container">
-    <div class="row align-items-center g-5">
+  <div class="full-container">
+    <div class="row align-items-center g-4 g-lg-5">
       <!-- left text -->
       <div class="col-lg-6 order-2 order-lg-1" data-aos="fade-right">
         <div class="hero-name">Hey, I'm <span>Arpit Kukadiya</span></div>
@@ -792,13 +888,13 @@
           <a href="#contact" class="btn-outline-custom">Let's Talk</a>
         </div>
         <!-- social icons -->
-        <div class="d-flex">
+        <div class="d-flex flex-wrap">
           <a href="https://www.linkedin.com/in/arpit-kukadiya-943b64266/" target="_blank" class="social-icon"><i class="bi bi-linkedin"></i></a>
           <a href="https://github.com/Arpitkukadiya" target="_blank" class="social-icon"><i class="bi bi-github"></i></a>
           <a href="https://www.instagram.com/patidar_111_/" target="_blank" class="social-icon"><i class="bi bi-instagram"></i></a>
         </div>
       </div>
-      <!-- right image - CLEAN SINGLE PHOTO -->
+      <!-- right image -->
       <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-left">
         <div class="hero-photo-wrapper">
           <img src="arpit.jpeg" alt="Arpit Kukadiya" class="hero-photo">
@@ -814,36 +910,36 @@
 
 <!-- ================= ABOUT ================= -->
 <section id="about" class="bg-darker">
-  <div class="container">
+  <div class="full-container">
     <div class="text-center mb-5" data-aos="fade-up">
       <h2 class="section-title">About Me</h2>
       <p class="section-subtitle">A glimpse into my background and expertise</p>
     </div>
 
     <!-- info cards -->
-    <div class="row g-4 mb-5">
-      <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="0">
+    <div class="row g-3 g-md-4 mb-5">
+      <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="0">
         <div class="icon-card">
           <i class="fas fa-briefcase"></i>
           <h6>Experience</h6>
           <p>Fresher</p>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="100">
+      <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="100">
         <div class="icon-card">
           <i class="fas fa-graduation-cap"></i>
           <h6>Education</h6>
           <p>BCA in Computer Science</p>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="200">
+      <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="200">
         <div class="icon-card">
           <i class="fas fa-map-marker-alt"></i>
           <h6>Location</h6>
           <p>India</p>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="300">
+      <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="300">
         <div class="icon-card">
           <i class="fas fa-code"></i>
           <h6>Speciality</h6>
@@ -855,50 +951,50 @@
     <!-- skills -->
     <div class="mt-5" data-aos="fade-up">
       <h4 class="text-center mb-5" style="font-weight: 600; color: #fff;">Technical Skills</h4>
-      <div class="row g-4">
-        <div class="col-md-6">
+      <div class="row g-3 g-md-4">
+        <div class="col-12 col-md-6">
           <div class="skill-item">
             <h6>HTML <span>90%</span></h6>
             <div class="progress"><div class="progress-bar bg-html animate-bar" style="--target-width: 90%;"></div></div>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <div class="skill-item">
             <h6>CSS <span>75%</span></h6>
             <div class="progress"><div class="progress-bar bg-css animate-bar" style="--target-width: 75%;"></div></div>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <div class="skill-item">
             <h6>Bootstrap <span>70%</span></h6>
             <div class="progress"><div class="progress-bar bg-bootstrap animate-bar" style="--target-width: 70%;"></div></div>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <div class="skill-item">
             <h6>JavaScript <span>10%</span></h6>
             <div class="progress"><div class="progress-bar bg-javascript animate-bar" style="--target-width: 10%;"></div></div>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <div class="skill-item">
             <h6>Power BI <span>90%</span></h6>
             <div class="progress"><div class="progress-bar bg-powerbi animate-bar" style="--target-width: 90%;"></div></div>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <div class="skill-item">
             <h6>DBA <span>85%</span></h6>
             <div class="progress"><div class="progress-bar bg-dba animate-bar" style="--target-width: 85%;"></div></div>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <div class="skill-item">
             <h6>Laravel <span>65%</span></h6>
             <div class="progress"><div class="progress-bar bg-laravel animate-bar" style="--target-width: 65%;"></div></div>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <div class="skill-item">
             <h6>Cloud Computing <span>60%</span></h6>
             <div class="progress"><div class="progress-bar bg-cloud animate-bar" style="--target-width: 60%;"></div></div>
@@ -910,16 +1006,16 @@
 </section>
 
 <!-- ================= PROJECTS ================= -->
-<section id="projects" class="bg-deep" style="background: #0b0f1a;">
-  <div class="container">
+<section id="projects" style="background: #0b0f1a;">
+  <div class="full-container">
     <div class="text-center mb-5" data-aos="fade-up">
       <h2 class="section-title">Projects</h2>
       <p class="section-subtitle">Some of my recent work — crafted with passion</p>
     </div>
-    <div class="row g-4">
+    <div class="row g-3 g-md-4">
       
       <!-- ========== SALOOHAIRBYCHETS (LIVE) ========== -->
-      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="0">
+      <div class="col-12 col-sm-6 col-lg-4" data-aos="fade-up" data-aos-delay="0">
         <div class="project-card">
           <span class="live-badge"><span class="pulse-dot"></span> LIVE</span>
           <img src="https://image.thum.io/get/width/600/crop/400/https://saloohairbychets.vercel.app" 
@@ -936,7 +1032,7 @@
       </div>
 
       <!-- ========== VEERU-INFOTECH (LIVE) ========== -->
-      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+      <div class="col-12 col-sm-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
         <div class="project-card">
           <span class="live-badge"><span class="pulse-dot"></span> LIVE</span>
           <img src="https://image.thum.io/get/width/600/crop/400/https://veeru-infotech.vercel.app" 
@@ -953,7 +1049,7 @@
       </div>
 
       <!-- 1 -->
-      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+      <div class="col-12 col-sm-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
         <div class="project-card">
           <img src="ims.png" alt="Internship Management System" class="card-image">
           <div class="card-body">
@@ -966,7 +1062,7 @@
         </div>
       </div>
       <!-- 2 -->
-      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="0">
+      <div class="col-12 col-sm-6 col-lg-4" data-aos="fade-up" data-aos-delay="0">
         <div class="project-card">
           <img src="farmer.png" alt="GreenHarvest" class="card-image">
           <div class="card-body">
@@ -979,7 +1075,7 @@
         </div>
       </div>
       <!-- 3 -->
-      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+      <div class="col-12 col-sm-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
         <div class="project-card">
           <img src="footwear.png" alt="Footwear" class="card-image">
           <div class="card-body">
@@ -992,7 +1088,7 @@
         </div>
       </div>
       <!-- 4 -->
-      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+      <div class="col-12 col-sm-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
         <div class="project-card">
           <img src="docker/docker.png" alt="Docker Cheat Sheet" class="card-image">
           <div class="card-body">
@@ -1005,7 +1101,7 @@
         </div>
       </div>
       <!-- 5 -->
-      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="0">
+      <div class="col-12 col-sm-6 col-lg-4" data-aos="fade-up" data-aos-delay="0">
         <div class="project-card">
           <img src="wather.png" alt="Weather Forecast" class="card-image">
           <div class="card-body">
@@ -1018,7 +1114,7 @@
         </div>
       </div>
       <!-- 6 -->
-      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+      <div class="col-12 col-sm-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
         <div class="project-card">
           <img src="game.png" alt="Game" class="card-image">
           <div class="card-body">
@@ -1036,14 +1132,14 @@
 
 <!-- ================= CONTACT ================= -->
 <section id="contact" class="bg-darker">
-  <div class="container" data-aos="fade-up">
+  <div class="full-container" data-aos="fade-up">
     <div class="text-center mb-5">
       <h2 class="section-title">Contact</h2>
       <p class="section-subtitle">Let's build something amazing together</p>
     </div>
-    <div class="row g-4">
+    <div class="row g-3 g-md-4">
       <!-- info -->
-      <div class="col-lg-4">
+      <div class="col-12 col-lg-4">
         <div class="contact-info-card">
           <div class="contact-info-item">
             <i class="bi bi-geo-alt"></i>
@@ -1069,14 +1165,14 @@
         </div>
       </div>
       <!-- form -->
-      <div class="col-lg-8">
+      <div class="col-12 col-lg-8">
         <form action="https://api.web3forms.com/submit" method="POST" class="contact-form">
           <input type="hidden" name="access_key" value="b1311ffb-e2b9-4870-973f-c052bc44ba6b">
           <div class="row g-3">
-            <div class="col-md-6">
+            <div class="col-12 col-md-6">
               <input type="text" name="name" class="form-control" placeholder="Your Name" required>
             </div>
-            <div class="col-md-6">
+            <div class="col-12 col-md-6">
               <input type="email" name="email" class="form-control" placeholder="Your Email" required>
             </div>
             <div class="col-12">
@@ -1097,15 +1193,15 @@
 
 <!-- ================= FOOTER ================= -->
 <footer id="footer">
-  <div class="container">
-    <div class="row g-5">
-      <div class="col-lg-4 col-md-6">
+  <div class="full-container">
+    <div class="row g-4">
+      <div class="col-12 col-md-6 col-lg-4">
         <div class="footer-logo">Arpit<span>.</span></div>
         <p class="footer-desc">
           I'm Arpit Kukadiya, a passionate web developer creating modern, responsive websites and applications.
         </p>
       </div>
-      <div class="col-lg-2 col-md-6">
+      <div class="col-6 col-md-6 col-lg-2">
         <h3 class="footer-heading">Quick Links</h3>
         <ul class="footer-links">
           <li><a href="#home">Home</a></li>
@@ -1114,12 +1210,12 @@
           <li><a href="#contact">Contact</a></li>
         </ul>
       </div>
-      <div class="col-lg-3 col-md-6">
+      <div class="col-6 col-md-6 col-lg-3">
         <h3 class="footer-heading">Contact Info</h3>
-        <div class="footer-contact-item"><i class="fas fa-envelope"></i> arpitkukadiya10@gmail.com</div>
-        <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i> Gandhinagar, India</div>
+        <div class="footer-contact-item"><i class="fas fa-envelope"></i> <span>arpitkukadiya10@gmail.com</span></div>
+        <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i> <span>Gandhinagar, India</span></div>
       </div>
-      <div class="col-lg-3 col-md-6">
+      <div class="col-12 col-md-6 col-lg-3">
         <h3 class="footer-heading">Follow Me</h3>
         <div class="footer-social">
           <a href="https://github.com/Arpitkukadiya" target="_blank"><i class="fab fa-github"></i></a>
