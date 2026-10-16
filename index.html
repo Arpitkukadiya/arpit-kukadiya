@@ -77,18 +77,17 @@
       letter-spacing: -0.02em;
     }
 
-    /* ================= FULL WIDTH CONTAINER (No side gap) ================= */
+    /* ================= FULL WIDTH CONTAINER ================= */
     .full-container {
       width: 100%;
-      max-width: 100%;
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
+      max-width: 1400px;
+      padding-left: 2rem;
+      padding-right: 2rem;
       margin: 0 auto;
     }
-    @media (min-width: 1400px) {
+    @media (min-width: 1600px) {
       .full-container {
-        padding-left: 3rem;
-        padding-right: 3rem;
+        max-width: 1500px;
       }
     }
 
@@ -253,6 +252,25 @@
       border-radius: 50%;
       pointer-events: none;
     }
+
+    /* Hero two-column layout */
+    .hero-row {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+    }
+    .hero-text-col {
+      flex: 1 1 55%;
+      min-width: 0;
+    }
+    .hero-image-col {
+      flex: 1 1 45%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      min-width: 0;
+    }
+
     .hero-name {
       font-size: 3.5rem;
       font-weight: 800;
@@ -281,21 +299,21 @@
       line-height: 1.75;
     }
 
-    /* ========== CLEAN HERO PHOTO ========== */
+    /* ========== HERO PHOTO (Right side, clean) ========== */
     .hero-photo-wrapper {
       display: flex;
       justify-content: center;
       align-items: center;
       position: relative;
       padding: 1.5rem;
+      width: 100%;
+      max-width: 460px;
     }
     .hero-photo-wrapper::before {
       content: '';
       position: absolute;
-      width: 85%;
-      height: 85%;
-      max-width: 420px;
-      max-height: 420px;
+      width: 88%;
+      height: 88%;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(59, 130, 246, 0.35) 0%, rgba(139, 92, 246, 0.2) 40%, transparent 70%);
       filter: blur(50px);
@@ -309,10 +327,8 @@
     .hero-photo-wrapper::after {
       content: '';
       position: absolute;
-      width: 90%;
-      height: 90%;
-      max-width: 440px;
-      max-height: 440px;
+      width: 92%;
+      height: 92%;
       border-radius: 50%;
       border: 2px dashed rgba(59, 130, 246, 0.25);
       z-index: 0;
@@ -326,7 +342,7 @@
       position: relative;
       z-index: 2;
       width: 100%;
-      max-width: 360px;
+      max-width: 380px;
       aspect-ratio: 1/1;
       object-fit: cover;
       border-radius: 50%;
@@ -761,31 +777,48 @@
     @media (max-width: 1199px) {
       .hero-name { font-size: 3rem; }
       .dynamic-text { font-size: 1.5rem; }
-      .hero-photo { max-width: 320px; }
+      .hero-photo { max-width: 340px; }
     }
 
     @media (max-width: 991px) {
       section { padding: 4rem 0; }
       .section-title { font-size: 2.1rem; }
       .full-container {
-        padding-left: 1.25rem;
-        padding-right: 1.25rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
       }
-      .hero-section { padding-top: 6rem; padding-bottom: 2rem; }
+      .hero-section { padding-top: 6rem; padding-bottom: 3rem; }
+      .hero-row { 
+        flex-direction: column-reverse;
+        gap: 2rem;
+        text-align: center;
+      }
+      .hero-text-col { 
+        flex: 1 1 100%; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .hero-image-col { 
+        flex: 1 1 100%; 
+        justify-content: center;
+      }
       .hero-name { font-size: 2.8rem; }
       .dynamic-text { font-size: 1.4rem; min-height: 2.6rem; }
-      .hero-desc { font-size: 1rem; }
-      .hero-photo { max-width: 280px; }
+      .hero-desc { font-size: 1rem; margin-left: auto; margin-right: auto; }
+      .hero-photo { max-width: 300px; }
+      .hero-photo-wrapper { max-width: 400px; }
       .navbar-nav .nav-link { margin: 0.4rem 0; }
       .navbar-nav { padding: 0.75rem 0; }
       .section-title::after { left: 50%; transform: translateX(-50%); }
+      .social-icon { margin-right: 0.5rem; margin-bottom: 0.5rem; }
     }
 
     @media (max-width: 767px) {
       .hero-name { font-size: 2.3rem; }
       .dynamic-text { font-size: 1.2rem; min-height: 2.4rem; }
-      .hero-photo { max-width: 240px; }
-      .hero-photo-wrapper { padding: 1rem; }
+      .hero-photo { max-width: 260px; }
+      .hero-photo-wrapper { padding: 1rem; max-width: 340px; }
       .available-badge { bottom: 5%; right: 5%; font-size: 0.7rem; padding: 0.4rem 0.85rem; }
       .btn-primary-custom,
       .btn-outline-custom { padding: 0.7rem 1.6rem; font-size: 0.9rem; }
@@ -794,11 +827,11 @@
       .project-card .card-image { height: 180px; }
       .contact-info-card,
       .contact-form { padding: 1.4rem; }
-      .social-icon { width: 42px; height: 42px; font-size: 1.1rem; margin-right: 0.7rem; }
+      .social-icon { width: 42px; height: 42px; font-size: 1.1rem; }
       section { padding: 3.5rem 0; }
       .full-container {
-        padding-left: 1rem;
-        padding-right: 1rem;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
       }
     }
 
@@ -810,7 +843,8 @@
       .icon-card { padding: 1.4rem 1rem; }
       .icon-card i { font-size: 2rem; }
       .icon-card h6 { font-size: 1.05rem; }
-      .hero-photo { max-width: 200px; }
+      .hero-photo { max-width: 220px; }
+      .hero-photo-wrapper { max-width: 300px; }
       .available-badge { bottom: 3%; right: 3%; font-size: 0.65rem; padding: 0.35rem 0.75rem; }
       .card-body { padding: 1.2rem; }
       .card-title { font-size: 1.1rem; }
@@ -819,8 +853,8 @@
       .btn-primary-custom,
       .btn-outline-custom { padding: 0.65rem 1.4rem; font-size: 0.88rem; }
       .full-container {
-        padding-left: 0.85rem;
-        padding-right: 0.85rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
       }
       .footer-social a { width: 36px; height: 36px; font-size: 1rem; margin-right: 0.5rem; }
       section { padding: 3rem 0; }
@@ -829,12 +863,13 @@
     @media (max-width: 375px) {
       .hero-name { font-size: 1.75rem; }
       .dynamic-text { font-size: 0.95rem; min-height: 1.9rem; }
-      .hero-photo { max-width: 180px; }
+      .hero-photo { max-width: 190px; }
+      .hero-photo-wrapper { max-width: 260px; }
       .available-badge { font-size: 0.6rem; padding: 0.3rem 0.65rem; }
       .section-title { font-size: 1.5rem; }
       .full-container {
-        padding-left: 0.75rem;
-        padding-right: 0.75rem;
+        padding-left: 0.85rem;
+        padding-right: 0.85rem;
       }
     }
 
@@ -874,28 +909,28 @@
 <!-- ================= HERO ================= -->
 <section id="home" class="hero-section">
   <div class="full-container">
-    <div class="row align-items-center g-4 g-lg-5">
-      <!-- left text -->
-      <div class="col-lg-6 order-2 order-lg-1" data-aos="fade-right">
+    <div class="hero-row">
+      <!-- LEFT: Text -->
+      <div class="hero-text-col" data-aos="fade-right">
         <div class="hero-name">Hey, I'm <span>Arpit Kukadiya</span></div>
         <div class="dynamic-text" id="dynamicText">Web Developer</div>
         <p class="hero-desc">
           I craft clean, creative, and responsive digital experiences. 
           Turning ideas into modern, pixel-perfect websites.
         </p>
-        <div class="d-flex flex-wrap gap-3 mb-4">
+        <div class="d-flex flex-wrap gap-3 mb-4 justify-content-center justify-content-lg-start">
           <a href="#projects" class="btn-primary-custom">Explore Projects</a>
           <a href="#contact" class="btn-outline-custom">Let's Talk</a>
         </div>
         <!-- social icons -->
-        <div class="d-flex flex-wrap">
+        <div class="d-flex flex-wrap justify-content-center justify-content-lg-start">
           <a href="https://www.linkedin.com/in/arpit-kukadiya-943b64266/" target="_blank" class="social-icon"><i class="bi bi-linkedin"></i></a>
           <a href="https://github.com/Arpitkukadiya" target="_blank" class="social-icon"><i class="bi bi-github"></i></a>
           <a href="https://www.instagram.com/patidar_111_/" target="_blank" class="social-icon"><i class="bi bi-instagram"></i></a>
         </div>
       </div>
-      <!-- right image -->
-      <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-left">
+      <!-- RIGHT: Photo -->
+      <div class="hero-image-col" data-aos="fade-left">
         <div class="hero-photo-wrapper">
           <img src="arpit.jpeg" alt="Arpit Kukadiya" class="hero-photo">
           <div class="available-badge">
