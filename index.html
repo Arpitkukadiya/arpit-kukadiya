@@ -10,6 +10,8 @@
   
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons (CRITICAL - was missing) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Font Awesome -->
@@ -253,20 +255,19 @@
       pointer-events: none;
     }
 
-    /* Hero two-column layout */
-    .hero-row {
-      display: flex;
-      align-items: center;
+    /* Hero grid: Text left, Photo right */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
       gap: 3rem;
+      align-items: center;
     }
     .hero-text-col {
-      flex: 1 1 55%;
       min-width: 0;
     }
     .hero-image-col {
-      flex: 1 1 45%;
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
       align-items: center;
       min-width: 0;
     }
@@ -299,7 +300,7 @@
       line-height: 1.75;
     }
 
-    /* ========== HERO PHOTO (Right side, clean) ========== */
+    /* ========== HERO PHOTO ========== */
     .hero-photo-wrapper {
       display: flex;
       justify-content: center;
@@ -778,6 +779,7 @@
       .hero-name { font-size: 3rem; }
       .dynamic-text { font-size: 1.5rem; }
       .hero-photo { max-width: 340px; }
+      .hero-grid { gap: 2rem; }
     }
 
     @media (max-width: 991px) {
@@ -788,20 +790,18 @@
         padding-right: 1.5rem;
       }
       .hero-section { padding-top: 6rem; padding-bottom: 3rem; }
-      .hero-row { 
-        flex-direction: column-reverse;
+      .hero-grid { 
+        grid-template-columns: 1fr;
         gap: 2rem;
         text-align: center;
       }
       .hero-text-col { 
-        flex: 1 1 100%; 
         display: flex;
         flex-direction: column;
         align-items: center;
       }
-      .hero-image-col { 
-        flex: 1 1 100%; 
-        justify-content: center;
+      .hero-image-col {
+        order: -1;
       }
       .hero-name { font-size: 2.8rem; }
       .dynamic-text { font-size: 1.4rem; min-height: 2.6rem; }
@@ -909,7 +909,7 @@
 <!-- ================= HERO ================= -->
 <section id="home" class="hero-section">
   <div class="full-container">
-    <div class="hero-row">
+    <div class="hero-grid">
       <!-- LEFT: Text -->
       <div class="hero-text-col" data-aos="fade-right">
         <div class="hero-name">Hey, I'm <span>Arpit Kukadiya</span></div>
@@ -922,11 +922,17 @@
           <a href="#projects" class="btn-primary-custom">Explore Projects</a>
           <a href="#contact" class="btn-outline-custom">Let's Talk</a>
         </div>
-        <!-- social icons -->
+        <!-- social icons - FIXED with Bootstrap Icons -->
         <div class="d-flex flex-wrap justify-content-center justify-content-lg-start">
-          <a href="https://www.linkedin.com/in/arpit-kukadiya-943b64266/" target="_blank" class="social-icon"><i class="bi bi-linkedin"></i></a>
-          <a href="https://github.com/Arpitkukadiya" target="_blank" class="social-icon"><i class="bi bi-github"></i></a>
-          <a href="https://www.instagram.com/patidar_111_/" target="_blank" class="social-icon"><i class="bi bi-instagram"></i></a>
+          <a href="https://www.linkedin.com/in/arpit-kukadiya-943b64266/" target="_blank" class="social-icon" aria-label="LinkedIn">
+            <i class="bi bi-linkedin"></i>
+          </a>
+          <a href="https://github.com/Arpitkukadiya" target="_blank" class="social-icon" aria-label="GitHub">
+            <i class="bi bi-github"></i>
+          </a>
+          <a href="https://www.instagram.com/patidar_111_/" target="_blank" class="social-icon" aria-label="Instagram">
+            <i class="bi bi-instagram"></i>
+          </a>
         </div>
       </div>
       <!-- RIGHT: Photo -->
